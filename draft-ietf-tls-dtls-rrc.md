@@ -82,11 +82,19 @@ peer that the sending peer is reachable at the indicated address and port.
 
 {::boilerplate bcp14}
 
-
 This document assumes familiarity with the CID format and protocol defined for
 DTLS 1.2 {{!I-D.ietf-tls-dtls-connection-id}} and for DTLS 1.3
 {{!I-D.ietf-tls-dtls13}}.  The presentation language used in this document is
 described in Section 4 of {{!RFC8446}}.
+
+# RRC Extension
+
+This specification uses the tls_flags extension defined in {{!I-D.-ietf-tls-tlsflags}}
+to allow a client and a server to negotiate support for this extension. 
+
+The RRC flag is assigned the value (TBD1) and is used in the ClientHello (CH) and 
+the ServerHello (SH). 
+   
 
 # The Return Routability Check Message
 
@@ -142,14 +150,56 @@ address.
 
 # Example
 
-The example shown in {{fig-rrc-example}} illustrates a client and a server
-exchanging application payloads protected by DTLS with an unilaterally used
-CIDs.  At some point in the communication interaction the IP address used by
+The example TLS 1.3 handshake shown in {{fig-handshake}} shows a client 
+and a server negotiating the support for CID and for the RRC extension.
+
+~~~
+       Client                                           Server
+
+Key  ^ ClientHello
+Exch | + key_share
+     | + signature_algorithms
+     | + tls_flags (RRC)
+     v + connection_id=empty
+	                            -------->
+                                                  ServerHello  ^ Key
+                                                 +  key_share  | Exch
+                                          + connection_id=100  |
+                                             + tls_flags (RRC) v
+                                        {EncryptedExtensions}  ^  Server
+                                        {CertificateRequest}  v  Params
+                                               {Certificate}  ^
+                                         {CertificateVerify}  | Auth
+                               <--------          {Finished}  v
+
+     ^ {Certificate}
+Auth | {CertificateVerify}
+     v {Finished}              -------->
+       [Application Data]      <------->  [Application Data]
+
+              +  Indicates noteworthy extensions sent in the
+                 previously noted message.
+
+              *  Indicates optional or situation-dependent
+                 messages/extensions that are not always sent.
+
+              {} Indicates messages protected using keys
+                 derived from a [sender]_handshake_traffic_secret.
+
+              [] Indicates messages protected using keys
+                 derived from [sender]_application_traffic_secret_N.
+~~~
+{: #fig-handshake title="Message Flow for Full TLS Handshake"}
+
+Once a connection has been established the client and the server
+exchange application payloads protected by DTLS with an unilaterally used
+CIDs. In our case, the client is requested to use CID 100 for records 
+sent to the server. 
+
+At some point in the communication interaction the IP address used by
 the client changes and, thanks to the CID usage, the security context to
 interpret the record is successfully located by the server.  However, the
-server wants to test the reachability of the client at his new IP address, to
-avoid being abused (e.g., as an amplifier) by an attacker impersonating the
-client.
+server wants to test the reachability of the client at his new IP address.
 
 ~~~
       Client                                             Server
@@ -209,13 +259,25 @@ harm to connectivity.
 
 # IANA Considerations
 
-IANA is requested to allocate an entry to the existing TLS "ContentType"
+IANA is requested to allocate an entry to the TLS "ContentType"
 registry, for the return_routability_check(TBD) defined in this document.
+
+IANA is requested to allocate an entry to the TLS ExtensionType Values registry
+in the tls_flags type: 
+
+- Value: [[IANA please assign a value from the 32-63 value range.]]
+
+- Flag Name: RRC
+
+- Message: Return Routability Check (RRC)
+
+- Recommended: N
+
+- Reference: [[This document]]
 
 # Open Issues
 
 Issues against this document are tracked at https://github.com/tlswg/dtls-rrc/issues
-
 
 # Acknowledgments
 
@@ -228,6 +290,12 @@ for their input to this document.
 
 RFC EDITOR: PLEASE REMOVE THE THIS SECTION
 
+draft-ietf-tls-dtls-rrc-01
+
+   - Usage of the TLS flags extension
+   - Enhanced IANA consideration section 
+   - Expanded example section
+
 draft-ietf-tls-dtls-rrc-00
 
    - Draft name changed after WG adoption
@@ -239,4 +307,3 @@ draft-tschofenig-tls-dtls-rrc-01
 draft-tschofenig-tls-dtls-rrc-00
 
    - Initial version
-
