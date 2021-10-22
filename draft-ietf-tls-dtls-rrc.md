@@ -161,7 +161,7 @@ Exch | + key_share
      | + signature_algorithms
      | + tls_flags (RRC)
      v + connection_id=empty
-	                            -------->
+                               -------->
                                                   ServerHello  ^ Key
                                                  +  key_share  | Exch
                                           + connection_id=100  |
