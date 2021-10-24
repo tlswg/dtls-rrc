@@ -108,32 +108,41 @@ enum {
     (255)
 } ContentType;
 
-struct {
-    opaque cookie<1..2^16-1>;
-} Cookie;
+uint64 Cookie;
+
+enum {
+    path_challenge(0),
+    path_response(1),
+    reserved(2..255)
+} rrc_msg_type;
 
 struct {
-    Cookie cookie;
+    rrc_msg_type msg_type;
+    select (return_routability_check.msg_type) {
+        case path_challenge: Cookie;
+        case path_response:  Cookie;
+    };
 } return_routability_check;
 ~~~~
 
 The newly introduced return_routability_check message contains a cookie.  The
-semantic of the cookie is similar to the cookie used in the HelloRetryRequest
-message defined in {{!RFC8446}}.
+cookie is a 8-byte field containing arbitrary data.
 
 The return_routability_check message MUST be authenticated and encrypted using
 the currently active security context.
 
 The receiver that observes the peer's address and or port update MUST stop
-sending any buffered application data (or limit the sending rate to a TBD
+sending any buffered application data (or limit the data sent to a TBD
 threshold) and initiate the return routability check that proceeds as follows:
 
-1. A cookie is placed in the return_routability_check message;
+1. A cookie is placed in a return_routability_check message of type
+   path_challenge;
 1. The message is sent to the observed new address and a timeout T is started;
 1. The peer endpoint, after successfully verifying the received
-   return_routability_check message echoes it back;
+   return_routability_check message echoes the cookie value in a
+   return_routability_check message of type path_response;
 1. When the initiator receives and verifies the return_routability_check
-   message, it updates the peer address binding;
+   message contains the sent cookie, it updates the peer address binding;
 1. If T expires, or the address confirmation fails, the peer address binding is
    not updated.
 
@@ -180,12 +189,12 @@ client.
                                                  Address B >>
 
                                   <--------  Return Routability Check
-                                                    (cookie)
+                                             path_challenge(cookie)
                                                     Src-IP=Z
                                                     Dst-IP=B
 
       Return Routability Check    -------->
-      (cookie)
+      path_response(cookie)
       Src-IP=B
       Dst-IP=Z
 
