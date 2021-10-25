@@ -271,7 +271,7 @@ in the tls_flags type:
 
 - Message: CH,SH
 
-- Recommended: N
+- Recommended: Y
 
 - Reference: [[This document]]
 
