@@ -262,7 +262,7 @@ harm to connectivity.
 IANA is requested to allocate an entry to the TLS "ContentType"
 registry, for the return_routability_check(TBD) defined in this document.
 
-IANA is requested to allocate an entry to the TLS ExtensionType Values registry
+IANA is requested to allocate an entry to the TLS Flags registry
 in the tls_flags type: 
 
 - Value: [[IANA please assign a value from the 32-63 value range.]]
