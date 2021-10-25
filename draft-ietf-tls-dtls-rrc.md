@@ -269,7 +269,7 @@ in the tls_flags type:
 
 - Flag Name: RRC
 
-- Message: Return Routability Check (RRC)
+- Message: CH,SH
 
 - Recommended: N
 
