@@ -90,11 +90,11 @@ described in Section 4 of {{!RFC8446}}.
 # RRC Extension
 
 This specification uses the tls_flags extension defined in {{!I-D.-ietf-tls-tlsflags}}
-to allow a client and a server to negotiate support for this extension. 
+to allow a client and a server to negotiate support for this extension.
 
-The RRC flag is assigned the value (TBD1) and is used in the ClientHello (CH) and 
-the ServerHello (SH). 
-   
+The RRC flag is assigned the value (TBD1) and is used in the ClientHello (CH) and
+the ServerHello (SH).
+
 
 # The Return Routability Check Message
 
@@ -159,7 +159,7 @@ address.
 
 # Example
 
-The example TLS 1.3 handshake shown in {{fig-handshake}} shows a client 
+The example TLS 1.3 handshake shown in {{fig-handshake}} shows a client
 and a server negotiating the support for CID and for the RRC extension.
 
 ~~~
@@ -202,8 +202,8 @@ Auth | {CertificateVerify}
 
 Once a connection has been established the client and the server
 exchange application payloads protected by DTLS with an unilaterally used
-CIDs. In our case, the client is requested to use CID 100 for records 
-sent to the server. 
+CIDs. In our case, the client is requested to use CID 100 for records
+sent to the server.
 
 At some point in the communication interaction the IP address used by
 the client changes and, thanks to the CID usage, the security context to
@@ -272,7 +272,7 @@ IANA is requested to allocate an entry to the TLS "ContentType"
 registry, for the return_routability_check(TBD) defined in this document.
 
 IANA is requested to allocate an entry to the TLS Flags registry
-in the tls_flags type: 
+in the tls_flags type:
 
 - Value: [[IANA please assign a value from the 32-63 value range.]]
 
@@ -302,7 +302,7 @@ RFC EDITOR: PLEASE REMOVE THE THIS SECTION
 draft-ietf-tls-dtls-rrc-01
 
    - Usage of the TLS flags extension
-   - Enhanced IANA consideration section 
+   - Enhanced IANA consideration section
    - Expanded example section
 
 draft-ietf-tls-dtls-rrc-00
