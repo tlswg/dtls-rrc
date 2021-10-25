@@ -89,7 +89,7 @@ described in Section 4 of {{!RFC8446}}.
 
 # RRC Extension
 
-This specification uses the tls_flags extension defined in {{!I-D.-ietf-tls-tlsflags}}
+This specification uses the tls_flags extension defined in {{!I-D.ietf-tls-tlsflags}}
 to allow a client and a server to negotiate support for this extension.
 
 The RRC flag is assigned the value (TBD1) and is used in the ClientHello (CH) and
@@ -174,12 +174,12 @@ Exch | + key_share
                                                   ServerHello  ^ Key
                                                  +  key_share  | Exch
                                           + connection_id=100  |
-                                             + tls_flags (RRC) v
+                                            + tls_flags (RRC)  v
                                         {EncryptedExtensions}  ^  Server
-                                        {CertificateRequest}  v  Params
-                                               {Certificate}  ^
-                                         {CertificateVerify}  | Auth
-                               <--------          {Finished}  v
+                                         {CertificateRequest}  v  Params
+                                                {Certificate}  ^
+                                          {CertificateVerify}  | Auth
+                               <--------           {Finished}  v
 
      ^ {Certificate}
 Auth | {CertificateVerify}
@@ -290,7 +290,13 @@ Issues against this document are tracked at https://github.com/tlswg/dtls-rrc/is
 
 # Acknowledgments
 
-We would like to thank Achim Kraus, Hanno Becker and Manuel Pegourie-Gonnard
+We would like to thank
+Achim Kraus,
+Hanno Becker,
+Hanno Böck,
+Manuel Pegourie-Gonnard,
+Mohit Sahni and
+Rich Salz
 for their input to this document.
 
 --- back
@@ -301,9 +307,12 @@ RFC EDITOR: PLEASE REMOVE THE THIS SECTION
 
 draft-ietf-tls-dtls-rrc-01
 
-   - Usage of the TLS flags extension
+   - Use the TLS flags extension for negotiating RRC
    - Enhanced IANA consideration section
    - Expanded example section
+   - Revamp message layout:
+     - Use 8-byte fixed size cookies
+     - Explicitly separate path challenge from response
 
 draft-ietf-tls-dtls-rrc-00
 
