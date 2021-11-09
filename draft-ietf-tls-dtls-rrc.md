@@ -89,12 +89,15 @@ described in Section 4 of {{!RFC8446}}.
 
 # RRC Extension
 
-This specification uses the tls_flags extension defined in {{!I-D.ietf-tls-tlsflags}}
-to allow a client and a server to negotiate support for this extension.
+The use of RRC is negotiated via the `rrc` DTLS-only extension.  On connecting,
+the client includes the `rrc` extension in its Client Hello if it wishes to use
+RRC.  If the server is capable of meeting this requirement, it responds with a
+`rrc` extension in its Server Hello.  The `extension_type` value for this
+extension is TBD1 and the `extension_data` field of this extension is empty.
+The client and server MUST NOT use RRC unless both sides have successfully
+exchanged `rrc` extensions.
 
-The RRC flag is assigned the value (TBD1) and is used in the ClientHello (CH) and
-the ServerHello (SH).
-
+Note that the RRC extension applies to both DTLS 1.2 and DTLS 1.3.
 
 # The Return Routability Check Message
 
@@ -112,7 +115,7 @@ enum {
     handshake(22),
     application_data(23),
     heartbeat(24),  /* RFC 6520 */
-    return_routability_check(TBD), /* NEW */
+    return_routability_check(TBD2), /* NEW */
     (255)
 } ContentType;
 
@@ -133,23 +136,23 @@ struct {
 } return_routability_check;
 ~~~~
 
-The newly introduced return_routability_check message contains a cookie.  The
+The newly introduced `return_routability_check` message contains a cookie.  The
 cookie is a 8-byte field containing arbitrary data.
 
-The return_routability_check message MUST be authenticated and encrypted using
+The `return_routability_check` message MUST be authenticated and encrypted using
 the currently active security context.
 
 The receiver that observes the peer's address and or port update MUST stop
 sending any buffered application data (or limit the data sent to a TBD
 threshold) and initiate the return routability check that proceeds as follows:
 
-1. A cookie is placed in a return_routability_check message of type
+1. A cookie is placed in a `return_routability_check` message of type
    path_challenge;
 1. The message is sent to the observed new address and a timeout T is started;
 1. The peer endpoint, after successfully verifying the received
-   return_routability_check message echoes the cookie value in a
-   return_routability_check message of type path_response;
-1. When the initiator receives and verifies the return_routability_check
+   `return_routability_check` message echoes the cookie value in a
+   `return_routability_check` message of type path_response;
+1. When the initiator receives and verifies the `return_routability_check`
    message contains the sent cookie, it updates the peer address binding;
 1. If T expires, or the address confirmation fails, the peer address binding is
    not updated.
@@ -168,13 +171,13 @@ and a server negotiating the support for CID and for the RRC extension.
 Key  ^ ClientHello
 Exch | + key_share
      | + signature_algorithms
-     | + tls_flags (RRC)
+     | + rrc
      v + connection_id=empty
                                -------->
                                                   ServerHello  ^ Key
                                                  +  key_share  | Exch
                                           + connection_id=100  |
-                                            + tls_flags (RRC)  v
+                                                        + rrc  v
                                         {EncryptedExtensions}  ^  Server
                                          {CertificateRequest}  v  Params
                                                 {Certificate}  ^
@@ -268,21 +271,19 @@ harm to connectivity.
 
 # IANA Considerations
 
-IANA is requested to allocate an entry to the TLS "ContentType"
-registry, for the return_routability_check(TBD) defined in this document.
+IANA is requested to allocate an entry to the TLS `ContentType`
+registry, for the `return_routability_check(TBD2)` defined in this document.
+The `return_routability_check` content type is only applicable to DTLS 1.2 and
+1.3.
 
-IANA is requested to allocate an entry to the TLS Flags registry
-in the tls_flags type:
+IANA is requested to allocate the extension code point (TBD1) for the `rrc`
+extension to the `TLS ExtensionType Values` registry as described in
+{{tbl-ext}}.
 
-- Value: [[IANA please assign a value from the 32-63 value range.]]
-
-- Flag Name: RRC
-
-- Message: CH,SH
-
-- Recommended: Y
-
-- Reference: [[This document]]
+| Value | Extension Name | TLS 1.3 |  DTLS-Only |  Recommended | Reference |
+|--------------------------------------------------------------------------|
+| TBD1  | rrc            | CH, SH  | Y          | N            | RFC-THIS  |
+{: #tbl-ext title="rrc entry in the TLS ExtensionType Values registry" }
 
 # Open Issues
 
@@ -303,7 +304,11 @@ for their input to this document.
 
 # History
 
-RFC EDITOR: PLEASE REMOVE THE THIS SECTION
+<cref>RFC EDITOR: PLEASE REMOVE THIS SECTION</cref>
+
+draft-ietf-tls-dtls-rrc-02
+
+   - Undo the TLS flags extension for negotiating RRC, use a new extension type
 
 draft-ietf-tls-dtls-rrc-01
 
