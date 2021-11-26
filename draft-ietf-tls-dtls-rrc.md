@@ -92,7 +92,7 @@ described in Section 4 of {{!RFC8446}}.
 The use of RRC is negotiated via the `rrc` DTLS-only extension.  On connecting,
 the client includes the `rrc` extension in its ClientHello if it wishes to use
 RRC.  If the server is capable of meeting this requirement, it responds with a
-`rrc` extension in its Server Hello.  The `extension_type` value for this
+`rrc` extension in its ServerHello.  The `extension_type` value for this
 extension is TBD1 and the `extension_data` field of this extension is empty.
 The client and server MUST NOT use RRC unless both sides have successfully
 exchanged `rrc` extensions.
