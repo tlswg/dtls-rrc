@@ -280,7 +280,7 @@ IANA is requested to allocate the extension code point (TBD1) for the `rrc`
 extension to the `TLS ExtensionType Values` registry as described in
 {{tbl-ext}}.
 
-| Value | Extension Name | TLS 1.3 |  DTLS-Only |  Recommended | Reference |
+| Value | Extension Name | TLS 1.3 | DTLS-Only | Recommended | Reference |
 |--------------------------------------------------------------------------|
 | TBD1  | rrc            | CH, SH  | Y          | N            | RFC-THIS  |
 {: #tbl-ext title="rrc entry in the TLS ExtensionType Values registry" }
