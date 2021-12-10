@@ -201,7 +201,7 @@ the initiator and responder roles, broken down per protocol phase.
   anti-amplification limit to probe if the PMTU for the new path is still
   acceptable.
 
-## Timer Choice
+## Timer Choice {#timer-choice}
 
 When setting T, implementations are cautioned that the new path could have a
 longer round-trip time than the original.
