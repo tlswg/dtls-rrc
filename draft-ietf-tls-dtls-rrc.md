@@ -197,7 +197,7 @@ the initiator and responder roles, broken down per protocol phase.
   only if the path is functional in both directions.
   * The initiator MUST NOT enforce this behaviour
 * The responder MAY use padding using the record padding mechanism available in
-  DTLS 1.3 and 1.2, when CID is enabled on its sending direction) up to the
+  DTLS 1.3, and 1.2 when CID is enabled on its sending direction) up to the
   anti-amplification limit to probe if the PMTU for the new path is still
   acceptable.
 
