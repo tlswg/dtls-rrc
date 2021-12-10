@@ -78,6 +78,11 @@ CID-to-IP address/port binding is updated in that peer's session state
 database.  This is done in order to provide more confidence to the receiving
 peer that the sending peer is reachable at the indicated address and port.
 
+Note however that, irrespective of CID, if RRC has been successfully negotiated
+by the peers, path validation can be used at any time by either endpoint. For
+instance, an endpoint might check that a peer is still in possession of its
+address after a period of quiescence.
+
 # Conventions and Terminology
 
 {::boilerplate bcp14}
@@ -86,6 +91,10 @@ This document assumes familiarity with the CID format and protocol defined for
 DTLS 1.2 {{!I-D.ietf-tls-dtls-connection-id}} and for DTLS 1.3
 {{!I-D.ietf-tls-dtls13}}.  The presentation language used in this document is
 described in Section 4 of {{!RFC8446}}.
+
+This document reuses the definition of "anti-amplification limit" from
+{{?RFC9000}} to mean three times the amount of data received from an
+unvalidated address.
 
 # RRC Extension
 
@@ -142,15 +151,19 @@ cookie is a 8-byte field containing arbitrary data.
 The `return_routability_check` message MUST be authenticated and encrypted using
 the currently active security context.
 
-The receiver that observes the peer's address and or port update MUST stop
-sending any buffered application data (or limit the data sent to a TBD
-threshold) and initiate the return routability check that proceeds as follows:
+# Path Validation Procedure
 
-1. A cookie is placed in a `return_routability_check` message of type
-   path_challenge;
-1. The message is sent to the observed new address and a timeout T is started;
+The receiver that observes the peer's address or port update MUST stop sending
+any buffered application data (or limit the data sent to the unvalidated
+address to the anti-amplification limit) and initiate the return routability
+check that proceeds as follows:
+
+1. An unpredictable cookie is placed in a `return_routability_check` message of
+   type path_challenge;
+1. The message is sent to the observed new address and a timer T (see
+   {{timer-choice}}) is started;
 1. The peer endpoint, after successfully verifying the received
-   `return_routability_check` message echoes the cookie value in a
+   `return_routability_check` message responds by echoing the cookie value in a
    `return_routability_check` message of type path_response;
 1. When the initiator receives and verifies the `return_routability_check`
    message contains the sent cookie, it updates the peer address binding;
@@ -159,6 +172,48 @@ threshold) and initiate the return routability check that proceeds as follows:
 
 After this point, any pending send operation is resumed to the bound peer
 address.
+
+{{path-challenge-reqs}} and {{path-response-reqs}} contain the requirments for
+the initiator and responder roles, broken down per protocol phase.
+
+## Path Challenge Requirements {#path-challenge-reqs}
+
+* The initiator MAY send multiple `return_routability_check` message of type
+  path_challenge to cater for packet loss on the probed path.
+  * Each path_challenge SHOULD go into different transport packets.
+  * Each path_challenge MUST have different unpredictable data.
+* The initiator MAY use padding using the record padding mechanism available in
+  DTLS 1.3 and 1.2, when CID is enabled on its sending direction) up to the
+  anti-amplification limit to probe if the PMTU for the new path is still
+  acceptable.
+
+## Path Response Requirements {#path-response-reqs}
+
+* The responder MUST NOT delay sending an elicited path_response message.
+* The responder MUST send exactly one path_response messages for each received
+  path_request.
+* The responder MUST send the path_response on the network path where the
+  corresponding path_challenge has been received, so that validation succeeds
+  only if the path is functional in both directions.
+  * The initiator MUST NOT enforce this behaviour
+* The responder MAY use padding using the record padding mechanism available in
+  DTLS 1.3 and 1.2, when CID is enabled on its sending direction) up to the
+  anti-amplification limit to probe if the PMTU for the new path is still
+  acceptable.
+
+## Timer Choice
+
+When setting T, implementations are cautioned that the new path could have a
+longer round-trip time than the original.
+
+In settings where there is external information about the RTT, implementations
+SHOULD use [1.5,3]xRTT estimate as T.
+<cref>TODO pick a number in the interval</cref>
+
+If an implementation has no way to obtain information regarding the current
+RTT, a value of 1s SHOULD be used.  If there is a-priori knowledge of the
+network environment (e.g., endpoints deployed in constrained networks) a
+different, more suitable value MAY be chosen.
 
 # Example
 
