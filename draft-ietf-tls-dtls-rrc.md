@@ -183,7 +183,7 @@ the initiator and responder roles, broken down per protocol phase.
   * Each path_challenge SHOULD go into different transport packets.
   * Each path_challenge MUST have different unpredictable data.
 * The initiator MAY use padding using the record padding mechanism available in
-  DTLS 1.3, and 1.2 when CID is enabled on its sending direction) up to the
+  DTLS 1.3 (and in DTLS 1.2, when CID is enabled on its sending direction) up to the
   anti-amplification limit to probe if the PMTU for the new path is still
   acceptable.
 
