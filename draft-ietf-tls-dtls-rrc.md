@@ -94,7 +94,8 @@ described in Section 4 of {{!RFC8446}}.
 
 This document reuses the definition of "anti-amplification limit" from
 {{?RFC9000}} to mean three times the amount of data received from an
-unvalidated address.
+unvalidated address.  This includes all DTLS records originating from that
+source address, including discarded ones.
 
 # RRC Extension
 
