@@ -80,8 +80,8 @@ peer that the sending peer is reachable at the indicated address and port.
 
 Note however that, irrespective of CID, if RRC has been successfully negotiated
 by the peers, path validation can be used at any time by either endpoint. For
-instance, an endpoint might check that a peer is still in possession of its
-address after a period of quiescence.
+instance, an endpoint might use RRC to check that a peer is still in possession
+of its address after a period of quiescence.
 
 # Conventions and Terminology
 
@@ -179,7 +179,7 @@ the initiator and responder roles, broken down per protocol phase.
 
 ## Path Challenge Requirements {#path-challenge-reqs}
 
-* The initiator MAY send multiple `return_routability_check` message of type
+* The initiator MAY send multiple `return_routability_check` messages of type
   path_challenge to cater for packet loss on the probed path.
   * Each path_challenge SHOULD go into different transport packets.
   * Each path_challenge MUST have different unpredictable data.
@@ -212,9 +212,11 @@ SHOULD use [1.5,3]xRTT estimate as T.
 <cref>TODO pick a number in the interval</cref>
 
 If an implementation has no way to obtain information regarding the current
-RTT, a value of 1s SHOULD be used.  If there is a-priori knowledge of the
-network environment (e.g., endpoints deployed in constrained networks) a
-different, more suitable value MAY be chosen.
+RTT, a value of 1s SHOULD be used.
+
+Profiles for specific deployment environments -- for example, constrained
+networks {{?I-D.ietf-uta-tls13-iot-profile}} -- MAY specify a different, more
+suitable value.
 
 # Example
 
