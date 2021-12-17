@@ -181,12 +181,16 @@ the initiator and responder roles, broken down per protocol phase.
 
 * The initiator MAY send multiple `return_routability_check` messages of type
   path_challenge to cater for packet loss on the probed path.
-  * Each path_challenge SHOULD go into different transport packets.
+  * Each path_challenge SHOULD go into different transport packets.  (Note that
+    the DTLS implementation may not have control over the packetization done by
+    the transport layer.)
+  * The transmission of subsequent path_challenge message SHOULD be paced to
+    decrease the chance of loss.
   * Each path_challenge MUST have different unpredictable data.
 * The initiator MAY use padding using the record padding mechanism available in
-  DTLS 1.3 (and in DTLS 1.2, when CID is enabled on its sending direction) up to the
-  anti-amplification limit to probe if the PMTU for the new path is still
-  acceptable.
+  DTLS 1.3 (and in DTLS 1.2, when CID is enabled on the sending direction) up
+  to the anti-amplification limit to probe if the path MTU (PMTU) for the new
+  path is still acceptable.
 
 ## Path Response Requirements {#path-response-reqs}
 
@@ -197,22 +201,22 @@ the initiator and responder roles, broken down per protocol phase.
   corresponding path_challenge has been received, so that validation succeeds
   only if the path is functional in both directions.
   * The initiator MUST NOT enforce this behaviour
-* The responder MAY use padding using the record padding mechanism available in
-  DTLS 1.3 (and in DTLS 1.2, when CID is enabled on its sending direction) up to the
-  anti-amplification limit to probe if the PMTU for the new path is still
-  acceptable.
+* The initiator MUST silently discard any invalid path_response it receives.
+
+Note that RRC does not cater for PMTU discovery on the reverse path.  If the
+responder wants to do PMTU discovery using RRC, it should initiate a new path
+validation procedure.
 
 ## Timer Choice {#timer-choice}
 
 When setting T, implementations are cautioned that the new path could have a
-longer round-trip time than the original.
+longer round-trip time (RTT) than the original.
 
-In settings where there is external information about the RTT, implementations
-SHOULD use [1.5,3]xRTT estimate as T.
-<cref>TODO pick a number in the interval</cref>
+In settings where there is external information about the RTT of the active
+path, implementations SHOULD use T = 3xRTT.
 
-If an implementation has no way to obtain information regarding the current
-RTT, a value of 1s SHOULD be used.
+If an implementation has no way to obtain information regarding the RTT of the
+active path, a value of 1s SHOULD be used.
 
 Profiles for specific deployment environments -- for example, constrained
 networks {{?I-D.ietf-uta-tls13-iot-profile}} -- MAY specify a different, more
