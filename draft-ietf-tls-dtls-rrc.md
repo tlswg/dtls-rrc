@@ -174,7 +174,7 @@ check that proceeds as follows:
 After this point, any pending send operation is resumed to the bound peer
 address.
 
-{{path-challenge-reqs}} and {{path-response-reqs}} contain the requirments for
+{{path-challenge-reqs}} and {{path-response-reqs}} contain the requirements for
 the initiator and responder roles, broken down per protocol phase.
 
 ## Path Challenge Requirements {#path-challenge-reqs}
@@ -184,9 +184,9 @@ the initiator and responder roles, broken down per protocol phase.
   * Each path_challenge SHOULD go into different transport packets.  (Note that
     the DTLS implementation may not have control over the packetization done by
     the transport layer.)
-  * The transmission of subsequent path_challenge message SHOULD be paced to
+  * The transmission of subsequent path_challenge messages SHOULD be paced to
     decrease the chance of loss.
-  * Each path_challenge MUST have different unpredictable data.
+  * Each path_challenge message MUST contain random data.
 * The initiator MAY use padding using the record padding mechanism available in
   DTLS 1.3 (and in DTLS 1.2, when CID is enabled on the sending direction) up
   to the anti-amplification limit to probe if the path MTU (PMTU) for the new
