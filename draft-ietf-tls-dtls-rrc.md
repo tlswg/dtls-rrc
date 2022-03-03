@@ -152,6 +152,75 @@ cookie is a 8-byte field containing arbitrary data.
 The `return_routability_check` message MUST be authenticated and encrypted using
 the currently active security context.
 
+# The No-Op Message {#no-op}
+
+An off-path attacker that can observe packets might forward copies of
+genuine packets to endpoints. If the copied packet arrives before
+the genuine packet, this will appear as a NAT rebinding. Any genuine
+packet will be discarded as a duplicate. If the attacker is able to
+continue forwarding packets, it might be able to cause migration to a
+path via the attacker. This places the attacker on-path, giving it
+the ability to observe or drop all subsequent packets.
+
+This style of attack relies on the attacker using a path that has
+approximately the same characteristics as the direct path between
+endpoints. The attack is more reliable if relatively few packets are
+sent or if packet loss coincides with the attempted attack.
+
+A non-path probing packet received on the original path that increases the
+maximum received packet number will cause the endpoint to move back
+to that path. Eliciting packets on this path increases the
+likelihood that the attack is unsuccessful. Therefore, mitigation of
+this attack relies on triggering the exchange of packets.
+
+In response to an apparent migration, endpoints MUST validate the
+previously active path using a `return_routability_check`  exchange.
+This induces the sending of new packets on that path. If the path is
+no longer viable, the validation attempt will time out and fail;
+if the path is viable but no longer desired, the validation will
+succeed but only results in probing packets being sent on the path.
+
+An endpoint that receives a `return_routability_check` message
+containing a path_challenge on an active path SHOULD send a `no_op`
+message in response. If the `no_op` message arrives before any copy
+made by an attacker, this results in the connection being migrated
+back to the original path. Any subsequent migration to another path
+restarts this entire process.
+
+The `no_op` message is defined as below. 
+
+~~~~
+enum {
+    invalid(0),
+    change_cipher_spec(20),
+    alert(21),
+    handshake(22),
+    application_data(23),
+    heartbeat(24),  /* RFC 6520 */
+    return_routability_check(TBD2), /* NEW */
+    no_op(TBD3), /* NEW */
+    (255)
+} ContentType;
+
+struct {} no_op;
+~~~~
+
+The `return_routability_check` message MUST be authenticated and
+encrypted using the currently active security context.
+
+Note that this defense is imperfect, but this is not considered a serious
+problem. If the path via the attack is reliably faster than the
+original path despite multiple attempts to use that original path, it
+is not possible to distinguish between an attack and an improvement
+in routing.
+
+An endpoint could also use heuristics to improve detection of this
+style of attack. For instance, NAT rebinding is improbable if
+packets were recently received on the old path; similarly, rebinding
+is rare on IPv6 paths. Endpoints can also look for duplicated
+packets. Conversely, a change in connection ID is more likely to
+indicate an intentional migration rather than an attack.
+
 # Path Validation Procedure
 
 The receiver that observes the peer's address or port update MUST stop sending
@@ -334,9 +403,9 @@ harm to connectivity.
 # IANA Considerations
 
 IANA is requested to allocate an entry to the TLS `ContentType`
-registry, for the `return_routability_check(TBD2)` defined in this document.
-The `return_routability_check` content type is only applicable to DTLS 1.2 and
-1.3.
+registry, for the `return_routability_check(TBD2)` and the `no_op(TBD3)`
+defined in this document. The `return_routability_check` and the `no_op`
+content types are only applicable to DTLS 1.2 and 1.3.
 
 IANA is requested to allocate the extension code point (TBD1) for the `rrc`
 extension to the `TLS ExtensionType Values` registry as described in
@@ -361,6 +430,8 @@ Manuel Pegourie-Gonnard,
 Mohit Sahni and
 Rich Salz
 for their input to this document.
+
+The text in {{no-op}} is recycled from RFC 9000.
 
 --- back
 
