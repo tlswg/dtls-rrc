@@ -134,6 +134,7 @@ uint64 Cookie;
 enum {
     path_challenge(0),
     path_response(1),
+    no_op(3),
     reserved(2..255)
 } rrc_msg_type;
 
@@ -152,7 +153,7 @@ cookie is a 8-byte field containing arbitrary data.
 The `return_routability_check` message MUST be authenticated and encrypted using
 the currently active security context.
 
-# The No-Op Message {#no-op}
+# Off-Path Packet Forwarding {#off-path}
 
 An off-path attacker that can observe packets might forward copies of
 genuine packets to endpoints. If the copied packet arrives before
@@ -181,32 +182,12 @@ if the path is viable but no longer desired, the validation will
 succeed but only results in probing packets being sent on the path.
 
 An endpoint that receives a `return_routability_check` message
-containing a path_challenge on an active path SHOULD send a `no_op`
-message in response. If the `no_op` message arrives before any copy
-made by an attacker, this results in the connection being migrated
-back to the original path. Any subsequent migration to another path
-restarts this entire process.
-
-The `no_op` message is defined as below. 
-
-~~~~
-enum {
-    invalid(0),
-    change_cipher_spec(20),
-    alert(21),
-    handshake(22),
-    application_data(23),
-    heartbeat(24),  /* RFC 6520 */
-    return_routability_check(TBD2), /* NEW */
-    no_op(TBD3), /* NEW */
-    (255)
-} ContentType;
-
-struct {} no_op;
-~~~~
-
-The `return_routability_check` message MUST be authenticated and
-encrypted using the currently active security context.
+containing a path_challenge on an active path SHOULD send 
+a `return_routability_check` of msg-type no_op in response. 
+If the `return_routability_check` with a `no_op` arrives before any
+copy made by an attacker, this results in the connection being
+migrate back to the original path. Any subsequent migration to
+another path restarts this entire process.
 
 Note that this defense is imperfect, but this is not considered a serious
 problem. If the path via the attack is reliably faster than the
@@ -403,9 +384,9 @@ harm to connectivity.
 # IANA Considerations
 
 IANA is requested to allocate an entry to the TLS `ContentType`
-registry, for the `return_routability_check(TBD2)` and the `no_op(TBD3)`
-defined in this document. The `return_routability_check` and the `no_op`
-content types are only applicable to DTLS 1.2 and 1.3.
+registry, for the `return_routability_check(TBD2)` message defined in
+this document. The `return_routability_check` content type is only
+applicable to DTLS 1.2 and 1.3.
 
 IANA is requested to allocate the extension code point (TBD1) for the `rrc`
 extension to the `TLS ExtensionType Values` registry as described in
@@ -431,13 +412,25 @@ Mohit Sahni and
 Rich Salz
 for their input to this document.
 
-The text in {{no-op}} is recycled from RFC 9000.
+The text in {{off-path}} is recycled from RFC 9000.
 
 --- back
 
 # History
 
 <cref>RFC EDITOR: PLEASE REMOVE THIS SECTION</cref>
+
+draft-ietf-tls-dtls-rrc-05
+
+   - Added text about off-path packet forwarding
+
+draft-ietf-tls-dtls-rrc-04
+
+   -  Re-submitted draft to fix references
+
+draft-ietf-tls-dtls-rrc-03
+
+   -  Added details for challenge-response exchange
 
 draft-ietf-tls-dtls-rrc-02
 
