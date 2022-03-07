@@ -134,7 +134,7 @@ uint64 Cookie;
 enum {
     path_challenge(0),
     path_response(1),
-    no_op(3),
+    path_delete(2),
     reserved(2..255)
 } rrc_msg_type;
 
@@ -143,12 +143,12 @@ struct {
     select (return_routability_check.msg_type) {
         case path_challenge: Cookie;
         case path_response:  Cookie;
+        case path_delete:  Cookie;
     };
 } return_routability_check;
 ~~~~
 
-The newly introduced `return_routability_check` message contains a cookie.  The
-cookie is a 8-byte field containing arbitrary data.
+The cookie is a 8-byte field containing arbitrary data.
 
 The `return_routability_check` message MUST be authenticated and encrypted using
 the currently active security context.
@@ -168,30 +168,145 @@ approximately the same characteristics as the direct path between
 endpoints. The attack is more reliable if relatively few packets are
 sent or if packet loss coincides with the attempted attack.
 
-A non-path probing packet received on the original path that increases the
+A data packet received on the original path that increases the
 maximum received packet number will cause the endpoint to move back
 to that path. Eliciting packets on this path increases the
-likelihood that the attack is unsuccessful. Therefore, mitigation of
-this attack relies on triggering the exchange of packets.
+likelihood that the attack is unsuccessful.
 
-In response to an apparent migration, endpoints MUST validate the
-previously active path using a `return_routability_check`  exchange.
-This induces the sending of new packets on that path. If the path is
-no longer viable, the validation attempt will time out and fail;
-if the path is viable but no longer desired, the validation will
-succeed but only results in probing packets being sent on the path.
+{{fig-off-path}} demonstrates the case where a receiver receives a
+packet with a new source IP address and/or new port number. The
+receiver needs to determine whether this path change is caused
+by an attacker and will sent a RRC message with a path_challenge
+along the old path. 
 
-An endpoint that receives a `return_routability_check` message
-containing a path_challenge on an active path SHOULD send 
-a `return_routability_check` of msg-type no_op in response. 
-If the `return_routability_check` with a `no_op` arrives before any
-copy made by an attacker, this results in the connection being
-migrate back to the original path. Any subsequent migration to
-another path restarts this entire process.
+~~~~
+        new   +--------+  old
+        path  |        |  path
+       +----->|Receiver|<-----+
+       |      |        |      |
+       |      +--------+      |
+       |                      |
+       |                      |
+       |                      |
+       |                      |
+       |                      |
+ +----------+                 |
+ | Attacker?|                 |
+ +----------+                 |
+       |                      |
+       |                      |
+       |                      |
+       |      +--------+      |
+       |      |        |      |
+       +------| Sender |------+
+              |        |
+              +--------+
+~~~~
+{: #fig-off-path title="Off-Path Packet Forwarding Scenario"}
+
+Three cases need to be considered:
+
+Case 1: The old path is dead, which leads to a timeout of RRC-1. 
+
+As shown in {{fig-old-path-dead}}, RRC-2 needs to be sent on the
+new path. In this situation the switch to the new path is
+considered legitimate (assuming that the attacker is unable to
+selectively drop packets). The sender will reply with RRC-3 
+containing a path_response on the new path.
+
+~~~~
+   ...................>+--------+
+   .           ********|        |********
+   .           *+----->|Receiver|<-----+*
+   .           *| new  |        | old  |*
+   .     RRC-2 *| path +--------+ path |* RRC-1
+   .      with *|                      |* with
+   .     path- *|                      |* path-
+   . challenge *|                      |* challenge
+   .           *|                      |*
+   .           *|                      |*
+   .      +----------+                 |*
+   .      | Attacker |                 |*
+   .      +----------+                 |*
+   .           *|                      |v
+   .           *|                      |timeout
+   .           *|                      |
+   .RRC-3      *|      +--------+      |
+   .with       *|      |        |      |
+   .path-      *+------| Sender |------+
+   .response   *******>|        |
+   ....................+--------+
+~~~~
+{: #fig-old-path-dead title="Old path is dead"}
+
+Case 2: The old path is alive but not preferred. 
+
+This case is shown in {{fig-old-path-not-preferred}} whereby the
+sender replies with a RRC-2 path_delete message on the old path.
+This triggers the receiver to send RRC-3 with a path-challenge
+along the new path. The sender will reply with RRC-4 containing
+a path_response along the new path.
+
+~~~~
+  ...................>+--------+<....................
+  .           ********|        |********            .
+  .           *+----->|Receiver|<-----+*            .
+  .           *| new  |        | old  |*            .
+  .     RRC-3 *| path +--------+ path |* RRC-1      .
+  .      with *|                      |* with       .
+  .     path- *|                      |* path-      .
+  . challenge *|                      |* challenge  .
+  .           *|                      |*            .
+  .           *|                      |*            .
+  .      +----------+                 |*            .
+  .      | Attacker |                 |*            .
+  .      +----------+                 |*            .
+  .           *|                      |*            .
+  .           *|                      |*            .
+  .           *|                      |*            .
+  .RRC-4      *|      +--------+      |*       RRC-2.
+  .with       *|      |        |      |*        with.
+  .path-      *+------| Sender |------+*       path-.
+  .response   *******>|        |<*******      delete.
+  ....................+--------+.....................
+~~~~
+{: #fig-old-path-not-preferred title="Old path is not preferred"}
+
+Case 3: The old path is alive and preferred. 
+
+This is most likely the result of an attacker. The sender replies 
+with RRC-2 containing a path_response along the old path. The
+interaction is shown in {{fig-old-path-preferred}}. This results
+in the connection being migrate back to the old path.
+
+~~~~
+               +--------+<....................
+               |        |********            .
+        +----->|Receiver|<-----+*            .
+        | new  |        | old  |*            .
+        | path +--------+ path |* RRC-1      .
+        |                      |* with       .
+        |                      |* path-      .
+        |                      |* challenge  .
+        |                      |*            .
+        |                      |*            .
+  +----------+                 |*            .
+  | Attacker |                 |*            .
+  +----------+                 |*            .
+        |                      |*            .
+        |                      |*            .
+        |                      |*            .
+        |      +--------+      |*       RRC-2.
+        |      |        |      |*        with.
+        +------| Sender |------+*       path-.
+               |        |<*******    response.
+               +--------+.....................
+~~~~
+{: #fig-old-path-preferred title="Old path is preferred"}
 
 Note that this defense is imperfect, but this is not considered a serious
 problem. If the path via the attack is reliably faster than the
-original path despite multiple attempts to use that original path, it
+old path despite multiple attempts to use that old path, it
 is not possible to distinguish between an attack and an improvement
 in routing.
 
@@ -200,9 +315,13 @@ style of attack. For instance, NAT rebinding is improbable if
 packets were recently received on the old path; similarly, rebinding
 is rare on IPv6 paths. Endpoints can also look for duplicated
 packets. Conversely, a change in connection ID is more likely to
-indicate an intentional migration rather than an attack.
+indicate an intentional migration rather than an attack. Note, however,
+changes in connection IDs are only supported in DTLS 1.3 but not in
+DTLS 1.2.
 
 # Path Validation Procedure
+
+Note: This algorithm does not take the {{off-path}} scenario into account.
 
 The receiver that observes the peer's address or port update MUST stop sending
 any buffered application data (or limit the data sent to the unvalidated
@@ -227,6 +346,38 @@ address.
 {{path-challenge-reqs}} and {{path-response-reqs}} contain the requirements for
 the initiator and responder roles, broken down per protocol phase.
 
+# Enhanced Path Validation Procedure
+
+Note: This algorithm also takes the {{off-path}} scenario into account.
+
+The receiver that observes the peer's address or port update MUST stop sending
+any buffered application data (or limit the data sent to the unvalidated
+address to the anti-amplification limit) and initiate the return routability
+check that proceeds as follows:
+
+1. An unpredictable cookie is placed in a `return_routability_check` message of
+   type path_challenge;
+1. The message is sent to the previously valid address and a timer T (see
+   {{timer-choice}}) is started;
+1. The peer endpoint, after successfully verifying the received
+   `return_routability_check` message responds by echoing the cookie value in a
+   `return_routability_check` message of type path_response if the path through
+   which the message was received is preferred. If the path is not preferred,
+   a `return_routability_check` message of type path_delete MUST be returned;
+1. When the initiator receives and verifies the `return_routability_check`
+   message contains the sent cookie, it updates the peer address binding;
+1. If T expires, or the address confirmation fails, the peer address binding is
+   not updated. In this case, a new `return_routability_check` message of type
+   path_challenge MUST be sent to the observed new address containing a new
+   cookie value. A timer is started and step (3) from above is applied.
+
+After this point, any pending send operation is resumed to the bound peer
+address.
+
+{{path-challenge-reqs}} and {{path-response-reqs}} contain the requirements for
+the initiator and responder roles, broken down per protocol phase.
+
+
 ## Path Challenge Requirements {#path-challenge-reqs}
 
 * The initiator MAY send multiple `return_routability_check` messages of type
@@ -244,13 +395,14 @@ the initiator and responder roles, broken down per protocol phase.
 
 ## Path Response Requirements {#path-response-reqs}
 
-* The responder MUST NOT delay sending an elicited path_response message.
-* The responder MUST send exactly one path_response messages for each received
-  path_request.
-* The responder MUST send the path_response on the network path where the
-  corresponding path_challenge has been received, so that validation succeeds
-  only if the path is functional in both directions.
-  * The initiator MUST NOT enforce this behaviour
+* The responder MUST NOT delay sending an elicited path_response or
+  path_delete messages.
+* The responder MUST send exactly one path_response or path_delete message 
+  for each received path_request.
+* The responder MUST send the path_response or the  path_delete on the path 
+  where the corresponding path_challenge has been received, so that validation
+  succeeds only if the path is functional in both directions. The initiator
+  MUST NOT enforce this behaviour.
 * The initiator MUST silently discard any invalid path_response it receives.
 
 Note that RRC does not cater for PMTU discovery on the reverse path.  If the
@@ -411,8 +563,6 @@ Manuel Pegourie-Gonnard,
 Mohit Sahni and
 Rich Salz
 for their input to this document.
-
-The text in {{off-path}} is recycled from RFC 9000.
 
 --- back
 
