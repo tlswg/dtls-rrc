@@ -208,11 +208,11 @@ Three cases need to be considered:
 
 Case 1: The old path is dead, which leads to a timeout of RRC-1. 
 
-As shown in {{fig-old-path-dead}}, a RRC message of type path_challenge (RRC-2) needs to be sent on the
-new path. In this situation the switch to the new path is
-considered legitimate (assuming that the attacker is unable to
-selectively drop packets). The sender will reply with RRC-3 
-containing a path_response on the new path.
+As shown in {{fig-old-path-dead}}, a RRC message of type 
+path_challenge (RRC-2) needs to be sent on the new path. In this
+situation the switch to the new path is considered legitimate.
+The sender will reply with RRC-3 containing a path_response on
+the new path.
 
 ~~~~
    ...................>+--------+
