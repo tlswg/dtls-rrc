@@ -319,7 +319,7 @@ indicate an intentional migration rather than an attack. Note, however,
 changes in connection IDs are only supported in DTLS 1.3 but not in
 DTLS 1.2.
 
-# Path Validation Procedure
+# Path Validation Procedure {#regular}
 
 Note: This algorithm does not take the {{off-path}} scenario into account.
 
@@ -328,15 +328,15 @@ any buffered application data (or limit the data sent to the unvalidated
 address to the anti-amplification limit) and initiate the return routability
 check that proceeds as follows:
 
-1. An unpredictable cookie is placed in a `return_routability_check` message of
-   type path_challenge;
+1. The receiver creates a `return_routability_check` message of
+   type path_challenge and places the unpredictable cookie into the message.
 1. The message is sent to the observed new address and a timer T (see
-   {{timer-choice}}) is started;
+   {{timer-choice}}) is started.
 1. The peer endpoint, after successfully verifying the received
    `return_routability_check` message responds by echoing the cookie value in a
-   `return_routability_check` message of type path_response;
+   `return_routability_check` message of type path_response.
 1. When the initiator receives and verifies the `return_routability_check`
-   message contains the sent cookie, it updates the peer address binding;
+   message contains the sent cookie, it updates the peer address binding.
 1. If T expires, or the address confirmation fails, the peer address binding is
    not updated.
 
@@ -346,7 +346,7 @@ address.
 {{path-challenge-reqs}} and {{path-response-reqs}} contain the requirements for
 the initiator and responder roles, broken down per protocol phase.
 
-# Enhanced Path Validation Procedure
+# Enhanced Path Validation Procedure {#enhanced}
 
 Note: This algorithm also takes the {{off-path}} scenario into account.
 
@@ -355,28 +355,36 @@ any buffered application data (or limit the data sent to the unvalidated
 address to the anti-amplification limit) and initiate the return routability
 check that proceeds as follows:
 
-1. An unpredictable cookie is placed in a `return_routability_check` message of
-   type path_challenge;
-1. The message is sent to the previously valid address and a timer T (see
-   {{timer-choice}}) is started;
-1. The peer endpoint, after successfully verifying the received
-   `return_routability_check` message responds by echoing the cookie value in a
-   `return_routability_check` message of type path_response if the path through
-   which the message was received is preferred. If the path is not preferred,
-   a `return_routability_check` message of type path_delete MUST be returned;
-1. When the initiator receives and verifies that the `return_routability_check`
-   message contains the sent cookie, it updates the peer address binding;
+1. The receiver creates a `return_routability_check` message of
+   type path_challenge and places the unpredictable cookie into the message.
+1. The message is sent to the previously valid address, which corresponds to the
+   old path. Additionally, a timer T, see {{timer-choice}}, is started.
+1. The peer endpoint verifies the received `return_routability_check` message. 
+   The action to be taken depends on the preference of the path through which
+   the message was received:
+   - If the path through which the message was received is preferred,
+   a `return_routability_check` message of type path_response MUST be returned.
+   - If the path through which the message was received is not preferred, 
+   a `return_routability_check` message of type path_delete MUST be returned.
+   In either case, the peer endpoint echoes the cookie value in the response.
+1. The initiator receives and verifies that the `return_routability_check`
+   message contains the previously sent cookie. The actions taken by the 
+   initiator differ based on the received message:
+   - When a `return_routability_check` message of type path_response was received,
+   the initiator MUST continue using the previously valid address, i.e. no switch
+   to the new path takes place and the peer address binding is not updated.
+   - When a `return_routability_check` message of type path_delete was received, 
+   the initiator MUST perform a return routability check on the observed new 
+   address, as described in {{regular}}.
 1. If T expires, or the address confirmation fails, the peer address binding is
-   not updated. In this case, a new `return_routability_check` message of type
-   path_challenge MUST be sent to the observed new address containing a new
-   cookie value. A timer is started and step (3) from above is applied.
+   not updated. In this case, the initiator MUST perform a return routability 
+   check on the observed new address, as described in {{regular}}. 
 
-After this point, any pending send operation is resumed to the bound peer
-address.
+After the path validation procedure is completed, any pending send operation is
+resumed to the bound peer address.
 
 {{path-challenge-reqs}} and {{path-response-reqs}} contain the requirements for
 the initiator and responder roles, broken down per protocol phase.
-
 
 ## Path Challenge Requirements {#path-challenge-reqs}
 
@@ -393,7 +401,7 @@ the initiator and responder roles, broken down per protocol phase.
   to the anti-amplification limit to probe if the path MTU (PMTU) for the new
   path is still acceptable.
 
-## Path Response Requirements {#path-response-reqs}
+## Path Response/Delete Requirements {#path-response-reqs}
 
 * The responder MUST NOT delay sending an elicited path_response or
   path_delete messages.
