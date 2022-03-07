@@ -135,7 +135,7 @@ enum {
     path_challenge(0),
     path_response(1),
     path_delete(2),
-    reserved(2..255)
+    reserved(3..255)
 } rrc_msg_type;
 
 struct {
