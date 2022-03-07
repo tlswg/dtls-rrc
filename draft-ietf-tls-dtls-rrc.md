@@ -176,8 +176,8 @@ likelihood that the attack is unsuccessful.
 {{fig-off-path}} demonstrates the case where a receiver receives a
 packet with a new source IP address and/or new port number. The
 receiver needs to determine whether this path change is caused
-by an attacker and will sent a RRC message with a path_challenge
-along the old path. 
+by an attacker and will send a RRC message of type path_challenge (RRC-1)
+on the old path. 
 
 ~~~~
         new   +--------+  old
