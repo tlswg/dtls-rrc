@@ -177,7 +177,7 @@ likelihood that the attack is unsuccessful.
 packet with a new source IP address and/or new port number. The
 receiver needs to determine whether this path change is caused
 by an attacker and will send a RRC message of type path_challenge (RRC-1)
-on the old path. 
+on the old path.
 
 ~~~~
         new   +--------+  old
@@ -206,9 +206,9 @@ on the old path.
 
 Three cases need to be considered:
 
-Case 1: The old path is dead, which leads to a timeout of RRC-1. 
+Case 1: The old path is dead, which leads to a timeout of RRC-1.
 
-As shown in {{fig-old-path-dead}}, a RRC message of type 
+As shown in {{fig-old-path-dead}}, a RRC message of type
 path_challenge (RRC-2) needs to be sent on the new path. In this
 situation the switch to the new path is considered legitimate.
 The sender will reply with RRC-3 containing a path_response on
@@ -239,7 +239,7 @@ the new path.
 ~~~~
 {: #fig-old-path-dead title="Old path is dead"}
 
-Case 2: The old path is alive but not preferred. 
+Case 2: The old path is alive but not preferred.
 
 This case is shown in {{fig-old-path-not-preferred}} whereby the
 sender replies with a RRC-2 path_delete message on the old path.
@@ -272,9 +272,9 @@ a path_response along the new path.
 ~~~~
 {: #fig-old-path-not-preferred title="Old path is not preferred"}
 
-Case 3: The old path is alive and preferred. 
+Case 3: The old path is alive and preferred.
 
-This is most likely the result of an attacker. The sender replies 
+This is most likely the result of an attacker. The sender replies
 with RRC-2 containing a path_response along the old path. The
 interaction is shown in {{fig-old-path-preferred}}. This results
 in the connection being migrated back to the old path.
@@ -359,26 +359,26 @@ check that proceeds as follows:
    type path_challenge and places the unpredictable cookie into the message.
 1. The message is sent to the previously valid address, which corresponds to the
    old path. Additionally, a timer T, see {{timer-choice}}, is started.
-1. The peer endpoint verifies the received `return_routability_check` message. 
+1. The peer endpoint verifies the received `return_routability_check` message.
    The action to be taken depends on the preference of the path through which
    the message was received:
    - If the path through which the message was received is preferred,
    a `return_routability_check` message of type path_response MUST be returned.
-   - If the path through which the message was received is not preferred, 
+   - If the path through which the message was received is not preferred,
    a `return_routability_check` message of type path_delete MUST be returned.
    In either case, the peer endpoint echoes the cookie value in the response.
 1. The initiator receives and verifies that the `return_routability_check`
-   message contains the previously sent cookie. The actions taken by the 
+   message contains the previously sent cookie. The actions taken by the
    initiator differ based on the received message:
    - When a `return_routability_check` message of type path_response was received,
    the initiator MUST continue using the previously valid address, i.e. no switch
    to the new path takes place and the peer address binding is not updated.
-   - When a `return_routability_check` message of type path_delete was received, 
-   the initiator MUST perform a return routability check on the observed new 
+   - When a `return_routability_check` message of type path_delete was received,
+   the initiator MUST perform a return routability check on the observed new
    address, as described in {{regular}}.
 1. If T expires, or the address confirmation fails, the peer address binding is
-   not updated. In this case, the initiator MUST perform a return routability 
-   check on the observed new address, as described in {{regular}}. 
+   not updated. In this case, the initiator MUST perform a return routability
+   check on the observed new address, as described in {{regular}}.
 
 After the path validation procedure is completed, any pending send operation is
 resumed to the bound peer address.
@@ -405,9 +405,9 @@ the initiator and responder roles, broken down per protocol phase.
 
 * The responder MUST NOT delay sending an elicited path_response or
   path_delete messages.
-* The responder MUST send exactly one path_response or path_delete message 
+* The responder MUST send exactly one path_response or path_delete message
   for each received path_challenge.
-* The responder MUST send the path_response or the  path_delete on the path 
+* The responder MUST send the path_response or the  path_delete on the path
   where the corresponding path_challenge has been received, so that validation
   succeeds only if the path is functional in both directions. The initiator
   MUST NOT enforce this behaviour.
