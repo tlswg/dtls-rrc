@@ -277,7 +277,7 @@ Case 3: The old path is alive and preferred.
 This is most likely the result of an attacker. The sender replies 
 with RRC-2 containing a path_response along the old path. The
 interaction is shown in {{fig-old-path-preferred}}. This results
-in the connection being migrate back to the old path.
+in the connection being migrated back to the old path.
 
 ~~~~
                +--------+<....................
