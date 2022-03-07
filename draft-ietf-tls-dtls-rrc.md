@@ -364,7 +364,7 @@ check that proceeds as follows:
    `return_routability_check` message of type path_response if the path through
    which the message was received is preferred. If the path is not preferred,
    a `return_routability_check` message of type path_delete MUST be returned;
-1. When the initiator receives and verifies the `return_routability_check`
+1. When the initiator receives and verifies that the `return_routability_check`
    message contains the sent cookie, it updates the peer address binding;
 1. If T expires, or the address confirmation fails, the peer address binding is
    not updated. In this case, a new `return_routability_check` message of type
