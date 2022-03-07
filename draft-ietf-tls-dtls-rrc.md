@@ -398,7 +398,7 @@ the initiator and responder roles, broken down per protocol phase.
 * The responder MUST NOT delay sending an elicited path_response or
   path_delete messages.
 * The responder MUST send exactly one path_response or path_delete message 
-  for each received path_request.
+  for each received path_challenge.
 * The responder MUST send the path_response or the  path_delete on the path 
   where the corresponding path_challenge has been received, so that validation
   succeeds only if the path is functional in both directions. The initiator
