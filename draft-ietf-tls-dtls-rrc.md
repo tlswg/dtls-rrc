@@ -248,26 +248,26 @@ along the new path. The sender will reply with RRC-4 containing
 a path_response along the new path.
 
 ~~~ aasvg
-          new                      old
-          path    .----------.    path
-          .------>|          +-------.
-          | .-----+ Receiver +-----. |
-          | | .---+          |<--. | |
-          | | |   '----------'   | | |
- path-    4 | |                  | | 1 path-
- response | | |                  | | | challenge
-          | | |                  | | |
-       .--|-+-|----.          .--|-+-|-----.
-      /   |AP2|   /          / AP| / |NAT /
-     '----|-+-|--'          '----|-+-|---'
-          | | |                  | | |
-          | | 3 path-     path-  2 | |
-          | | | challenge delete | | |
-          | | |   .----------.   | | |
-          | | '-->|          +---' | |
-          | '-----+  Sender  +-----' |
-          '-------+          |<------'
-                  '----------'
+            new                      old
+            path    .----------.    path
+            .------>|          |<------.
+            | .-----+ Receiver +-----. |
+            | | .---+          +---. | |
+            | | |   '----------'   | | |
+   path-    4 | |        path-     1 | |
+   response | | |        challenge | | |
+            | | |                  | | |
+  .---------|-+-|----.          .--|-+-|-----------.
+ / AP/NAT A |   |   /          /   |   | AP/NAT B /
+'-----------|---|--'          '----|-+-|---------'
+            | | |                  | | |
+            | | 3 path-            | | 2 path-
+            | | | challenge        | | | delete
+            | | |   .----------.   | | |
+            | | '-->|          |<--' | |
+            | '-----+  Sender  +-----' |
+            '-------+          |<------'
+                    '----------'
 ~~~
 {: #fig-old-path-not-preferred artwork-align="center"
    title="Old path is not preferred"}
