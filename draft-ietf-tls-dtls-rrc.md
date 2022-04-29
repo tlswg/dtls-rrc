@@ -1,14 +1,18 @@
 ---
+v: 3
+
 title: Return Routability Check for DTLS 1.2 and DTLS 1.3
 abbrev: DTLS Return Routability Check
 docname: draft-ietf-tls-dtls-rrc-latest
 category: std
+consensus: true
+submissiontype: IETF
 updates: 6347
 
-ipr: pre5378Trust200902
+ipr: trust200902
 area: Security
 workgroup: TLS
-keyword: Internet-Draft
+keyword: DTLS, RRC, CID
 
 stand_alone: yes
 pi:
@@ -20,20 +24,18 @@ pi:
   strict: yes
   comments: yes
   inline: yes
-  text-list-symbols: -o*+
   docmapping: yes
+
 author:
- -
-       ins: H. Tschofenig
-       name: Hannes Tschofenig
-       organization: Arm Limited
-       role: editor
-       email: hannes.tschofenig@arm.com
- -
-       ins: T. Fossati
-       name: Thomas Fossati
-       organization: Arm Limited
-       email: thomas.fossati@arm.com
+  - ins: H. Tschofenig
+    name: Hannes Tschofenig
+    organization: Arm Limited
+    role: editor
+    email: hannes.tschofenig@arm.com
+  - ins: T. Fossati
+    name: Thomas Fossati
+    organization: Arm Limited
+    email: thomas.fossati@arm.com
 
 --- abstract
 
@@ -59,19 +61,17 @@ and negotiated.
 
 A CID is an identifier carried in the record layer header of a DTLS datagram
 that gives the receiver additional information for selecting the appropriate
-security context.  The CID mechanism has been specified in
-{{!I-D.ietf-tls-dtls-connection-id}} for DTLS 1.2 and in
-{{!I-D.ietf-tls-dtls13}} for DTLS 1.3.
+security context.  The CID mechanism has been specified in {{!RFC9146}} for
+DTLS 1.2 and in {{!RFC9147}} for DTLS 1.3.
 
-Section 6 of {{!I-D.ietf-tls-dtls-connection-id}} describes how the use of CID
-increases the attack surface by providing both on-path and off-path attackers
-an opportunity for (D)DoS.  It then goes on describing the steps a DTLS
-principal must take when a record with a CID is received that has a source
-address (and/or port) different from the one currently associated with the DTLS
-connection.  However, the actual mechanism for ensuring that the new peer
-address is willing to receive and process DTLS records is left open.  This
-document standardizes a return routability check (RRC) as part of the DTLS
-protocol itself.
+Section 6 of {{!RFC9146}} describes how the use of CID increases the attack
+surface by providing both on-path and off-path attackers an opportunity for
+(D)DoS.  It then goes on describing the steps a DTLS principal must take when a
+record with a CID is received that has a source address (and/or port) different
+from the one currently associated with the DTLS connection.  However, the
+actual mechanism for ensuring that the new peer address is willing to receive
+and process DTLS records is left open.  This document standardizes a return
+routability check (RRC) as part of the DTLS protocol itself.
 
 The return routability check is performed by the receiving peer before the
 CID-to-IP address/port binding is updated in that peer's session state
@@ -85,12 +85,11 @@ of its address after a period of quiescence.
 
 # Conventions and Terminology
 
-{::boilerplate bcp14}
+{::boilerplate bcp14-tagged}
 
 This document assumes familiarity with the CID format and protocol defined for
-DTLS 1.2 {{!I-D.ietf-tls-dtls-connection-id}} and for DTLS 1.3
-{{!I-D.ietf-tls-dtls13}}.  The presentation language used in this document is
-described in Section 4 of {{!RFC8446}}.
+DTLS 1.2 {{!RFC9146}} and for DTLS 1.3 {{!RFC9147}}.  The presentation language
+used in this document is described in Section 4 of {{!RFC8446}}.
 
 This document reuses the definition of "anti-amplification limit" from
 {{?RFC9000}} to mean three times the amount of data received from an
@@ -143,7 +142,7 @@ struct {
     select (return_routability_check.msg_type) {
         case path_challenge: Cookie;
         case path_response:  Cookie;
-        case path_delete:  Cookie;
+        case path_delete:    Cookie;
     };
 } return_routability_check;
 ~~~~
@@ -179,30 +178,30 @@ receiver needs to determine whether this path change is caused
 by an attacker and will send a RRC message of type path_challenge (RRC-1)
 on the old path.
 
+~~~ aasvg
+        new                  old
+        path  .----------.  path
+              |          |
+        .-----+ Receiver +-----.
+        |     |          |     |
+        |     '----------'     |
+        |                      |
+        |                      |
+        |                      |
+   .----+------.               |
+  / Attacker? /                |
+ '------+----'                 |
+        |                      |
+        |                      |
+        |                      |
+        |     .----------.     |
+        |     |          |     |
+        '-----+  Sender  +-----'
+              |          |
+              '----------'
 ~~~~
-        new   +--------+  old
-        path  |        |  path
-       +----->|Receiver|<-----+
-       |      |        |      |
-       |      +--------+      |
-       |                      |
-       |                      |
-       |                      |
-       |                      |
-       |                      |
- +----------+                 |
- | Attacker?|                 |
- +----------+                 |
-       |                      |
-       |                      |
-       |                      |
-       |      +--------+      |
-       |      |        |      |
-       +------| Sender |------+
-              |        |
-              +--------+
-~~~~
-{: #fig-off-path title="Off-Path Packet Forwarding Scenario"}
+{: #fig-off-path artwork-align="center"
+   title="Off-Path Packet Forwarding Scenario"}
 
 Three cases need to be considered:
 
@@ -214,30 +213,31 @@ situation the switch to the new path is considered legitimate.
 The sender will reply with RRC-3 containing a path_response on
 the new path.
 
+~~~ aasvg
+
+          new                      old
+          path    .----------.    path
+          .------>|          +-------.
+          | .-----+ Receiver +...... |
+          | | .---+          |     . |
+          | | |   '----------'     . |
+ path-    3 | |                    . 1 path-
+ response | | |                    . | challenge
+          | | |                    . |
+       .--|-+-|----------------------v--.
+      /   |   |       NAT            X / timeout
+     '----|-+-|-----------------------'
+          | | |                    .
+          | | 2 path-              .
+          | | | challenge          .
+          | | |   .----------.     .
+          | | '-->|          |     .
+          | '-----+  Sender  +.....'
+          '-------+          |
+                  '----------'
 ~~~~
-   ...................>+--------+
-   .           ********|        |********
-   .           *+----->|Receiver|<-----+*
-   .           *| new  |        | old  |*
-   .     RRC-2 *| path +--------+ path |* RRC-1
-   .      with *|                      |* with
-   .     path- *|                      |* path-
-   . challenge *|                      |* challenge
-   .           *|                      |*
-   .           *|                      |*
-   .      +----------+                 |*
-   .      | Attacker |                 |*
-   .      +----------+                 |*
-   .           *|                      |v
-   .           *|                      |timeout
-   .           *|                      |
-   .RRC-3      *|      +--------+      |
-   .with       *|      |        |      |
-   .path-      *+------| Sender |------+
-   .response   *******>|        |
-   ....................+--------+
-~~~~
-{: #fig-old-path-dead title="Old path is dead"}
+{: #fig-old-path-dead artwork-align="center"
+   title="Old path is dead"}
 
 Case 2: The old path is alive but not preferred.
 
@@ -247,30 +247,30 @@ This triggers the receiver to send RRC-3 with a path-challenge
 along the new path. The sender will reply with RRC-4 containing
 a path_response along the new path.
 
-~~~~
-  ...................>+--------+<....................
-  .           ********|        |********            .
-  .           *+----->|Receiver|<-----+*            .
-  .           *| new  |        | old  |*            .
-  .     RRC-3 *| path +--------+ path |* RRC-1      .
-  .      with *|                      |* with       .
-  .     path- *|                      |* path-      .
-  . challenge *|                      |* challenge  .
-  .           *|                      |*            .
-  .           *|                      |*            .
-  .      +----------+                 |*            .
-  .      | Attacker |                 |*            .
-  .      +----------+                 |*            .
-  .           *|                      |*            .
-  .           *|                      |*            .
-  .           *|                      |*            .
-  .RRC-4      *|      +--------+      |*       RRC-2.
-  .with       *|      |        |      |*        with.
-  .path-      *+------| Sender |------+*       path-.
-  .response   *******>|        |<*******      delete.
-  ....................+--------+.....................
-~~~~
-{: #fig-old-path-not-preferred title="Old path is not preferred"}
+~~~ aasvg
+          new                      old
+          path    .----------.    path
+          .------>|          +-------.
+          | .-----+ Receiver +-----. |
+          | | .---+          |<--. | |
+          | | |   '----------'   | | |
+ path-    4 | |                  | | 1 path-
+ response | | |                  | | | challenge
+          | | |                  | | |
+       .--|-+-|----.          .--|-+-|-----.
+      /   |AP2|   /          / AP| / |NAT /
+     '----|-+-|--'          '----|-+-|---'
+          | | |                  | | |
+          | | 3 path-     path-  2 | |
+          | | | challenge delete | | |
+          | | |   .----------.   | | |
+          | | '-->|          +---' | |
+          | '-----+  Sender  +-----' |
+          '-------+          |<------'
+                  '----------'
+~~~
+{: #fig-old-path-not-preferred artwork-align="center"
+   title="Old path is not preferred"}
 
 Case 3: The old path is alive and preferred.
 
@@ -279,30 +279,31 @@ with RRC-2 containing a path_response along the old path. The
 interaction is shown in {{fig-old-path-preferred}}. This results
 in the connection being migrated back to the old path.
 
-~~~~
-               +--------+<....................
-               |        |********            .
-        +----->|Receiver|<-----+*            .
-        | new  |        | old  |*            .
-        | path +--------+ path |* RRC-1      .
-        |                      |* with       .
-        |                      |* path-      .
-        |                      |* challenge  .
-        |                      |*            .
-        |                      |*            .
-  +----------+                 |*            .
-  | Attacker |                 |*            .
-  +----------+                 |*            .
-        |                      |*            .
-        |                      |*            .
-        |                      |*            .
-        |      +--------+      |*       RRC-2.
-        |      |        |      |*        with.
-        +------| Sender |------+*       path-.
-               |        |<*******    response.
-               +--------+.....................
-~~~~
-{: #fig-old-path-preferred title="Old path is preferred"}
+~~~ aasvg
+        new                    old
+        path  .----------.    path
+              |          +-------.
+        .-----+ Receiver +-----. |
+        |     |          |<--. | |
+        |     '----------'   | | |
+        |                    | | 1 path-
+        |                    | | | challenge
+        |                    | | |
+    .---+------.          .--|-+-|-----.
+   / off-path /          / AP| / |NAT /
+  / attacker /          '----|-+-|---'
+ '------+---'                | | |
+        |                    | | |
+        |           path-    2 | |
+        |           response | | |
+        |     .----------.   | | |
+        |     |          +---' | |
+        '-----+  Sender  +-----' |
+              |          |<------'
+              '----------'
+~~~
+{: #fig-old-path-preferred artwork-align="center"
+   title="Old path is preferred"}
 
 Note that this defense is imperfect, but this is not considered a serious
 problem. If the path via the attack is reliably faster than the
