@@ -175,7 +175,7 @@ likelihood that the attack is unsuccessful.
 {{fig-off-path}} demonstrates the case where a receiver receives a
 packet with a new source IP address and/or new port number. The
 receiver needs to determine whether this path change is caused
-by an attacker and will send a RRC message of type path_challenge (RRC-1)
+by an attacker and will send a RRC message of type `path_challenge` (1)
 on the old path.
 
 ~~~ aasvg
@@ -205,13 +205,12 @@ on the old path.
 
 Three cases need to be considered:
 
-Case 1: The old path is dead, which leads to a timeout of RRC-1.
+Case 1: The old path is dead, which leads to a timeout of (1).
 
 As shown in {{fig-old-path-dead}}, a RRC message of type
-path_challenge (RRC-2) needs to be sent on the new path. In this
+`path_challenge` (2) needs to be sent on the new path. In this
 situation the switch to the new path is considered legitimate.
-The sender will reply with RRC-3 containing a path_response on
-the new path.
+The sender will reply with a `path_response` (3) on the new path.
 
 ~~~ aasvg
 
@@ -241,11 +240,10 @@ the new path.
 
 Case 2: The old path is alive but not preferred.
 
-This case is shown in {{fig-old-path-not-preferred}} whereby the
-sender replies with a RRC-2 path_delete message on the old path.
-This triggers the receiver to send RRC-3 with a path-challenge
-along the new path. The sender will reply with RRC-4 containing
-a path_response along the new path.
+This case is shown in {{fig-old-path-not-preferred}} whereby the sender
+replies with a `path_delete` message (2) on the old path.  This triggers
+the receiver to send a path-challenge (3) on the new path. The sender
+will reply with a `path_response` (4) on the new path.
 
 ~~~ aasvg
             new                      old
@@ -275,7 +273,7 @@ a path_response along the new path.
 Case 3: The old path is alive and preferred.
 
 This is most likely the result of an attacker. The sender replies
-with RRC-2 containing a path_response along the old path. The
+with a `path_response` (2) along the old path. The
 interaction is shown in {{fig-old-path-preferred}}. This results
 in the connection being migrated back to the old path.
 
@@ -330,12 +328,12 @@ address to the anti-amplification limit) and initiate the return routability
 check that proceeds as follows:
 
 1. The receiver creates a `return_routability_check` message of
-   type path_challenge and places the unpredictable cookie into the message.
+   type `path_challenge` and places the unpredictable cookie into the message.
 1. The message is sent to the observed new address and a timer T (see
    {{timer-choice}}) is started.
 1. The peer endpoint, after successfully verifying the received
    `return_routability_check` message responds by echoing the cookie value in a
-   `return_routability_check` message of type path_response.
+   `return_routability_check` message of type `path_response`.
 1. When the initiator receives and verifies the `return_routability_check`
    message contains the sent cookie, it updates the peer address binding.
 1. If T expires, or the address confirmation fails, the peer address binding is
@@ -357,24 +355,24 @@ address to the anti-amplification limit) and initiate the return routability
 check that proceeds as follows:
 
 1. The receiver creates a `return_routability_check` message of
-   type path_challenge and places the unpredictable cookie into the message.
+   type `path_challenge` and places the unpredictable cookie into the message.
 1. The message is sent to the previously valid address, which corresponds to the
    old path. Additionally, a timer T, see {{timer-choice}}, is started.
 1. The peer endpoint verifies the received `return_routability_check` message.
    The action to be taken depends on the preference of the path through which
    the message was received:
    - If the path through which the message was received is preferred,
-   a `return_routability_check` message of type path_response MUST be returned.
+   a `return_routability_check` message of type `path_response` MUST be returned.
    - If the path through which the message was received is not preferred,
-   a `return_routability_check` message of type path_delete MUST be returned.
+   a `return_routability_check` message of type `path_delete` MUST be returned.
    In either case, the peer endpoint echoes the cookie value in the response.
 1. The initiator receives and verifies that the `return_routability_check`
    message contains the previously sent cookie. The actions taken by the
    initiator differ based on the received message:
-   - When a `return_routability_check` message of type path_response was received,
+   - When a `return_routability_check` message of type `path_response` was received,
    the initiator MUST continue using the previously valid address, i.e. no switch
    to the new path takes place and the peer address binding is not updated.
-   - When a `return_routability_check` message of type path_delete was received,
+   - When a `return_routability_check` message of type `path_delete` was received,
    the initiator MUST perform a return routability check on the observed new
    address, as described in {{regular}}.
 1. If T expires, or the address confirmation fails, the peer address binding is
@@ -390,13 +388,13 @@ the initiator and responder roles, broken down per protocol phase.
 ## Path Challenge Requirements {#path-challenge-reqs}
 
 * The initiator MAY send multiple `return_routability_check` messages of type
-  path_challenge to cater for packet loss on the probed path.
-  * Each path_challenge SHOULD go into different transport packets.  (Note that
+  `path_challenge` to cater for packet loss on the probed path.
+  * Each `path_challenge` SHOULD go into different transport packets.  (Note that
     the DTLS implementation may not have control over the packetization done by
     the transport layer.)
-  * The transmission of subsequent path_challenge messages SHOULD be paced to
+  * The transmission of subsequent `path_challenge` messages SHOULD be paced to
     decrease the chance of loss.
-  * Each path_challenge message MUST contain random data.
+  * Each `path_challenge` message MUST contain random data.
 * The initiator MAY use padding using the record padding mechanism available in
   DTLS 1.3 (and in DTLS 1.2, when CID is enabled on the sending direction) up
   to the anti-amplification limit to probe if the path MTU (PMTU) for the new
@@ -404,15 +402,15 @@ the initiator and responder roles, broken down per protocol phase.
 
 ## Path Response/Delete Requirements {#path-response-reqs}
 
-* The responder MUST NOT delay sending an elicited path_response or
-  path_delete messages.
-* The responder MUST send exactly one path_response or path_delete message
-  for each received path_challenge.
-* The responder MUST send the path_response or the  path_delete on the path
-  where the corresponding path_challenge has been received, so that validation
+* The responder MUST NOT delay sending an elicited `path_response` or
+  `path_delete` messages.
+* The responder MUST send exactly one `path_response` or `path_delete` message
+  for each received `path_challenge`.
+* The responder MUST send the `path_response` or the `path_delete` on the path
+  where the corresponding `path_challenge` has been received, so that validation
   succeeds only if the path is functional in both directions. The initiator
   MUST NOT enforce this behaviour.
-* The initiator MUST silently discard any invalid path_response it receives.
+* The initiator MUST silently discard any invalid `path_response` it receives.
 
 Note that RRC does not cater for PMTU discovery on the reverse path.  If the
 responder wants to do PMTU discovery using RRC, it should initiate a new path
