@@ -155,28 +155,30 @@ the currently active security context.
 # Off-Path Packet Forwarding {#off-path}
 
 An off-path attacker that can observe packets might forward copies of
-genuine packets to endpoints. If the copied packet arrives before
-the genuine packet, this will appear as a NAT rebinding. Any genuine
+genuine packets to endpoints over a different path. If the copied packet arrives before
+the genuine packet, this will appear as a path change, like in a genuine NAT rebinding occurence. Any genuine
 packet will be discarded as a duplicate. If the attacker is able to
 continue forwarding packets, it might be able to cause migration to a
 path via the attacker. This places the attacker on-path, giving it
 the ability to observe or drop all subsequent packets.
 
 This style of attack relies on the attacker using a path that has
-approximately the same characteristics as the direct path between
+the same or better (e.g., due to a more favourable SLA) characteristics as the direct path between
 endpoints. The attack is more reliable if relatively few packets are
 sent or if packet loss coincides with the attempted attack.
 
 A data packet received on the original path that increases the
 maximum received packet number will cause the endpoint to move back
-to that path. Eliciting packets on this path increases the
-likelihood that the attack is unsuccessful.
+to that path. Therefore, eliciting packets on this path increases the
+likelihood that the attack is unsuccessful. Note however that, unlike QUIC,
+DTLS has no "non-probing" packets so this would require application specific
+logics.
 
-{{fig-off-path}} demonstrates the case where a receiver receives a
-packet with a new source IP address and/or new port number. The
-receiver needs to determine whether this path change is caused
-by an attacker and will send a RRC message of type `path_challenge` (1)
-on the old path.
+{{fig-off-path}} illustrates the case where a receiver receives a
+packet with a new source IP address and/or new port number. In order
+to determine whether this path change was not triggered 
+by an off-path attacker, the receiver will send a RRC message of type
+`path_challenge` (1) on the old path.
 
 ~~~ aasvg
         new                  old
@@ -205,12 +207,12 @@ on the old path.
 
 Three cases need to be considered:
 
-Case 1: The old path is dead, which leads to a timeout of (1).
+Case 1: The old path is dead (e.g., due to a NAT rebinding), which leads to a
+timeout of (1).
 
-As shown in {{fig-old-path-dead}}, a RRC message of type
-`path_challenge` (2) needs to be sent on the new path. In this
-situation the switch to the new path is considered legitimate.
-The sender will reply with a `path_response` (3) on the new path.
+As shown in {{fig-old-path-dead}}, a `path_challenge` (2) needs to be sent on
+the new path.  If the sender replies with a `path_response` on the new path
+(3), the switch to the new path is considered legitimate.
 
 ~~~ aasvg
 
@@ -242,8 +244,9 @@ Case 2: The old path is alive but not preferred.
 
 This case is shown in {{fig-old-path-not-preferred}} whereby the sender
 replies with a `path_delete` message (2) on the old path.  This triggers
-the receiver to send a path-challenge (3) on the new path. The sender
-will reply with a `path_response` (4) on the new path.
+the receiver to send a `path_challenge` (3) on the new path. The sender
+will reply with a `path_response` (4) on the new path, thus providing
+confirmation for the path migration.
 
 ~~~ aasvg
             new                      old
@@ -272,10 +275,11 @@ will reply with a `path_response` (4) on the new path.
 
 Case 3: The old path is alive and preferred.
 
-This is most likely the result of an attacker. The sender replies
-with a `path_response` (2) along the old path. The
-interaction is shown in {{fig-old-path-preferred}}. This results
-in the connection being migrated back to the old path.
+This is most likely the result of an off-path attacker trying to place itself
+on path.  The receiver sends a `path_challenge` on the old path and the sender
+replies with a `path_response` (2) on the old path. The interaction is shown in
+{{fig-old-path-preferred}}. This results in the connection not being migrated
+to the new path, thus thwarting the attack.
 
 ~~~ aasvg
         new                    old
@@ -314,8 +318,8 @@ style of attack. For instance, NAT rebinding is improbable if
 packets were recently received on the old path; similarly, rebinding
 is rare on IPv6 paths. Endpoints can also look for duplicated
 packets. Conversely, a change in connection ID is more likely to
-indicate an intentional migration rather than an attack. Note, however,
-changes in connection IDs are only supported in DTLS 1.3 but not in
+indicate an intentional migration rather than an attack. Note that
+changes in connection IDs are supported in DTLS 1.3 but not in
 DTLS 1.2.
 
 # Path Validation Procedure {#regular}
