@@ -156,7 +156,7 @@ the currently active security context.
 
 An off-path attacker that can observe packets might forward copies of
 genuine packets to endpoints over a different path. If the copied packet arrives before
-the genuine packet, this will appear as a path change, like in a genuine NAT rebinding occurence. Any genuine
+the genuine packet, this will appear as a path change, like in a genuine NAT rebinding occurrence. Any genuine
 packet will be discarded as a duplicate. If the attacker is able to
 continue forwarding packets, it might be able to cause migration to a
 path via the attacker. This places the attacker on-path, giving it
