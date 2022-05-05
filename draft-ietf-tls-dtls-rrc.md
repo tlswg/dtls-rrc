@@ -163,7 +163,7 @@ path via the attacker. This places the attacker on-path, giving it
 the ability to observe or drop all subsequent packets.
 
 This style of attack relies on the attacker using a path that has
-the same or better (e.g., due to a more favourable SLA) characteristics as the direct path between
+the same or better characteristics (e.g., due to a more favourable service level agreements) as the direct path between
 endpoints. The attack is more reliable if relatively few packets are
 sent or if packet loss coincides with the attempted attack.
 
