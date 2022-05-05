@@ -583,16 +583,20 @@ Value
 Description:
 : a brief description of the message
 
+DTLS-Only:
+: RRC is only available in DTLS, therefore this column will be set to `Y` for
+all the entries in this registry
+
 Reference:
 : a reference document
 
 Initial entries in this sub-registry are as follows:
 
-| Value | Description    | Reference |
-|------------------------------------|
-| 0     | path_challenge | RFC-THIS  |
-| 1     | path_response  | RFC-THIS  |
-| 2     | path_drop      | RFC-THIS  |
+| Value | Description    | DTLS-Only | Reference |
+|------------------------------------------------|
+| 0     | path_challenge | Y         | RFC-THIS  |
+| 1     | path_response  | Y         | RFC-THIS  |
+| 2     | path_drop      | Y         | RFC-THIS  |
 {: #tbl-rrc-mt title="Initial Entries in RRC Message Type registry" }
 
 # Open Issues
