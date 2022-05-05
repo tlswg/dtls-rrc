@@ -172,7 +172,7 @@ maximum received packet number will cause the endpoint to move back
 to that path. Therefore, eliciting packets on this path increases the
 likelihood that the attack is unsuccessful. Note however that, unlike QUIC,
 DTLS has no "non-probing" packets so this would require application specific
-logics.
+mechanisms.
 
 {{fig-off-path}} illustrates the case where a receiver receives a
 packet with a new source IP address and/or new port number. In order
