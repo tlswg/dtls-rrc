@@ -133,7 +133,7 @@ uint64 Cookie;
 enum {
     path_challenge(0),
     path_response(1),
-    path_delete(2),
+    path_drop(2),
     reserved(3..255)
 } rrc_msg_type;
 
@@ -142,7 +142,7 @@ struct {
     select (return_routability_check.msg_type) {
         case path_challenge: Cookie;
         case path_response:  Cookie;
-        case path_delete:    Cookie;
+        case path_drop:      Cookie;
     };
 } return_routability_check;
 ~~~~
@@ -243,7 +243,7 @@ the new path.  If the sender replies with a `path_response` on the new path
 Case 2: The old path is alive but not preferred.
 
 This case is shown in {{fig-old-path-not-preferred}} whereby the sender
-replies with a `path_delete` message (2) on the old path.  This triggers
+replies with a `path_drop` message (2) on the old path.  This triggers
 the receiver to send a `path_challenge` (3) on the new path. The sender
 will reply with a `path_response` (4) on the new path, thus providing
 confirmation for the path migration.
@@ -263,7 +263,7 @@ confirmation for the path migration.
 '-----------|---|--'          '----|-+-|---------'
             | | |                  | | |
             | | 3 path-            | | 2 path-
-            | | | challenge        | | | delete
+            | | | challenge        | | | drop
             | | |   .----------.   | | |
             | | '-->|          |<--' | |
             | '-----+  Sender  +-----' |
@@ -368,7 +368,7 @@ check that proceeds as follows:
    - If the path through which the message was received is preferred,
    a `return_routability_check` message of type `path_response` MUST be returned.
    - If the path through which the message was received is not preferred,
-   a `return_routability_check` message of type `path_delete` MUST be returned.
+   a `return_routability_check` message of type `path_drop` MUST be returned.
    In either case, the peer endpoint echoes the cookie value in the response.
 1. The initiator receives and verifies that the `return_routability_check`
    message contains the previously sent cookie. The actions taken by the
@@ -376,7 +376,7 @@ check that proceeds as follows:
    - When a `return_routability_check` message of type `path_response` was received,
    the initiator MUST continue using the previously valid address, i.e. no switch
    to the new path takes place and the peer address binding is not updated.
-   - When a `return_routability_check` message of type `path_delete` was received,
+   - When a `return_routability_check` message of type `path_drop` was received,
    the initiator MUST perform a return routability check on the observed new
    address, as described in {{regular}}.
 1. If T expires, or the address confirmation fails, the peer address binding is
@@ -404,13 +404,13 @@ the initiator and responder roles, broken down per protocol phase.
   to the anti-amplification limit to probe if the path MTU (PMTU) for the new
   path is still acceptable.
 
-## Path Response/Delete Requirements {#path-response-reqs}
+## Path Response/Drop Requirements {#path-response-reqs}
 
 * The responder MUST NOT delay sending an elicited `path_response` or
-  `path_delete` messages.
-* The responder MUST send exactly one `path_response` or `path_delete` message
+  `path_drop` messages.
+* The responder MUST send exactly one `path_response` or `path_drop` message
   for each received `path_challenge`.
-* The responder MUST send the `path_response` or the `path_delete` on the path
+* The responder MUST send the `path_response` or the `path_drop` on the path
   where the corresponding `path_challenge` has been received, so that validation
   succeeds only if the path is functional in both directions. The initiator
   MUST NOT enforce this behaviour.
