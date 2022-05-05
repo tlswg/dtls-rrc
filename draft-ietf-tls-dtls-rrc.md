@@ -176,7 +176,7 @@ mechanisms.
 
 {{fig-off-path}} illustrates the case where a receiver receives a
 packet with a new source IP address and/or new port number. In order
-to determine whether this path change was not triggered 
+to determine whether this path change was not triggered
 by an off-path attacker, the receiver will send a RRC message of type
 `path_challenge` (1) on the old path.
 
@@ -546,19 +546,54 @@ harm to connectivity.
 
 # IANA Considerations
 
+[^to-be-removed]
+
+[^to-be-removed]: RFC Editor: please replace RFC-THIS with this RFC number and remove this note.
+
+## New TLS ContentType
+
 IANA is requested to allocate an entry to the TLS `ContentType`
 registry, for the `return_routability_check(TBD2)` message defined in
 this document. The `return_routability_check` content type is only
 applicable to DTLS 1.2 and 1.3.
 
+## New TLS ExtensionType
+
 IANA is requested to allocate the extension code point (TBD1) for the `rrc`
 extension to the `TLS ExtensionType Values` registry as described in
 {{tbl-ext}}.
 
-| Value | Extension Name | TLS 1.3 | DTLS-Only | Recommended | Reference |
+| Value | Extension Name | TLS 1.3 | DTLS-Only  | Recommended  | Reference |
 |--------------------------------------------------------------------------|
 | TBD1  | rrc            | CH, SH  | Y          | N            | RFC-THIS  |
 {: #tbl-ext title="rrc entry in the TLS ExtensionType Values registry" }
+
+## New RRC Message Type Sub-registry
+
+IANA is requested to create a new sub-registry for RRC Message Types in the TLS
+Parameters registry {{!IANA.tls-parameters}}, with the policy "expert review"
+{{!RFC8126}}.
+
+Each entry in the registry must include:
+
+{:vspace}
+Value
+: A number in the range from 0 to 255 (decimal)
+
+Description:
+: a brief description of the message
+
+Reference:
+: a reference document
+
+Initial entries in this sub-registry are as follows:
+
+| Value | Description    | Reference |
+|------------------------------------|
+| 0     | path_challenge | RFC-THIS  |
+| 1     | path_response  | RFC-THIS  |
+| 2     | path_drop      | RFC-THIS  |
+{: #tbl-rrc-mt title="Initial Entries in RRC Message Type registry" }
 
 # Open Issues
 
