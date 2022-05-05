@@ -546,10 +546,14 @@ harm to connectivity.
 
 # IANA Considerations
 
+## Content Type Registration
+
 IANA is requested to allocate an entry to the TLS `ContentType`
 registry, for the `return_routability_check(TBD2)` message defined in
 this document. The `return_routability_check` content type is only
 applicable to DTLS 1.2 and 1.3.
+
+## TLS ExtensionType Registration
 
 IANA is requested to allocate the extension code point (TBD1) for the `rrc`
 extension to the `TLS ExtensionType Values` registry as described in
@@ -560,6 +564,44 @@ extension to the `TLS ExtensionType Values` registry as described in
 | TBD1  | rrc            | CH, SH  | Y          | N            | RFC-THIS  |
 {: #tbl-ext title="rrc entry in the TLS ExtensionType Values registry" }
 
+## RRC Message Type Registry
+
+IANA is also requested to create a new registry under the TLS
+namespace with name "RRC Message Type" and the following fields:
+
+   *  "Value": A number between 0 and 255.  All potential values
+      are available for assignment.
+
+   *  "Name": An abbreviated short-hand version of the message name.
+
+   *  Description, which provides a short description.
+
+   *  Reference, which is a link to the document defining this message type.
+
+The policy for this registry shall be "Specification Required", as described in
+Section 4.6 of [RFC8126], with the exception of message types numbered from
+0-15, which follow the "Standards Action" policy (Section 4.9 of
+[RFC8126]).  Designated expert(s) are advised to follow the advice in
+Section 17 of [RFC8447] when reviewing registration requests.
+
+IANA is asked to populate this registry with the following initial registry
+values:
+
+   *  Value: 0
+   *  Message Name: path_challenge
+   *  Description: Path Challenge
+   *  Reference: [[This RFC]]
+
+   *  Value: 1
+   *  Message Name: path_response
+   *  Description: Path Response
+   *  Reference: [[This RFC]]
+
+   *  Value: 2
+   *  Message Name: path_drop
+   *  Description: Path Drop
+   *  Reference: [[This RFC]]
+        
 # Open Issues
 
 Issues against this document are tracked at https://github.com/tlswg/dtls-rrc/issues
@@ -580,6 +622,7 @@ for their input to this document.
 # History
 
 <cref>RFC EDITOR: PLEASE REMOVE THIS SECTION</cref>
+
 
 draft-ietf-tls-dtls-rrc-05
 
