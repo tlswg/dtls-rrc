@@ -581,7 +581,7 @@ Parameters registry {{!IANA.tls-parameters}}, with the policy "expert review"
 Each entry in the registry must include:
 
 {:vspace}
-Value
+Value:
 : A number in the range from 0 to 255 (decimal)
 
 Description:
