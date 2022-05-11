@@ -111,15 +111,21 @@ exchanged `rrc` extensions.
 
 Note that the RRC extension applies to both DTLS 1.2 and DTLS 1.3.
 
-# The Return Routability Check Message
+# Return Routability Check Message Types
 
-When a record with CID is received that has the source address of the enclosing
-UDP datagram different from the one previously associated with that CID, the
-receiver MUST NOT update its view of the peer's IP address and port number with
-the source specified in the UDP datagram before cryptographically validating
-the enclosed record(s) but instead perform a return routability check.
+This document defines the `return_routability_check` content type
+({{fig-rrc-msg}}) to carry Return Routability Check protocol messages.
 
-~~~~
+The protocol consists of three message types: `path_challenge`, `path_response`
+and `path_drop` that are used for path validation and selection as described in
+{{path-validation}}.
+
+Each message carries a Cookie, a 8-byte field containing arbitrary data.
+
+The `return_routability_check` message MUST be authenticated and encrypted
+using the currently active security context.
+
+~~~ tls-msg
 enum {
     invalid(0),
     change_cipher_spec(20),
@@ -137,7 +143,7 @@ enum {
     path_challenge(0),
     path_response(1),
     path_drop(2),
-    reserved(3..255)
+    (255)
 } rrc_msg_type;
 
 struct {
@@ -148,12 +154,23 @@ struct {
         case path_drop:      Cookie;
     };
 } return_routability_check;
-~~~~
+~~~
+{: #fig-rrc-msg align="left"
+   title="Return Routability Check Message"}
 
-The cookie is a 8-byte field containing arbitrary data.
+Future extensions or additions to the Return Routability Check protocol may
+define new message types.  Implementations MUST be able to parse and ignore
+unknown values.
 
-The `return_routability_check` message MUST be authenticated and encrypted using
-the currently active security context.
+# RRC and CID Interplay
+
+RRC offers an in-protocol mechanism to perform peer address validation, thus
+complementing the "peer address update" procedure described in {{Section 6 of
+RFC9146}}.  Specifically, when both CID {{RFC9146}} and RRC have been
+successfully negotiated for the session, if a record with CID is received that
+has the source address of the enclosing UDP datagram different from the one
+previously associated with that CID value, the receiver SHOULD perform a return
+routability check as described in {{path-validation}}.
 
 # Off-Path Packet Forwarding {#off-path}
 
@@ -325,7 +342,9 @@ indicate an intentional migration rather than an attack. Note that
 changes in connection IDs are supported in DTLS 1.3 but not in
 DTLS 1.2.
 
-# Path Validation Procedure {#regular}
+# Path Validation Procedure {#path-validation}
+
+## Basic {#regular}
 
 Note: This algorithm does not take the {{off-path}} scenario into account.
 
@@ -352,7 +371,7 @@ address.
 {{path-challenge-reqs}} and {{path-response-reqs}} contain the requirements for
 the initiator and responder roles, broken down per protocol phase.
 
-# Enhanced Path Validation Procedure {#enhanced}
+## Enhanced {#enhanced}
 
 Note: This algorithm also takes the {{off-path}} scenario into account.
 
