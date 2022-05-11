@@ -37,6 +37,9 @@ author:
     organization: Arm Limited
     email: thomas.fossati@arm.com
 
+entity:
+  SELF: "RFCthis"
+
 --- abstract
 
 This document specifies a return routability check for use in context of the
@@ -548,7 +551,7 @@ harm to connectivity.
 
 [^to-be-removed]
 
-[^to-be-removed]: RFC Editor: please replace RFC-THIS with this RFC number and remove this note.
+[^to-be-removed]: RFC Editor: please replace {{&SELF}} with this RFC number and remove this note.
 
 ## New TLS ContentType
 
@@ -565,8 +568,9 @@ extension to the `TLS ExtensionType Values` registry as described in
 
 | Value | Extension Name | TLS 1.3 | DTLS-Only  | Recommended  | Reference |
 |--------------------------------------------------------------------------|
-| TBD1  | rrc            | CH, SH  | Y          | N            | RFC-THIS  |
-{: #tbl-ext title="rrc entry in the TLS ExtensionType Values registry" }
+| TBD1  | rrc            | CH, SH  | Y          | N            | {{&SELF}} |
+{: #tbl-ext align="left"
+   title="rrc entry in the TLS ExtensionType Values registry" }
 
 ## New RRC Message Type Sub-registry
 
@@ -590,14 +594,16 @@ all the entries in this registry
 Reference:
 : a reference document
 
-Initial entries in this sub-registry are as follows:
+The initial state of this sub-registry is as follows:
 
 | Value | Description    | DTLS-Only | Reference |
 |------------------------------------------------|
-| 0     | path_challenge | Y         | RFC-THIS  |
-| 1     | path_response  | Y         | RFC-THIS  |
-| 2     | path_drop      | Y         | RFC-THIS  |
-{: #tbl-rrc-mt title="Initial Entries in RRC Message Type registry" }
+| 0     | path_challenge | Y         | {{&SELF}} |
+| 1     | path_response  | Y         | {{&SELF}} |
+| 2     | path_drop      | Y         | {{&SELF}} |
+| 3-255 | Unassigned     |           |           |
+{: #tbl-rrc-mt align="left"
+   title="Initial Entries in RRC Message Type registry" }
 
 # Open Issues
 
