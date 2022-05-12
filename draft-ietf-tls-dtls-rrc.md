@@ -359,17 +359,17 @@ It then initiates the return routability check that proceeds as described
 either in {{enhanced}} or {{regular}}, depending on whether the off-path
 attacker scenario described in {{off-path}} is to be taken into account or not.
 
+(The decision on what strategy to choose depends mainly on the threat model, but
+may also be influenced by other considerations.  Examples of impacting factors
+include: the need to minimise implementation complexity, privacy concerns, the
+need to reduce the time it takes to switch path.  The choice may be offered as
+a configuration option to the user.)
+
 After the path validation procedure is completed, any pending send operation is
 resumed to the bound peer address.
 
 {{path-challenge-reqs}} and {{path-response-reqs}} list the requirements for
 the initiator and responder roles, broken down per protocol phase.
-
-The decision on what strategy to choose depends mainly on the threat model, but
-may also be influenced by other considerations.  Examples of impacting factors
-include: the need to minimise implementation complexity, privacy concerns, the
-need to reduce the time it takes to switch path.  The choice may be offered as
-a configuration option to the user.
 
 ## Basic {#regular}
 
