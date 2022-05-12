@@ -351,14 +351,27 @@ DTLS 1.2.
 
 # Path Validation Procedure {#path-validation}
 
-## Basic {#regular}
-
-Note: This algorithm does not take the {{off-path}} scenario into account.
-
 The receiver that observes the peer's address or port update MUST stop sending
-any buffered application data (or limit the data sent to the unvalidated
-address to the anti-amplification limit) and initiate the return routability
-check that proceeds as follows:
+any buffered application data, or limit the data sent to the unvalidated
+address to the anti-amplification limit.
+
+It then initiates the return routability check that proceeds as described
+either in {{enhanced}} or {{regular}}, depending on whether the off-path
+attacker scenario described in {{off-path}} is to be taken into account or not.
+
+After the path validation procedure is completed, any pending send operation is
+resumed to the bound peer address.
+
+{{path-challenge-reqs}} and {{path-response-reqs}} list the requirements for
+the initiator and responder roles, broken down per protocol phase.
+
+The decision on what strategy to choose depends mainly on the threat model, but
+may also be influenced by other considerations.  Examples of impacting factors
+include: the need to minimise implementation complexity, privacy concerns, the
+need to reduce the time it takes to switch path.  The choice may be offered as
+a configuration option to the user.
+
+## Basic {#regular}
 
 1. The receiver creates a `return_routability_check` message of
    type `path_challenge` and places the unpredictable cookie into the message.
@@ -367,33 +380,21 @@ check that proceeds as follows:
 1. The peer endpoint, after successfully verifying the received
    `return_routability_check` message responds by echoing the cookie value in a
    `return_routability_check` message of type `path_response`.
-1. When the initiator receives and verifies the `return_routability_check`
-   message contains the sent cookie, it updates the peer address binding.
-1. If T expires, or the address confirmation fails, the peer address binding is
-   not updated.
-
-After this point, any pending send operation is resumed to the bound peer
-address.
-
-{{path-challenge-reqs}} and {{path-response-reqs}} list the requirements for
-the initiator and responder roles, broken down per protocol phase.
+1. When the initiator receives the `return_routability_check`
+   message and verifies that it contains the sent cookie, it updates the peer
+   address binding.
+1. If T expires the peer address binding is not updated.
 
 ## Enhanced {#enhanced}
-
-Note: This algorithm also takes the {{off-path}} scenario into account.
-
-The receiver that observes the peer's address or port update MUST stop sending
-any buffered application data (or limit the data sent to the unvalidated
-address to the anti-amplification limit) and initiate the return routability
-check that proceeds as follows:
 
 1. The receiver creates a `return_routability_check` message of
    type `path_challenge` and places the unpredictable cookie into the message.
 1. The message is sent to the previously valid address, which corresponds to the
    old path. Additionally, a timer T, see {{timer-choice}}, is started.
-1. The peer endpoint verifies the received `return_routability_check` message.
-   The action to be taken depends on the preference of the path through which
-   the message was received:
+1. If the path is still functional, the peer endpoint verifies the received
+   `return_routability_check` message.
+   The action to be taken depends on whether the path through which
+   the message was received is the preferred one or not anymore:
    - If the path through which the message was received is preferred,
    a `return_routability_check` message of type `path_response` MUST be returned.
    - If the path through which the message was received is not preferred,
@@ -408,15 +409,9 @@ check that proceeds as follows:
    - When a `return_routability_check` message of type `path_drop` was received,
    the initiator MUST perform a return routability check on the observed new
    address, as described in {{regular}}.
-1. If T expires, or the address confirmation fails, the peer address binding is
-   not updated. In this case, the initiator MUST perform a return routability
-   check on the observed new address, as described in {{regular}}.
-
-After the path validation procedure is completed, any pending send operation is
-resumed to the bound peer address.
-
-{{path-challenge-reqs}} and {{path-response-reqs}} list the requirements for
-the initiator and responder roles, broken down per protocol phase.
+1. If T expires the peer address binding is not updated. In this case, the
+   initiator MUST perform a return routability check on the observed new
+   address, as described in {{regular}}.
 
 ## Path Challenge Requirements {#path-challenge-reqs}
 
