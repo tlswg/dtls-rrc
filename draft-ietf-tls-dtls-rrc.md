@@ -438,7 +438,8 @@ the initiator and responder roles, broken down per protocol phase.
   where the corresponding `path_challenge` has been received, so that validation
   succeeds only if the path is functional in both directions. The initiator
   MUST NOT enforce this behaviour.
-* The initiator MUST silently discard any invalid `path_response` it receives.
+* The initiator MUST silently discard any invalid `path_response` or
+  `path_drop` it receives.
 
 Note that RRC does not cater for PMTU discovery on the reverse path.  If the
 responder wants to do PMTU discovery using RRC, it should initiate a new path
