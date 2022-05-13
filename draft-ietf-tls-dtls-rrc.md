@@ -172,7 +172,14 @@ has the source address of the enclosing UDP datagram different from the one
 previously associated with that CID value, the receiver SHOULD perform a return
 routability check as described in {{path-validation}}.
 
-# Off-Path Packet Forwarding {#off-path}
+# Attacker Model
+
+RRC is not designed to counter on-path attackers.  These can never be
+distinguished from, for example, a genuine network device.  However, RRC can
+withstand off-path attackers of the type described below when the enhanced path
+validation algorithm ({{enhanced}}) is used.
+
+## Off-Path Packet Forwarding {#off-path}
 
 An off-path attacker that can observe packets might forward copies of
 genuine packets to endpoints over a different path. If the copied packet arrives before
@@ -368,7 +375,7 @@ check that proceeds as follows:
 After this point, any pending send operation is resumed to the bound peer
 address.
 
-{{path-challenge-reqs}} and {{path-response-reqs}} contain the requirements for
+{{path-challenge-reqs}} and {{path-response-reqs}} list the requirements for
 the initiator and responder roles, broken down per protocol phase.
 
 ## Enhanced {#enhanced}
@@ -408,7 +415,7 @@ check that proceeds as follows:
 After the path validation procedure is completed, any pending send operation is
 resumed to the bound peer address.
 
-{{path-challenge-reqs}} and {{path-response-reqs}} contain the requirements for
+{{path-challenge-reqs}} and {{path-response-reqs}} list the requirements for
 the initiator and responder roles, broken down per protocol phase.
 
 ## Path Challenge Requirements {#path-challenge-reqs}
