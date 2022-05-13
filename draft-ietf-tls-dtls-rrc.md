@@ -37,6 +37,9 @@ author:
     organization: Arm Limited
     email: thomas.fossati@arm.com
 
+entity:
+  SELF: "RFCthis"
+
 --- abstract
 
 This document specifies a return routability check for use in context of the
@@ -176,7 +179,7 @@ mechanisms.
 
 {{fig-off-path}} illustrates the case where a receiver receives a
 packet with a new source IP address and/or new port number. In order
-to determine whether this path change was not triggered 
+to determine whether this path change was not triggered
 by an off-path attacker, the receiver will send a RRC message of type
 `path_challenge` (1) on the old path.
 
@@ -546,19 +549,61 @@ harm to connectivity.
 
 # IANA Considerations
 
+[^to-be-removed]
+
+[^to-be-removed]: RFC Editor: please replace {{&SELF}} with this RFC number and remove this note.
+
+## New TLS ContentType
+
 IANA is requested to allocate an entry to the TLS `ContentType`
 registry, for the `return_routability_check(TBD2)` message defined in
 this document. The `return_routability_check` content type is only
 applicable to DTLS 1.2 and 1.3.
 
+## New TLS ExtensionType
+
 IANA is requested to allocate the extension code point (TBD1) for the `rrc`
 extension to the `TLS ExtensionType Values` registry as described in
 {{tbl-ext}}.
 
-| Value | Extension Name | TLS 1.3 | DTLS-Only | Recommended | Reference |
+| Value | Extension Name | TLS 1.3 | DTLS-Only  | Recommended  | Reference |
 |--------------------------------------------------------------------------|
-| TBD1  | rrc            | CH, SH  | Y          | N            | RFC-THIS  |
-{: #tbl-ext title="rrc entry in the TLS ExtensionType Values registry" }
+| TBD1  | rrc            | CH, SH  | Y          | N            | {{&SELF}} |
+{: #tbl-ext align="left"
+   title="rrc entry in the TLS ExtensionType Values registry" }
+
+## New RRC Message Type Sub-registry
+
+IANA is requested to create a new sub-registry for RRC Message Types in the TLS
+Parameters registry {{!IANA.tls-parameters}}, with the policy "expert review"
+{{!RFC8126}}.
+
+Each entry in the registry must include:
+
+{:vspace}
+Value:
+: A number in the range from 0 to 255 (decimal)
+
+Description:
+: a brief description of the message
+
+DTLS-Only:
+: RRC is only available in DTLS, therefore this column will be set to `Y` for
+all the entries in this registry
+
+Reference:
+: a reference document
+
+The initial state of this sub-registry is as follows:
+
+| Value | Description    | DTLS-Only | Reference |
+|------------------------------------------------|
+| 0     | path_challenge | Y         | {{&SELF}} |
+| 1     | path_response  | Y         | {{&SELF}} |
+| 2     | path_drop      | Y         | {{&SELF}} |
+| 3-255 | Unassigned     |           |           |
+{: #tbl-rrc-mt align="left"
+   title="Initial Entries in RRC Message Type registry" }
 
 # Open Issues
 
