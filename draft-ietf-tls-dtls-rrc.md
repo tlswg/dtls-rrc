@@ -174,10 +174,26 @@ routability check as described in {{path-validation}}.
 
 # Attacker Model
 
-RRC is not designed to counter on-path attackers.  These can never be
-distinguished from, for example, a genuine network device.  However, RRC can
-withstand off-path attackers of the type described below when the enhanced path
-validation algorithm ({{enhanced}}) is used.
+RRC is not designed to counter man-in-the-middle attackers.  These can never be
+distinguished from a genuine network device.  Instead, the types of attacker
+RRC is designed to withstand are:
+
+* On-path attackers that try to trigger a connection migration ({{on-path}});
+* Off-path attackers that try to put themselves on-path ({{off-path}}) -- as
+  long as the enhanced path validation algorithm is used, see {{enhanced}}.
+
+## On-Path Attacker {#on-path}
+
+An on-path attacker could make a copy of a packet, replace the source address
+with a spoofed one and forward it to the original destination.  If the spoofed
+packet arrives before the original it will be regarded as a migration, while
+the the original packet will be flagged as a duplicate and dropped.
+
+The subsequent path validation ({{path-validation}}) will fail because the
+entity at the (spoofed) source address does not have the cryptographic keys
+needed to decode the `path_challenge` message that is sent to it, and therefore
+to produce the corresponding `path_response`.  Since the path validation fails,
+the address binding is not altered, thus twarting the attack.
 
 ## Off-Path Packet Forwarding {#off-path}
 
