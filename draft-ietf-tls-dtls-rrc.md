@@ -569,17 +569,17 @@ return routability checks to the real peer (even if those datagrams are
 cryptographically authenticated).  On-path adversaries can, in general, pose a
 harm to connectivity.
 
-When RRC is coupled with CID (as expected in most cases), peers SHOULD avoid
-using the same CID on multiple network paths, as an adversary can otherwise
-correlate the communication interaction across those different paths.  This is
-not possible in DTLS 1.2 since CIDs have the same life-span of the connection.
-Instead, DTLS 1.3 provides mechanisms to ensure a new CID can always be used,
-if necessary.  In general, an endpoint should proactively send
-RequestConnectionId to ask for new CIDs as soon as the pool of spare CIDs is
-depleted (or below a threshold).  Also, in case a peer might have exhausted
-available CIDs, a migrating endpoint could include NewConnectionId in packets
-sent on the new path to make sure that the subsequent path validation can use
-fresh CIDs.
+Peers SHOULD avoid using the same CID on multiple network paths, in particular
+when initiating connection migration or when probing a new network as described
+in {{path-validation}}, as an adversary can otherwise correlate the
+communication interaction across those different paths.  While this is not
+possible in DTLS 1.2, since CIDs have the same life-span of the connection,
+DTLS 1.3 provides instead mechanisms to ensure a new CID can always be used, if
+necessary.  In general, an endpoint should proactively send RequestConnectionId
+to ask for new CIDs as soon as the pool of spare CIDs is depleted (or below a
+threshold).  Also, in case a peer might have exhausted available CIDs, a
+migrating endpoint could include NewConnectionId in packets sent on the new
+path to make sure that the subsequent path validation can use fresh CIDs.
 
 # IANA Considerations
 
