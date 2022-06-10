@@ -187,7 +187,7 @@ RRC is designed to withstand are:
 An on-path attacker could make a copy of a packet, replace the source address
 with a spoofed one and forward it to the original destination.  If the spoofed
 packet arrives before the original it will be regarded as a migration, while
-the the original packet will be flagged as a duplicate and dropped.
+the original packet will be flagged as a duplicate and dropped.
 
 The subsequent path validation ({{path-validation}}) will fail because the
 entity at the (spoofed) source address does not have the cryptographic keys
