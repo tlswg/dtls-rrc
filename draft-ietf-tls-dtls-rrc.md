@@ -179,8 +179,9 @@ distinguished from a genuine network device.  Instead, the types of attacker
 RRC is designed to withstand are:
 
 * On-path attackers that try to trigger a connection migration ({{on-path}});
-* Off-path attackers that try to put themselves on-path ({{off-path}}) -- as
-  long as the enhanced path validation algorithm is used, see {{enhanced}}.
+* Off-path attackers that try to put themselves on-path ({{off-path}}) --
+  provided that the enhanced path validation algorithm is used, see
+  {{enhanced}}.
 
 ## On-Path Attacker {#on-path}
 
