@@ -583,7 +583,7 @@ the subsequent path validation can use fresh CIDs.
 Note that DTLS 1.2 does not offer the ability to request new CIDs during the session lifetime since CIDs have the same life-span
 of the connection.  Therefore, deployments that use DTLS in multihoming
 environments SHOULD refuse to use CIDs with DTLS 1.2
-and switch to DTLS 1.3.
+and switch to DTLS 1.3 if the correlation privacy threat is a concern.
 
 # IANA Considerations
 
