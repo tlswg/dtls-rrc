@@ -7,7 +7,7 @@ docname: draft-ietf-tls-dtls-rrc-latest
 category: std
 consensus: true
 submissiontype: IETF
-updates: 6347
+updates: 6347, 9147
 
 ipr: trust200902
 area: Security
