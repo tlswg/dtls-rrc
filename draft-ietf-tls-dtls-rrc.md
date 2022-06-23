@@ -194,7 +194,7 @@ The subsequent path validation ({{path-validation}}) will fail because the
 entity at the (spoofed) source address does not have the cryptographic keys
 needed to decode the `path_challenge` message that is sent to it, and therefore
 to produce the corresponding `path_response`.  Since the path validation fails,
-the address binding is not altered, thus twarting the attack.
+the address binding is not altered, thus thwarting the attack.
 
 ## Off-Path Packet Forwarding {#off-path}
 
