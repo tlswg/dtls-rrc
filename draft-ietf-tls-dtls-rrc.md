@@ -689,6 +689,18 @@ for their input to this document.
 
 <cref>RFC EDITOR: PLEASE REMOVE THIS SECTION</cref>
 
+draft-ietf-tls-dtls-rrc-06
+
+   - Add Achim as co-author
+   - Added IANA registry for RRC message types (#14)
+   - Small fix in the path validation algorithm (#15)
+   - Renamed `path_delete` to `path_drop` (#16)
+   - Added an "attacker model" section (#17, #31)
+   - Add criteria for choosing between basic and enhanced path validation (#18)
+   - Reorganise Section 4 a bit (#19)
+   - Small fix in Path Response/Drop Requirements section (#20)
+   - Add privacy considerations wrt CID reuse (#30)
+
 draft-ietf-tls-dtls-rrc-05
 
    - Added text about off-path packet forwarding
