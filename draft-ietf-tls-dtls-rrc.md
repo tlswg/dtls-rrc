@@ -574,7 +574,7 @@ paths, in particular when initiating connection migration or when probing a new
 network path, as described in {{path-validation}}, as an adversary can otherwise
 correlate the communication interaction across those different paths.  DTLS 1.3
 provides mechanisms to ensure that a new CID can always be used.  In
-general, an endpoint should proactively send RequestConnectionId to ask for new
+general, an endpoint should proactively send a RequestConnectionId message to ask for new
 CIDs as soon as the pool of spare CIDs is depleted (or goes below a threshold).
 Also, in case a peer might have exhausted available CIDs, a migrating endpoint
 could include NewConnectionId in packets sent on the new path to make sure that
