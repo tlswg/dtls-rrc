@@ -185,9 +185,9 @@ RRC is designed to withstand the following attacks:
   {{enhanced}}.
 
 It is not possible for RRC to counter a man-in-the-middle attacker that is
-indistinguishable from a genuine network device. Such an attacker could, for 
+indistinguishable from a genuine network device. Such an attacker could, for
 example, drop, reorder or delay records at will. Man-in-the-middle attackers cannot
-craft DTLS records that would successfully pass verification due to the 
+craft DTLS records that would successfully pass verification due to the
 cryptographic protections applied by the DTLS record layer.
 
 
