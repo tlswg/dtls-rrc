@@ -589,6 +589,22 @@ return routability checks to the real peer (even if those datagrams are
 cryptographically authenticated).  On-path adversaries can, in general, pose a
 harm to connectivity.
 
+When using DTLS 1.3, peers SHOULD avoid using the same CID on multiple network
+paths, in particular when initiating connection migration or when probing a new
+network path, as described in {{path-validation}}, as an adversary can otherwise
+correlate the communication interaction across those different paths.  DTLS 1.3
+provides mechanisms to ensure that a new CID can always be used.  In
+general, an endpoint should proactively send a RequestConnectionId message to ask for new
+CIDs as soon as the pool of spare CIDs is depleted (or goes below a threshold).
+Also, in case a peer might have exhausted available CIDs, a migrating endpoint
+could include NewConnectionId in packets sent on the new path to make sure that
+the subsequent path validation can use fresh CIDs.
+
+Note that DTLS 1.2 does not offer the ability to request new CIDs during the session lifetime since CIDs have the same life-span
+of the connection.  Therefore, deployments that use DTLS in multihoming
+environments SHOULD refuse to use CIDs with DTLS 1.2
+and switch to DTLS 1.3 if the correlation privacy threat is a concern.
+
 # IANA Considerations
 
 [^to-be-removed]
