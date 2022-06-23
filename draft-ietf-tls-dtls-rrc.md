@@ -184,7 +184,7 @@ RRC is designed to withstand the following attacks:
   provided that the enhanced path validation algorithm is used, see
   {{enhanced}}.
 
-It is not possible for RRC to counter a man-in-the-middle attackers that is
+It is not possible for RRC to counter a man-in-the-middle attacker that is
 indistinguishable from a genuine network device. Such an attacker could, for 
 example, drop records. Man-in-the-middle attackers cannot
 craft DTLS records that would successfully pass verification due to the 
