@@ -580,7 +580,7 @@ Also, in case a peer might have exhausted available CIDs, a migrating endpoint
 could include NewConnectionId in packets sent on the new path to make sure that
 the subsequent path validation can use fresh CIDs.
 
-Note that this is not possible in DTLS 1.2 since CIDs have the same life-span
+Note that DTLS 1.2 does not offer the ability to request new CIDs during the session lifetime since CIDs have the same life-span
 of the connection.  Therefore, deployments that use DTLS in multihoming
 environments and are concerned about that SHOULD refuse to use CIDs in DTLS 1.2
 and switch to DTLS 1.3.
