@@ -32,6 +32,9 @@ author:
     organization: Arm Limited
     role: editor
     email: hannes.tschofenig@arm.com
+  - ins: A. Kraus
+    name: Achim Kraus
+    email: achimkraus@gmx.net
   - ins: T. Fossati
     name: Thomas Fossati
     organization: Arm Limited
