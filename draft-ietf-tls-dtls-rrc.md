@@ -177,14 +177,19 @@ routability check as described in {{path-validation}}.
 
 # Attacker Model
 
-RRC is not designed to counter man-in-the-middle attackers.  These can never be
-distinguished from a genuine network device.  Instead, the types of attacker
-RRC is designed to withstand are:
+RRC is designed to withstand the following attacks:
 
 * On-path attackers that try to trigger a connection migration ({{on-path}});
 * Off-path attackers that try to put themselves on-path ({{off-path}}) --
   provided that the enhanced path validation algorithm is used, see
   {{enhanced}}.
+
+It is not possible for RRC to counter a man-in-the-middle attackers that is
+indistinguishable from a genuine network device. Such an attacker could, for 
+example, drop records. Man-in-the-middle attackers cannot
+craft DTLS records that would successfully pass verification due to the 
+cryptographic algorithms used by the DTLS record layer.
+
 
 ## On-Path Attacker {#on-path}
 
