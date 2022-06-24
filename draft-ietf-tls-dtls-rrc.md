@@ -153,9 +153,9 @@ enum {
 struct {
     rrc_msg_type msg_type;
     select (return_routability_check.msg_type) {
-        case path_challenge: Cookie;
-        case path_response:  Cookie;
-        case path_drop:      Cookie;
+        case path_challenge: Cookie cookie;
+        case path_response:  Cookie cookie;
+        case path_drop:      Cookie cookie;
     };
 } return_routability_check;
 ~~~
