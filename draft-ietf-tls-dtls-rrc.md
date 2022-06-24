@@ -164,7 +164,7 @@ struct {
 
 Future extensions or additions to the Return Routability Check protocol may
 define new message types.  Implementations MUST be able to parse and ignore
-unknown values.
+messages with an unknown `msg_type`.
 
 # RRC and CID Interplay
 
