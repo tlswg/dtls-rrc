@@ -173,7 +173,7 @@ complementing the "peer address update" procedure described in {{Section 6 of
 RFC9146}}.  Specifically, when both CID {{RFC9146}} and RRC have been
 successfully negotiated for the session, if a record with CID is received that
 has the source address of the enclosing UDP datagram different from the one
-previously associated with that CID value, the receiver SHOULD perform a return
+currently associated with that CID value, the receiver SHOULD perform a return
 routability check as described in {{path-validation}}, unless an application
 layer specific address validation mechanism can be triggered instead.
 
