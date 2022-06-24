@@ -404,9 +404,9 @@ the initiator and responder roles, broken down per protocol phase.
    type `path_challenge` and places the unpredictable cookie into the message.
 1. The message is sent to the observed new address and a timer T (see
    {{timer-choice}}) is started.
-1. The peer endpoint, after successfully cryptographically verifying the received
+1. The peer endpoint cryptographically verifies the received
    `return_routability_check` message of
-   type `path_challenge` responds by echoing the cookie value in a
+   type `path_challenge` and responds by echoing the cookie value in a
    `return_routability_check` message of type `path_response`.
 1. When the initiator receives the `return_routability_check`
    message  of type `path_response` and verifies that it contains the sent cookie, it updates the peer
