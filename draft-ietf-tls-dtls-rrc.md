@@ -632,7 +632,7 @@ extension to the `TLS ExtensionType Values` registry as described in
 {{tbl-ext}}.
 
 | Value | Extension Name | TLS 1.3 | DTLS-Only  | Recommended  | Reference |
-|--------------------------------------------------------------------------|
+| ----- | -------------- | ------- | ---------- | ------------ | --------- |
 | TBD1  | rrc            | CH, SH  | Y          | N            | {{&SELF}} |
 {: #tbl-ext align="left"
    title="rrc entry in the TLS ExtensionType Values registry" }
@@ -662,7 +662,7 @@ Reference:
 The initial state of this sub-registry is as follows:
 
 | Value | Description    | DTLS-Only | Reference |
-|------------------------------------------------|
+|-------|----------------|-----------|-----------|
 | 0     | path_challenge | Y         | {{&SELF}} |
 | 1     | path_response  | Y         | {{&SELF}} |
 | 2     | path_drop      | Y         | {{&SELF}} |
