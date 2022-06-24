@@ -136,6 +136,7 @@ enum {
     handshake(22),
     application_data(23),
     heartbeat(24),  /* RFC 6520 */
+    tls12_cid(25),  /* RFC 9146, DTLS 1.2 only */
     return_routability_check(TBD2), /* NEW */
     (255)
 } ContentType;
