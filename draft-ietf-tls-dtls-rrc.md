@@ -404,11 +404,12 @@ the initiator and responder roles, broken down per protocol phase.
    type `path_challenge` and places the unpredictable cookie into the message.
 1. The message is sent to the observed new address and a timer T (see
    {{timer-choice}}) is started.
-1. The peer endpoint, after successfully verifying the received
-   `return_routability_check` message responds by echoing the cookie value in a
+1. The peer endpoint cryptographically verifies the received
+   `return_routability_check` message of
+   type `path_challenge` and responds by echoing the cookie value in a
    `return_routability_check` message of type `path_response`.
 1. When the initiator receives the `return_routability_check`
-   message and verifies that it contains the sent cookie, it updates the peer
+   message  of type `path_response` and verifies that it contains the sent cookie, it updates the peer
    address binding.
 1. If T expires the peer address binding is not updated.
 
@@ -418,8 +419,9 @@ the initiator and responder roles, broken down per protocol phase.
    type `path_challenge` and places the unpredictable cookie into the message.
 1. The message is sent to the previously valid address, which corresponds to the
    old path. Additionally, a timer T, see {{timer-choice}}, is started.
-1. If the path is still functional, the peer endpoint verifies the received
-   `return_routability_check` message.
+1. If the path is still functional, the peer endpoint cryptographically verifies the received
+   `return_routability_check` message of
+   type `path_challenge`.
    The action to be taken depends on whether the path through which
    the message was received is the preferred one or not anymore:
    - If the path through which the message was received is preferred,
