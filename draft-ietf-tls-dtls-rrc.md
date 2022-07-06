@@ -180,7 +180,8 @@ layer specific address validation mechanism can be triggered instead.
 # Attacker Model
 
 We define two classes of attackers, off-path and on-path, with increasing
-capabilities (see {{fig-attacker-capabilities}}) partly following terminology introduced in QUIC {{RFC9000}}:
+capabilities (see {{fig-attacker-capabilities}}) partly following terminology
+introduced in QUIC {{RFC9000}}:
 
 * An off-path attacker is not on the original path between the DTLS peers, but
   is able to observe packets on the original path and has faster routing
@@ -197,7 +198,7 @@ the DTLS record layer.
 
 ~~~ aasvg
     .--> .------------------------------------. <--.
-    |    | Inspect                            |    |
+    |    | Inspect un-encrypted portions      |    |
     |    +------------------------------------+    |
     |    | Inject                             |    |
 off-path +------------------------------------+    |
@@ -735,7 +736,7 @@ draft-ietf-tls-dtls-rrc-06
    - Added IANA registry for RRC message types (#14)
    - Small fix in the path validation algorithm (#15)
    - Renamed `path_delete` to `path_drop` (#16)
-   - Added an "attacker model" section (#17, #31)
+   - Added an "attacker model" section (#17, #31, #44, #45, #48)
    - Add criteria for choosing between basic and enhanced path validation (#18)
    - Reorganise Section 4 a bit (#19)
    - Small fix in Path Response/Drop Requirements section (#20)
