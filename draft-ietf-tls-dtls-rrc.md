@@ -180,7 +180,7 @@ layer specific address validation mechanism can be triggered instead.
 # Attacker Model
 
 We define two classes of attackers, off-path and on-path, with increasing
-capabilities (see {{fig-attacker-capabilities}}):
+capabilities (see {{fig-attacker-capabilities}}) partly following terminology introduced in QUIC {{RFC9000}}:
 
 * An off-path attacker is not on the original path between the DTLS peers, but
   is able to observe packets on the original path and has faster routing
