@@ -716,10 +716,9 @@ Issues against this document are tracked at https://github.com/tlswg/dtls-rrc/is
 # Acknowledgments
 
 We would like to thank
-Achim Kraus,
 Hanno Becker,
-Hanno Böck,
-Manuel Pegourie-Gonnard,
+{{{Hanno Böck}}},
+{{{Manuel Pégourié-Gonnard}}},
 Mohit Sahni and
 Rich Salz
 for their input to this document.
