@@ -528,8 +528,9 @@ suitable value.
 
 # Example
 
-The example TLS 1.3 handshake shown in {{fig-handshake}} shows a client
-and a server negotiating the support for CID and for the RRC extension.
+In the example TLS 1.3 handshake shown in {{fig-handshake}}, a client
+and a server successfully negotiate support for CID as well as the RRC
+extension.
 
 ~~~
        Client                                           Server
@@ -570,14 +571,18 @@ Auth | {CertificateVerify}
 {: #fig-handshake title="Message Flow for Full TLS Handshake"}
 
 Once a connection has been established the client and the server
-exchange application payloads protected by DTLS with an unilaterally used
-CIDs. In our case, the client is requested to use CID 100 for records
+exchange application payloads protected by DTLS with a unilaterally used
+CID. In our case, the client is requested to use CID 100 for records
 sent to the server.
 
 At some point in the communication interaction the IP address used by
 the client changes and, thanks to the CID usage, the security context to
 interpret the record is successfully located by the server.  However, the
-server wants to test the reachability of the client at his new IP address.
+server wants to test the reachability of the client at its new IP address.
+
+{{fig-rrc-example}} shows the server initiating a "basic" RRC exchange
+(see {{regular}}) that establishes reachability of the client at the new
+IP address.
 
 ~~~
       Client                                             Server
@@ -625,7 +630,7 @@ server wants to test the reachability of the client at his new IP address.
                                                        Src-IP=Z
                                                        Dst-IP=B
 ~~~
-{: #fig-rrc-example title="Return Routability Example"}
+{: #fig-rrc-example title='"Basic" Return Routability Example'}
 
 # Security and Privacy Considerations
 
