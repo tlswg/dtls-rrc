@@ -724,6 +724,7 @@ We would like to thank
 Hanno Becker,
 {{{Hanno Böck}}},
 {{{Manuel Pégourié-Gonnard}}},
+Martin Thomson,
 Mohit Sahni and
 Rich Salz
 for their input to this document.
@@ -733,6 +734,11 @@ for their input to this document.
 # History
 
 <cref>RFC EDITOR: PLEASE REMOVE THIS SECTION</cref>
+
+draft-ietf-tls-dtls-rrc-07
+
+   - Fix ambiguous wording around timer settings
+   - Clarify that the detailed protocol flow describes "basic" RRC
 
 draft-ietf-tls-dtls-rrc-06
 
