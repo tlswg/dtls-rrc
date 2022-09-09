@@ -520,7 +520,7 @@ In settings where there is external information about the RTT of the active
 path, implementations SHOULD use T = 3xRTT.
 
 If an implementation has no way to obtain information regarding the RTT of the
-active path, a value of 1s SHOULD be used.
+active path, T SHOULD be set to 1s.
 
 Profiles for specific deployment environments -- for example, constrained
 networks {{?I-D.ietf-uta-tls13-iot-profile}} -- MAY specify a different, more
