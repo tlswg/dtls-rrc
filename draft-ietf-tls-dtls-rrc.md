@@ -29,9 +29,8 @@ pi:
 author:
   - ins: H. Tschofenig
     name: Hannes Tschofenig
-    organization: Arm Limited
     role: editor
-    email: hannes.tschofenig@arm.com
+    email: hannes.tschofenig@gmx.net
   - ins: A. Kraus
     name: Achim Kraus
     email: achimkraus@gmx.net
@@ -734,6 +733,10 @@ for their input to this document.
 # History
 
 <cref>RFC EDITOR: PLEASE REMOVE THIS SECTION</cref>
+
+draft-ietf-tls-dtls-rrc-08
+
+   - Refresh document while queueing for WGLC
 
 draft-ietf-tls-dtls-rrc-07
 
