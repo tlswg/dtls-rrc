@@ -36,8 +36,8 @@ author:
     email: achimkraus@gmx.net
   - ins: T. Fossati
     name: Thomas Fossati
-    organization: Arm Limited
-    email: thomas.fossati@arm.com
+    organization: Linaro
+    email: thomas.fossati@linaro.org
 
 entity:
   SELF: "RFCthis"
