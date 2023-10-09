@@ -517,7 +517,7 @@ suitable value.
 
 # Example
 
-In the example TLS 1.3 handshake shown in {{fig-handshake}}, a client
+In the example DTLS 1.3 handshake shown in {{fig-handshake}}, a client
 and a server successfully negotiate support for both CID and the RRC
 extension.
 
@@ -557,7 +557,7 @@ Auth | {CertificateVerify}
               [] Indicates messages protected using keys
                  derived from [sender]_application_traffic_secret_N.
 ~~~
-{: #fig-handshake title="Message Flow for Full TLS Handshake"}
+{: #fig-handshake title="Message Flow for Full DTLS Handshake"}
 
 Once a connection has been established, the client and the server
 exchange application payloads protected by DTLS with a unilaterally used
