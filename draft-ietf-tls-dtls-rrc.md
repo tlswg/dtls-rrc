@@ -69,7 +69,7 @@ routability check (RRC) sub-protocol for DTLS 1.2 and 1.3.
 The return routability check is performed by the receiving endpoint before the
 CID-address binding is updated in that endpoint's session state.
 This is done in order to give the receiving endpoint confidence
-that the sending peer is in fact reachable at the latest indicated address and port.
+that the sending peer is in fact reachable at the source address (and port) indicated in the received datagram.
 
 Apart from of its use in the context of CID-address binding updates,
 the path validation capability offered by RRC can be used at any time by either endpoint. For
