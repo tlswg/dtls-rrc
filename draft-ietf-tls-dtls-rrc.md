@@ -655,7 +655,11 @@ and switch to DTLS 1.3 if the correlation privacy threat is a concern.
 
 IANA is requested to allocate an entry to the TLS `ContentType`
 registry, for the `return_routability_check(TBD2)` message defined in
-this document. The `return_routability_check` content type is only
+this document.  IANA is requested to set the DTLS_OK column to Y and
+to add the following note prior to the table:
+
+NOTE:
+: The `return_routability_check` content type is only
 applicable to DTLS 1.2 and 1.3.
 
 ## New TLS ExtensionType
