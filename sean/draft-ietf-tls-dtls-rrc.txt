@@ -5,10 +5,10 @@
 TLS                                                   H. Tschofenig, Ed.
 Internet-Draft                                                          
 Intended status: Standards Track                                A. Kraus
-Expires: 19 April 2024                                                  
+Expires: 20 April 2024                                                  
                                                               T. Fossati
                                                                   Linaro
-                                                         17 October 2023
+                                                         18 October 2023
 
 
            Return Routability Check for DTLS 1.2 and DTLS 1.3
@@ -46,7 +46,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 April 2024.
+   This Internet-Draft will expire on 20 April 2024.
 
 Copyright Notice
 
@@ -439,10 +439,10 @@ Table of Contents
                       Figure 6: Old path is preferred
 
    Note that this defense is imperfect, but this is not considered a
-   serious problem.  If the path via the attack is reliably faster than
-   the old path despite multiple attempts to use that old path, it is
-   not possible to distinguish between an attack and an improvement in
-   routing.
+   serious problem.  If the path via the attacker is reliably faster
+   than the old path despite multiple attempts to use that old path, it
+   is not possible to distinguish between an attack and an improvement
+   in routing.
 
    An endpoint could also use heuristics to improve detection of this
    style of attack.  For instance, NAT rebinding is improbable if
