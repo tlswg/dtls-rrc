@@ -387,7 +387,7 @@ to the new path, thus thwarting the attack.
    title="Old path is preferred"}
 
 Note that this defense is imperfect, but this is not considered a serious
-problem. If the path via the attack is reliably faster than the
+problem. If the path via the attacker is reliably faster than the
 old path despite multiple attempts to use that old path, it
 is not possible to distinguish between an attack and an improvement
 in routing.
