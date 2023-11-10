@@ -72,7 +72,7 @@ that the sending peer is in fact reachable at the source address (and port) indi
 
 {{regular}} of this document explains the fundamental mechanism that aims to reduce the DDoS attack surface.
 Additionally, in {{enhanced}}, a more advanced address validation mechanism is discussed.
-This mechanism is designed to counteract off-path attackers who try to place themselves on-path by racing packets that trigger address rebinding at the receiver.
+This mechanism is designed to counteract off-path attackers trying to place themselves on-path by racing packets that trigger address rebinding at the receiver.
 To gain a detailed understanding of the attacker model, please refer to {{attacker}}.
 
 Apart from of its use in the context of CID-address binding updates,
