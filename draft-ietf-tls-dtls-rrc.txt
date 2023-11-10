@@ -4,11 +4,11 @@
 
 TLS                                                   H. Tschofenig, Ed.
 Internet-Draft                                                          
-Updates: 6347, 9147 (if approved)                               A. Kraus
-Intended status: Standards Track                                        
-Expires: 11 April 2024                                        T. Fossati
+Intended status: Standards Track                                A. Kraus
+Expires: 13 May 2024                                                    
+                                                              T. Fossati
                                                                   Linaro
-                                                          9 October 2023
+                                                        10 November 2023
 
 
            Return Routability Check for DTLS 1.2 and DTLS 1.3
@@ -46,7 +46,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 April 2024.
+   This Internet-Draft will expire on 13 May 2024.
 
 Copyright Notice
 
@@ -439,10 +439,10 @@ Table of Contents
                       Figure 6: Old path is preferred
 
    Note that this defense is imperfect, but this is not considered a
-   serious problem.  If the path via the attack is reliably faster than
-   the old path despite multiple attempts to use that old path, it is
-   not possible to distinguish between an attack and an improvement in
-   routing.
+   serious problem.  If the path via the attacker is reliably faster
+   than the old path despite multiple attempts to use that old path, it
+   is not possible to distinguish between an attack and an improvement
+   in routing.
 
    An endpoint could also use heuristics to improve detection of this
    style of attack.  For instance, NAT rebinding is improbable if
@@ -738,8 +738,11 @@ Auth | {CertificateVerify}
 
    IANA is requested to allocate an entry to the TLS ContentType
    registry, for the return_routability_check(TBD2) message defined in
-   this document.  The return_routability_check content type is only
-   applicable to DTLS 1.2 and 1.3.
+   this document.  IANA is requested to set the DTLS_OK column to Y and
+   to add the following note prior to the table:
+
+      NOTE: The return_routability_check content type is only applicable
+      to DTLS 1.2 and 1.3.
 
 10.2.   New TLS ExtensionType
 
@@ -803,8 +806,8 @@ Auth | {CertificateVerify}
 12.  Acknowledgments
 
    We would like to thank Hanno Becker, Hanno Böck, Manuel Pégourié-
-   Gonnard, Marco Tiloca, Martin Thomson, Mohit Sahni and Rich Salz for
-   their input to this document.
+   Gonnard, Marco Tiloca, Martin Thomson, Mohit Sahni, Rich Salz and
+   Sean Turner for their input to this document.
 
 13.  References
 
@@ -845,11 +848,12 @@ Auth | {CertificateVerify}
 13.2.  Informative References
 
    [I-D.ietf-uta-tls13-iot-profile]
-              Tschofenig, H. and T. Fossati, "TLS/DTLS 1.3 Profiles for
-              the Internet of Things", Work in Progress, Internet-Draft,
-              draft-ietf-uta-tls13-iot-profile-07, 14 September 2023,
+              Tschofenig, H., Fossati, T., and M. Richardson, "TLS/DTLS
+              1.3 Profiles for the Internet of Things", Work in
+              Progress, Internet-Draft, draft-ietf-uta-tls13-iot-
+              profile-08, 22 October 2023,
               <https://datatracker.ietf.org/doc/html/draft-ietf-uta-
-              tls13-iot-profile-07>.
+              tls13-iot-profile-08>.
 
    [I-D.irtf-t2trg-amplification-attacks]
               Mattsson, J. P., Selander, G., and C. Amsüss,
