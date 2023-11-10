@@ -70,6 +70,11 @@ CID-address binding is updated in that endpoint's session state.
 This is done in order to give the receiving endpoint confidence
 that the sending peer is in fact reachable at the source address (and port) indicated in the received datagram.
 
+{{regular}} of this document explains the fundamental mechanism that aims to reduce the DDoS attack surface.
+Additionally, in {{enhanced}}, a more advanced address validation mechanism is discussed.
+This mechanism is designed to counteract off-path attackers who try to place themselves on-path by racing packets that trigger address rebinding at the receiver.
+To gain a detailed understanding of the attacker model, please refer to {{attacker}}.
+
 Apart from of its use in the context of CID-address binding updates,
 the path validation capability offered by RRC can be used at any time by either endpoint. For
 instance, an endpoint might use RRC to check that a peer is still reachable at
@@ -104,9 +109,9 @@ exchanged `rrc` extensions.
 # Return Routability Check Message Types
 
 This document defines the `return_routability_check` content type
-({{fig-rrc-msg}}) to carry Return Routability Check protocol messages.
+({{fig-rrc-msg}}) to carry Return Routability Check messages.
 
-The protocol consists of three message types: `path_challenge`, `path_response`
+The RRC sub-protocol consists of three message types: `path_challenge`, `path_response`
 and `path_drop` that are used for path validation and selection as described in
 {{path-validation}}.
 
@@ -149,7 +154,7 @@ struct {
 {: #fig-rrc-msg align="left"
    title="Return Routability Check Message"}
 
-Future extensions to the Return Routability Check protocol may
+Future extensions to the Return Routability Check sub-protocol may
 define new message types.  Implementations MUST be able to parse and ignore
 messages with an unknown `msg_type`.
 (Naturally, implementation MUST be able to parse and understand the three RRC message types defined in this document.)
@@ -165,7 +170,7 @@ currently associated with that CID value, the receiver SHOULD perform a return
 routability check as described in {{path-validation}}, unless an application
 layer specific address validation mechanism can be triggered instead (e.g., CoAP Echo {{?RFC9175}}).
 
-# Attacker Model
+# Attacker Model {#attacker}
 
 We define two classes of attackers, off-path and on-path, with increasing
 capabilities (see {{fig-attacker-capabilities}}) partly following terminology
@@ -221,6 +226,8 @@ the server in response is larger compared to the received packet (e.g., a CoAP
 server returning an MTU's worth of data from a 20-bytes GET request {{?I-D.irtf-t2trg-amplification-attacks}}) the
 attacker can use the server as a traffic amplifier toward the victim.
 
+### Mitigation Strategy
+
 When receiving a packet with a known CID and a spoofed source address, an
 RRC-capable endpoint will not send a (potentially large) response but instead a
 small `path_challenge` message to the victim host.  Since the host is not able
@@ -252,6 +259,8 @@ to that path. Therefore, eliciting packets on this path increases the
 likelihood that the attack is unsuccessful. Note however that, unlike QUIC,
 DTLS has no "non-probing" packets so this would require application specific
 mechanisms.
+
+### Mitigation Strategy
 
 {{fig-off-path}} illustrates the case where a receiver receives a
 packet with a new source IP address and/or new port number. In order
@@ -718,7 +727,8 @@ Hanno Becker,
 Marco Tiloca,
 Martin Thomson,
 Mohit Sahni,
-Rich Salz and
+Rich Salz,
+Yaron Sheffer and
 Sean Turner
 for their input to this document.
 
