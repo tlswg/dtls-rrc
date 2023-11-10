@@ -122,7 +122,7 @@ Table of Contents
    aims to reduce the DDoS attack surface.  Additionally, in
    Section 7.2, a more advanced address validation mechanism is
    discussed.  This mechanism is designed to counteract off-path
-   attackers who try to place themselves on-path by racing packets that
+   attackers trying to place themselves on-path by racing packets that
    trigger address rebinding at the receiver.  To gain a detailed
    understanding of the attacker model, please refer to Section 6.
 
