@@ -7,7 +7,6 @@ docname: draft-ietf-tls-dtls-rrc-latest
 category: std
 consensus: true
 submissiontype: IETF
-updates: 6347, 9147
 
 ipr: trust200902
 area: Security
@@ -388,7 +387,7 @@ to the new path, thus thwarting the attack.
    title="Old path is preferred"}
 
 Note that this defense is imperfect, but this is not considered a serious
-problem. If the path via the attack is reliably faster than the
+problem. If the path via the attacker is reliably faster than the
 old path despite multiple attempts to use that old path, it
 is not possible to distinguish between an attack and an improvement
 in routing.
@@ -655,8 +654,11 @@ and switch to DTLS 1.3 if the correlation privacy threat is a concern.
 
 IANA is requested to allocate an entry to the TLS `ContentType`
 registry, for the `return_routability_check(TBD2)` message defined in
-this document. The `return_routability_check` content type is only
-applicable to DTLS 1.2 and 1.3.
+this document.  IANA is requested to set the `DTLS_OK` column to `Y` and
+to add the following note prior to the table:
+
+> NOTE: The return_routability_check content type is only
+> applicable to DTLS 1.2 and 1.3.
 
 ## New TLS ExtensionType
 
@@ -715,8 +717,9 @@ Hanno Becker,
 {{{Manuel Pégourié-Gonnard}}},
 Marco Tiloca,
 Martin Thomson,
-Mohit Sahni and
-Rich Salz
+Mohit Sahni,
+Rich Salz and
+Sean Turner
 for their input to this document.
 
 --- back
