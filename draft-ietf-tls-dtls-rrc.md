@@ -701,7 +701,8 @@ The initial state of this sub-registry is as follows:
 | 0     | path_challenge | Y         | {{&SELF}} |
 | 1     | path_response  | Y         | {{&SELF}} |
 | 2     | path_drop      | Y         | {{&SELF}} |
-| 3-255 | Unassigned     |           |           |
+| 3-253 | Unassigned     |           |           |
+| 254-255 | Reserved for Private Use | Y          | {{&SELF}} |
 {: #tbl-rrc-mt align="left"
    title="Initial Entries in RRC Message Type registry" }
 
