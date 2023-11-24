@@ -13,24 +13,24 @@
 Connection ID (CID) construct for the Datagram Transport Layer Security (DTLS)
 protocol versions 1.2 and 1.3. 
     " name="description">
-<meta content="xml2rfc 3.18.1" name="generator">
+<meta content="xml2rfc 3.18.2" name="generator">
 <meta content="DTLS, RRC, CID" name="keyword">
 <meta content="draft-ietf-tls-dtls-rrc-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.18.1
-    Python 3.11.5
+  xml2rfc 3.18.2
+    Python 3.11.6
     ConfigArgParse 1.5.3
     google-i18n-address 3.1.0
     intervaltree 3.1.0
     Jinja2 3.1.2
     lxml 4.9.3
-    platformdirs 3.11.0
+    platformdirs 4.0.0
     pycountry 22.3.5
     PyYAML 6.0
     requests 2.31.0
     setuptools 67.7.2
     six 1.16.0
-    wcwidth 0.2.8
+    wcwidth 0.2.10
 -->
 <link href="draft-ietf-tls-dtls-rrc.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1029,11 +1029,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">DTLS Return Routability Check</td>
-<td class="right">October 2023</td>
+<td class="right">November 2023</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Tschofenig, et al.</td>
-<td class="center">Expires 19 April 2024</td>
+<td class="center">Expires 27 May 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1044,17 +1044,14 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="workgroup">TLS</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
 <dd class="internet-draft">draft-ietf-tls-dtls-rrc-latest</dd>
-<dt class="label-updates">Updates:</dt>
-<dd class="updates">
-<a href="https://www.rfc-editor.org/rfc/rfc6347" class="eref">6347</a>, <a href="https://www.rfc-editor.org/rfc/rfc9147" class="eref">9147</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-10-17" class="published">17 October 2023</time>
+<time datetime="2023-11-24" class="published">24 November 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-04-19">19 April 2024</time></dd>
+<dd class="expires"><time datetime="2024-05-27">27 May 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1108,7 +1105,7 @@ protocol versions 1.2 and 1.3.<a href="#section-abstract-1" class="pilcrow">¶</
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 19 April 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 27 May 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1793,7 +1790,7 @@ to the new path, thus thwarting the attack.<a href="#section-6.2-14" class="pilc
           </figcaption></figure>
 </div>
 <p id="section-6.2-16">Note that this defense is imperfect, but this is not considered a serious
-problem. If the path via the attack is reliably faster than the
+problem. If the path via the attacker is reliably faster than the
 old path despite multiple attempts to use that old path, it
 is not possible to distinguish between an attack and an improvement
 in routing.<a href="#section-6.2-16" class="pilcrow">¶</a></p>
@@ -2156,16 +2153,14 @@ and switch to DTLS 1.3 if the correlation privacy threat is a concern.<a href="#
         </h3>
 <p id="section-10.1-1">IANA is requested to allocate an entry to the TLS <code>ContentType</code>
 registry, for the <code>return_routability_check(TBD2)</code> message defined in
-this document.  IANA is requested to set the DTLS_OK column to Y and
+this document.  IANA is requested to set the <code>DTLS_OK</code> column to <code>Y</code> and
 to add the following note prior to the table:<a href="#section-10.1-1" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="dlParallel" id="section-10.1-2">
-          <dt id="section-10.1-2.1">NOTE:</dt>
-          <dd style="margin-left: 1.5em" id="section-10.1-2.2">
-            <p id="section-10.1-2.2.1">The <code>return_routability_check</code> content type is only
-applicable to DTLS 1.2 and 1.3.<a href="#section-10.1-2.2.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-</dl>
+<ul class="normal ulEmpty">
+<li class="normal ulEmpty" id="section-10.1-2.1">
+            <p id="section-10.1-2.1.1">NOTE: The return_routability_check content type is only
+applicable to DTLS 1.2 and 1.3.<a href="#section-10.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
 </section>
 </div>
 <div id="new-tls-extensiontype">
@@ -2273,10 +2268,16 @@ all the entries in this registry<a href="#section-10.3-3.6.1" class="pilcrow">¶
               <td class="text-left" rowspan="1" colspan="1">RFCthis</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">3-255</td>
+              <td class="text-left" rowspan="1" colspan="1">3-253</td>
               <td class="text-left" rowspan="1" colspan="1">Unassigned</td>
               <td class="text-left" rowspan="1" colspan="1"> </td>
               <td class="text-left" rowspan="1" colspan="1"> </td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">254-255</td>
+              <td class="text-left" rowspan="1" colspan="1">Reserved for Private Use</td>
+              <td class="text-left" rowspan="1" colspan="1">Y</td>
+              <td class="text-left" rowspan="1" colspan="1">RFCthis</td>
             </tr>
           </tbody>
         </table>
@@ -2304,8 +2305,9 @@ Hanno Becker,
 <span class="contact-name">Manuel Pégourié-Gonnard</span>,
 Marco Tiloca,
 Martin Thomson,
-Mohit Sahni and
-Rich Salz
+Mohit Sahni,
+Rich Salz and
+Sean Turner
 for their input to this document.<a href="#section-12-1" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2358,7 +2360,7 @@ for their input to this document.<a href="#section-12-1" class="pilcrow">¶</a><
 <dl class="references">
 <dt id="I-D.ietf-uta-tls13-iot-profile">[I-D.ietf-uta-tls13-iot-profile]</dt>
         <dd>
-<span class="refAuthor">Tschofenig, H.</span> and <span class="refAuthor">T. Fossati</span>, <span class="refTitle">"TLS/DTLS 1.3 Profiles for the Internet of Things"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-uta-tls13-iot-profile-07</span>, <time datetime="2023-09-14" class="refDate">14 September 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-uta-tls13-iot-profile-07">https://datatracker.ietf.org/doc/html/draft-ietf-uta-tls13-iot-profile-07</a>&gt;</span>. </dd>
+<span class="refAuthor">Tschofenig, H.</span>, <span class="refAuthor">Fossati, T.</span>, and <span class="refAuthor">M. Richardson</span>, <span class="refTitle">"TLS/DTLS 1.3 Profiles for the Internet of Things"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-uta-tls13-iot-profile-08</span>, <time datetime="2023-10-22" class="refDate">22 October 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-uta-tls13-iot-profile-08">https://datatracker.ietf.org/doc/html/draft-ietf-uta-tls13-iot-profile-08</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.irtf-t2trg-amplification-attacks">[I-D.irtf-t2trg-amplification-attacks]</dt>
         <dd>
