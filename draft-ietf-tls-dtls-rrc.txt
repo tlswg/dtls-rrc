@@ -797,20 +797,21 @@ Auth | {CertificateVerify}
 
    The initial state of this sub-registry is as follows:
 
-   +=======+================+===========+===========+
-   | Value | Description    | DTLS-Only | Reference |
-   +=======+================+===========+===========+
-   | 0     | path_challenge | Y         | RFCthis   |
-   +-------+----------------+-----------+-----------+
-   | 1     | path_response  | Y         | RFCthis   |
-   +-------+----------------+-----------+-----------+
-   | 2     | path_drop      | Y         | RFCthis   |
-   +-------+----------------+-----------+-----------+
-   | 3-255 | Unassigned     |           |           |
-   +-------+----------------+-----------+-----------+
+   +=========+==========================+===========+===========+
+   | Value   | Description              | DTLS-Only | Reference |
+   +=========+==========================+===========+===========+
+   | 0       | path_challenge           | Y         | RFCthis   |
+   +---------+--------------------------+-----------+-----------+
+   | 1       | path_response            | Y         | RFCthis   |
+   +---------+--------------------------+-----------+-----------+
+   | 2       | path_drop                | Y         | RFCthis   |
+   +---------+--------------------------+-----------+-----------+
+   | 3-253   | Unassigned               |           |           |
+   +---------+--------------------------+-----------+-----------+
+   | 254-255 | Reserved for Private Use | Y         | RFCthis   |
+   +---------+--------------------------+-----------+-----------+
 
-      Table 2: Initial Entries in RRC Message Type
-                        registry
+       Table 2: Initial Entries in RRC Message Type registry
 
 11.  Open Issues
 
