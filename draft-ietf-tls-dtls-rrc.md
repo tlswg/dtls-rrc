@@ -172,18 +172,26 @@ layer specific address validation mechanism can be triggered instead (e.g., CoAP
 
 # Attacker Model {#attacker}
 
-We define two classes of attackers, off-path and on-path, with increasing
-capabilities (see {{fig-attacker-capabilities}}) partly following terminology
+Attacks are divided into passive and active attacks. Passive attackers have the ability
+to read packets from the network, while active attackers also have the ability to write
+packets into the network. However, a passive attack could involve an attacker with the
+ability to cause a routing change or other modification in the path taken by packets that
+comprise a connection.
+
+Attackers are additionally categorized as either on-path attackers or off-path attackers
+(see {{fig-attacker-capabilities}}). This document follows the terminology
 introduced in QUIC {{RFC9000}}:
 
-* An off-path attacker is not on the original path between the DTLS peers, but
-  is able to observe packets on the original path and has faster routing
-  compared to the DTLS peers, which allows it to make copies of the observed
-  packets, race its copies to either peer and consistently win the race.
+* An on-path attacker can read, modify, or remove any packet it observes such that the packet
+no longer reaches its destination.
 
-* An on-path attacker is on the original path between the DTLS peers and is
-  therefore capable, compared to the off-path attacker, to also drop and delay
-  records at will.
+* An off-path attacker observes the packets but cannot prevent the original packet from
+reaching its intended destination.
+
+Both types of attackers can also transmit arbitrary packets. 
+
+This definition of on-path and off-path attackers differs from that of Section 3.5
+of {{RFC3552}} in that an off-path attacker is also able to observe packets.
 
 Note that, in general, attackers cannot craft DTLS records in a way that would
 successfully pass verification, due to the cryptographic protections applied by
