@@ -191,7 +191,7 @@ reaching its intended destination.
 Both types of attackers can also transmit arbitrary packets. 
 
 This definition of on-path and off-path attackers differs from that of Section 3.5
-of {{RFC3552}} in that an off-path attacker is also able to observe packets.
+of {{?RFC3552}} in that an off-path attacker is also able to observe packets.
 
 Note that, in general, attackers cannot craft DTLS records in a way that would
 successfully pass verification, due to the cryptographic protections applied by
