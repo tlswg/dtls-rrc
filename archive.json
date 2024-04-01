@@ -1,0 +1,103 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2021-07-29T01:07:36.236734+00:00",
+  "repo": "tlswg/dtls-rrc",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 1,
+      "id": "MDU6SXNzdWU5MDU4NTUwMzM=",
+      "title": "Use separate seqno and replay windows?",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/1",
+      "state": "OPEN",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Should the return routability check use separate sequence numbers and replay windows?\r\n",
+      "createdAt": "2021-05-28T18:24:35Z",
+      "updatedAt": "2021-05-28T18:24:35Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 2,
+      "id": "MDU6SXNzdWU5MDU4NTU2NDI=",
+      "title": "Use Heartbeat instead?",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/2",
+      "state": "OPEN",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Should the heartbeat message be re-used instead of the proposed new message exchange?",
+      "createdAt": "2021-05-28T18:25:03Z",
+      "updatedAt": "2021-05-28T18:25:03Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 3,
+      "id": "MDU6SXNzdWU5MTUyMzQxMDk=",
+      "title": "probe old path as well as new?",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/3",
+      "state": "OPEN",
+      "author": "kaduk",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Martin Duke's ballot comment on draft-ietf-dtls-connection-id referenced the procedures of https://datatracker.ietf.org/doc/html/rfc9000#section-9.3.3 (which operates in essentially the same security model as DTLS) including the use of a path challenge for both old and new paths.\r\nWe may want to have some similar discussion in this document.",
+      "createdAt": "2021-06-08T16:29:21Z",
+      "updatedAt": "2021-06-08T16:29:21Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
+  "pulls": []
+}
