@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2021-07-29T01:07:36.236734+00:00",
+  "timestamp": "2024-09-26T01:44:33.865646+00:00",
   "repo": "tlswg/dtls-rrc",
   "labels": [
     {
@@ -47,6 +47,11 @@
       "name": "wontfix",
       "description": "This will not be worked on",
       "color": "ffffff"
+    },
+    {
+      "name": "WGLC",
+      "description": "working group last call",
+      "color": "0e8a16"
     }
   ],
   "issues": [
@@ -55,49 +60,3965 @@
       "id": "MDU6SXNzdWU5MDU4NTUwMzM=",
       "title": "Use separate seqno and replay windows?",
       "url": "https://github.com/tlswg/dtls-rrc/issues/1",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thomas-fossati",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Should the return routability check use separate sequence numbers and replay windows?\r\n",
       "createdAt": "2021-05-28T18:24:35Z",
-      "updatedAt": "2021-05-28T18:24:35Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2022-05-01T17:50:53Z",
+      "closedAt": "2022-05-01T17:50:52Z",
+      "comments": [
+        {
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Question: There is no retransmission of path check messages",
+          "createdAt": "2021-12-10T13:46:09Z",
+          "updatedAt": "2021-12-10T13:46:09Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "OBE",
+          "createdAt": "2022-05-01T17:50:52Z",
+          "updatedAt": "2022-05-01T17:50:52Z"
+        }
+      ]
     },
     {
       "number": 2,
       "id": "MDU6SXNzdWU5MDU4NTU2NDI=",
       "title": "Use Heartbeat instead?",
       "url": "https://github.com/tlswg/dtls-rrc/issues/2",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thomas-fossati",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Should the heartbeat message be re-used instead of the proposed new message exchange?",
       "createdAt": "2021-05-28T18:25:03Z",
-      "updatedAt": "2021-05-28T18:25:03Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2021-10-25T13:24:48Z",
+      "closedAt": "2021-10-25T13:24:48Z",
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "We brought the [discussion](https://mailarchive.ietf.org/arch/msg/tls/OnrU-alIaPn2_YWS6h69Qk4HF6U/) to the mailing list.\r\n\r\nFrom the feedback and advice we received from Hanno B\u00f6ck, Mohit Sahni and Rich Salz, it seems like the guidance is:\r\n* DO NOT reuse the hearbeat framework because it\u2019s screwed:\r\n  * security middlebox interference\r\n  * codebase removed\r\n  * perceived as dangerous\r\n* Create a DTLS-only path-layer framework with new codepoints instead",
+          "createdAt": "2021-10-25T13:24:36Z",
+          "updatedAt": "2021-10-25T13:24:36Z"
+        }
+      ]
     },
     {
       "number": 3,
       "id": "MDU6SXNzdWU5MTUyMzQxMDk=",
       "title": "probe old path as well as new?",
       "url": "https://github.com/tlswg/dtls-rrc/issues/3",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "kaduk",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "thomas-fossati"
+      ],
       "labels": [],
       "body": "Martin Duke's ballot comment on draft-ietf-dtls-connection-id referenced the procedures of https://datatracker.ietf.org/doc/html/rfc9000#section-9.3.3 (which operates in essentially the same security model as DTLS) including the use of a path challenge for both old and new paths.\r\nWe may want to have some similar discussion in this document.",
       "createdAt": "2021-06-08T16:29:21Z",
-      "updatedAt": "2021-06-08T16:29:21Z",
-      "closedAt": null,
+      "updatedAt": "2022-05-05T15:45:08Z",
+      "closedAt": "2022-05-05T15:45:08Z",
+      "comments": [
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "The idea of that probe was to check, if the old address is also still valid. That would prevent an attack, where both peers are using CID and an eye-spotting attacker with high SLA prepares to get on path in order to drop then the traffic. With that, I would prefer, to have this as choice, to check this either always, or only, if the peer doesn't respond on the new path.",
+          "createdAt": "2021-11-26T14:27:23Z",
+          "updatedAt": "2021-11-26T14:27:23Z"
+        },
+        {
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Copy from RFC 9000:\r\n\r\n9.3.3.  Off-Path Packet Forwarding\r\n\r\n   An off-path attacker that can observe packets might forward copies of\r\n   genuine packets to endpoints.  If the copied packet arrives before\r\n   the genuine packet, this will appear as a NAT rebinding.  Any genuine\r\n   packet will be discarded as a duplicate.  If the attacker is able to\r\n   continue forwarding packets, it might be able to cause migration to a\r\n   path via the attacker.  This places the attacker on-path, giving it\r\n   the ability to observe or drop all subsequent packets.\r\n\r\n   This style of attack relies on the attacker using a path that has\r\n   approximately the same characteristics as the direct path between\r\n   endpoints.  The attack is more reliable if relatively few packets are\r\n   sent or if packet loss coincides with the attempted attack.\r\n\r\n   A non-probing packet received on the original path that increases the\r\n   maximum received packet number will cause the endpoint to move back\r\n   to that path.  Eliciting packets on this path increases the\r\n   likelihood that the attack is unsuccessful.  Therefore, mitigation of\r\n   this attack relies on triggering the exchange of packets.\r\n\r\n   In response to an apparent migration, endpoints MUST validate the\r\n   previously active path using a PATH_CHALLENGE frame.  This induces\r\n   the sending of new packets on that path.  If the path is no longer\r\n   viable, the validation attempt will time out and fail; if the path is\r\n   viable but no longer desired, the validation will succeed but only\r\n   results in probing packets being sent on the path.\r\n\r\n   An endpoint that receives a PATH_CHALLENGE on an active path SHOULD\r\n   send a non-probing packet in response.  If the non-probing packet\r\n   arrives before any copy made by an attacker, this results in the\r\n   connection being migrated back to the original path.  Any subsequent\r\n   migration to another path restarts this entire process.\r\n\r\n   This defense is imperfect, but this is not considered a serious\r\n   problem.  If the path via the attack is reliably faster than the\r\n   original path despite multiple attempts to use that original path, it\r\n   is not possible to distinguish between an attack and an improvement\r\n   in routing.\r\n\r\n   An endpoint could also use heuristics to improve detection of this\r\n   style of attack.  For instance, NAT rebinding is improbable if\r\n   packets were recently received on the old path; similarly, rebinding\r\n   is rare on IPv6 paths.  Endpoints can also look for duplicated\r\n   packets.  Conversely, a change in connection ID is more likely to\r\n   indicate an intentional migration rather than an attack.\r\n",
+          "createdAt": "2021-12-10T13:36:59Z",
+          "updatedAt": "2021-12-10T13:36:59Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "There are no available \"non-probing\" packets in DTLS.  Should we mint a new \"no-op\" record type for this?",
+          "createdAt": "2022-02-04T13:29:59Z",
+          "updatedAt": "2022-02-04T13:29:59Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Addressed by #12",
+          "createdAt": "2022-05-05T15:45:06Z",
+          "updatedAt": "2022-05-05T15:45:06Z"
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "id": "I_kwDOFigxk849sr0o",
+      "title": "Can we use TLS flags?",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/6",
+      "state": "CLOSED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "We'd like to use [TLS Flags](https://datatracker.ietf.org/doc/html/draft-ietf-tls-tlsflags) to negotiate RRC.\r\n\r\nAt the moment, the document seems to be defined for (D)TLS 1.3 only, but the reason why the same scheme would not be applicable to 1.2 are not fully clear.\r\n\r\nFor now (-01), optimistically, we are using it in a version agnostic fashion, hoping that eventually that will be the case.\r\n\r\nAchim has opened an [issue on the TLS flags repo](https://github.com/tlswg/tls-flags/issues/13).  This issue is for tracking on the RRC side.",
+      "createdAt": "2021-10-25T13:13:21Z",
+      "updatedAt": "2021-11-26T13:17:35Z",
+      "closedAt": "2021-11-26T13:17:35Z",
       "comments": []
+    },
+    {
+      "number": 9,
+      "id": "I_kwDOFigxk84_cpDu",
+      "title": "Define sending threshold on address update",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/9",
+      "state": "CLOSED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "thomas-fossati"
+      ],
+      "labels": [],
+      "body": "We want to limit the application data sent to a reasonable threshold while we run the RRC.",
+      "createdAt": "2021-11-26T13:24:02Z",
+      "updatedAt": "2021-12-21T10:48:09Z",
+      "closedAt": "2021-12-21T10:48:09Z",
+      "comments": [
+        {
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "RFC 9000, section 8 \"address validation\" (second paragraph, last line): 3 times the amount of data received.",
+          "createdAt": "2021-12-10T13:20:40Z",
+          "updatedAt": "2021-12-10T13:20:40Z"
+        },
+        {
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Here is the text: \r\n\r\n8.  Address Validation\r\n\r\n   Address validation ensures that an endpoint cannot be used for a\r\n   traffic amplification attack.  In such an attack, a packet is sent to\r\n   a server with spoofed source address information that identifies a\r\n   victim.  If a server generates more or larger packets in response to\r\n   that packet, the attacker can use the server to send more data toward\r\n   the victim than it would be able to send on its own.\r\n\r\n   The primary defense against amplification attacks is verifying that a\r\n   peer is able to receive packets at the transport address that it\r\n   claims.  Therefore, after receiving packets from an address that is\r\n   not yet validated, an endpoint MUST limit the amount of data it sends\r\n   to the unvalidated address to three times the amount of data received\r\n   from that address.  This limit on the size of responses is known as\r\n   the anti-amplification limit.",
+          "createdAt": "2021-12-10T13:23:52Z",
+          "updatedAt": "2021-12-10T13:23:52Z"
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "id": "I_kwDOFigxk84_cpar",
+      "title": "Path challenge-response algorithm refinements",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/10",
+      "state": "CLOSED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "thomas-fossati"
+      ],
+      "labels": [],
+      "body": "For example, allow multiple outstanding path_challenge messages to cater for potential packet loss.",
+      "createdAt": "2021-11-26T13:25:19Z",
+      "updatedAt": "2021-12-21T10:48:09Z",
+      "closedAt": "2021-12-21T10:48:09Z",
+      "comments": []
+    },
+    {
+      "number": 14,
+      "id": "I_kwDOFigxk85I2kk7",
+      "title": "RRC `msg_type` registration",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/14",
+      "state": "CLOSED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "thomas-fossati"
+      ],
+      "labels": [],
+      "body": "We probably need to create a new IANA registry for RRC message types.\r\n\r\nThe registry should be initialised with the 3 message types we define in the draft.",
+      "createdAt": "2022-05-01T19:44:19Z",
+      "updatedAt": "2022-05-13T14:03:09Z",
+      "closedAt": "2022-05-13T14:03:09Z",
+      "comments": [
+        {
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Ok.",
+          "createdAt": "2022-05-05T16:40:15Z",
+          "updatedAt": "2022-05-05T16:40:15Z"
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "id": "I_kwDOFigxk85I2kyN",
+      "title": "Check consistency between responder requirements and path validation algorithm",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/15",
+      "state": "CLOSED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "thomas-fossati"
+      ],
+      "labels": [],
+      "body": "In the path validation algorithm (both base and enhanced) we say \"[...] or the address confirmation fails [...]\", but we don't say precisely what we mean by that.\r\n\r\nIf it refers to failure in validating the received Cookie value, than there's a potential out-of-sync with the requirement: \"[...] the initiator MUST silently discard any invalid path_response it receives.\"\r\n\r\nIf not, we should say what we mean by \"address confirmation failure.\" ",
+      "createdAt": "2022-05-01T19:48:47Z",
+      "updatedAt": "2022-05-13T14:16:39Z",
+      "closedAt": "2022-05-13T14:16:39Z",
+      "comments": []
+    },
+    {
+      "number": 16,
+      "id": "I_kwDOFigxk85JIEo9",
+      "title": "A better name for `path_delete`",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/16",
+      "state": "CLOSED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "thomas-fossati"
+      ],
+      "labels": [],
+      "body": "A better name could be `path_drop` or `path_discard` -- one doesn't \"delete\" a path.",
+      "createdAt": "2022-05-05T15:42:15Z",
+      "updatedAt": "2022-05-13T14:02:49Z",
+      "closedAt": "2022-05-13T14:02:49Z",
+      "comments": [
+        {
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I agree. I prefer path_drop\r\n",
+          "createdAt": "2022-05-05T16:36:33Z",
+          "updatedAt": "2022-05-05T16:36:33Z"
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "id": "I_kwDOFigxk85JIFmO",
+      "title": "Section 5 title and location",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/17",
+      "state": "CLOSED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "thomas-fossati"
+      ],
+      "labels": [],
+      "body": "Section 5 title \"Off-path packet forwarding\" should be \"Attack model\" instead?\r\n\r\nAlso, is this the right position?  ISTM this should go after we discuss the base challenge/response mechanics.\r\n\r\nThere is also a missing premise, I think: _\"RRC is not designed to counter on-path attackers. These can never be distinguished from, for example, a genuine network device. However, RRC can resist off-path attackers when enhanced path validation ({{enhanced}}) is used.\"_",
+      "createdAt": "2022-05-05T15:44:29Z",
+      "updatedAt": "2022-05-13T14:10:10Z",
+      "closedAt": "2022-05-13T14:10:10Z",
+      "comments": []
+    },
+    {
+      "number": 18,
+      "id": "I_kwDOFigxk85JIIUJ",
+      "title": "when should I choose the enhanced path validation over basic?",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/18",
+      "state": "CLOSED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "thomas-fossati"
+      ],
+      "labels": [],
+      "body": "We probably need to tell implementers why/when they should choose the basic algorithm vs the enhanced.  For example, avoid enhanced if:\r\n* you need to minimise implementation complexity\r\n* you have privacy concerns -- i.e., to avoid providing a clear correlation signal\r\n* off-path attackers are not in your threat model and/or you want to reduce the time it takes to switch path",
+      "createdAt": "2022-05-05T15:51:09Z",
+      "updatedAt": "2022-05-13T14:16:39Z",
+      "closedAt": "2022-05-13T14:16:39Z",
+      "comments": []
+    },
+    {
+      "number": 19,
+      "id": "I_kwDOFigxk85JIJhs",
+      "title": "Section 4 needs splitting",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/19",
+      "state": "CLOSED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "thomas-fossati"
+      ],
+      "labels": [],
+      "body": "Section 4 should only provide a description of the RRC messages (chal/resp & delete) and say a few words about extensibility of the feature.\r\n\r\nI think the discussion around interplay between RRC and CID should go in a separate (sub)section.\r\n",
+      "createdAt": "2022-05-05T15:53:54Z",
+      "updatedAt": "2022-05-13T14:08:08Z",
+      "closedAt": "2022-05-13T14:08:08Z",
+      "comments": []
+    },
+    {
+      "number": 20,
+      "id": "I_kwDOFigxk85JIKSs",
+      "title": "Does RRC update CID?",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/20",
+      "state": "CLOSED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "We plug straight into [Section 6.5 of CID](https://www.rfc-editor.org/rfc/rfc9146.html#section-6-5).  So should this document update RFC9146?\r\n",
+      "createdAt": "2022-05-05T15:55:50Z",
+      "updatedAt": "2022-05-05T18:53:34Z",
+      "closedAt": "2022-05-05T18:53:34Z",
+      "comments": [
+        {
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I am not sure whether this is really an update. We do not change anything in RFC 9146, which is typically what the update means",
+          "createdAt": "2022-05-05T16:46:53Z",
+          "updatedAt": "2022-05-05T16:46:53Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "SGMT; feel free to close this.",
+          "createdAt": "2022-05-05T17:22:43Z",
+          "updatedAt": "2022-05-05T17:22:43Z"
+        }
+      ]
+    },
+    {
+      "number": 27,
+      "id": "I_kwDOFigxk85JoVIL",
+      "title": "invalid path_drop too needs to be discarded",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/27",
+      "state": "CLOSED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "thomas-fossati"
+      ],
+      "labels": [],
+      "body": "We say:\r\n\r\n_\"The initiator MUST silently discard any invalid path_response it receives.\"_\r\n\r\nwe should say instead:\r\n\r\n_\"The initiator MUST silently discard any invalid path_response or path_drop it receives.\"_",
+      "createdAt": "2022-05-13T14:18:55Z",
+      "updatedAt": "2022-05-13T14:47:08Z",
+      "closedAt": "2022-05-13T14:47:08Z",
+      "comments": []
+    },
+    {
+      "number": 29,
+      "id": "I_kwDOFigxk85JodJh",
+      "title": "Add Achim as co-author",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/29",
+      "state": "CLOSED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "$subject",
+      "createdAt": "2022-05-13T14:47:25Z",
+      "updatedAt": "2022-06-23T12:07:42Z",
+      "closedAt": "2022-06-23T12:07:42Z",
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "(Don't forget to remove Achim from the ACKs.)",
+          "createdAt": "2022-05-13T17:45:41Z",
+          "updatedAt": "2022-05-13T17:45:41Z"
+        }
+      ]
+    },
+    {
+      "number": 30,
+      "id": "I_kwDOFigxk85J6Ms5",
+      "title": "privacy considerations wrt CID reuse",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/30",
+      "state": "CLOSED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "We don't currently discuss any privacy implication associated with CID reuse.  We should at least:\r\n1. document how to ensure a new CID is used during path validation in 1.3\r\n2. flag that 1.2 has no way to work around linkability because CID have the same lifetime as the session",
+      "createdAt": "2022-05-18T13:45:33Z",
+      "updatedAt": "2022-06-23T12:16:17Z",
+      "closedAt": "2022-06-23T12:16:17Z",
+      "comments": []
+    },
+    {
+      "number": 31,
+      "id": "I_kwDOFigxk85KnsmK",
+      "title": "s/on-path/mitm/",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/31",
+      "state": "CLOSED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "At the top of the \"Attacker model\" section we say: _\"RRC is not designed to counter on-path attackers.\"_\r\n\r\nWhat we should say instead is _\"RRC is not designed to counter man-in-the-middle attackers.\"_\r\n\r\nWe do take care of on-path attackers, via the challenge/response exchange, and we should say that.",
+      "createdAt": "2022-05-29T15:33:34Z",
+      "updatedAt": "2022-06-23T12:10:22Z",
+      "closedAt": "2022-06-23T12:10:22Z",
+      "comments": [
+        {
+          "author": "ekr",
+          "authorAssociation": "NONE",
+          "body": "I don't think the CR exchange solves the problem, because the attacker can just change the IP addresses.\r\n",
+          "createdAt": "2022-05-29T23:57:18Z",
+          "updatedAt": "2022-05-29T23:57:18Z"
+        }
+      ]
+    },
+    {
+      "number": 35,
+      "id": "I_kwDOFigxk85Li1SV",
+      "title": "update history",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/35",
+      "state": "CLOSED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "What the title says.",
+      "createdAt": "2022-06-10T11:31:55Z",
+      "updatedAt": "2022-06-23T16:54:09Z",
+      "closedAt": "2022-06-23T16:54:09Z",
+      "comments": []
+    },
+    {
+      "number": 37,
+      "id": "I_kwDOFigxk85McF-O",
+      "title": "update 9147?",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/37",
+      "state": "CLOSED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "9147 (DTLS 1.3) should be added to the update list, I think.",
+      "createdAt": "2022-06-23T13:44:54Z",
+      "updatedAt": "2022-06-23T15:20:28Z",
+      "closedAt": "2022-06-23T15:20:28Z",
+      "comments": []
+    },
+    {
+      "number": 41,
+      "id": "I_kwDOFigxk85MgsUr",
+      "title": "Is the select ... obsolete?",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/41",
+      "state": "CLOSED",
+      "author": "boaks",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "```\r\nstruct {\r\n    rrc_msg_type msg_type;\r\n    select (return_routability_check.msg_type) {\r\n        case path_challenge: Cookie;\r\n        case path_response:  Cookie;\r\n        case path_drop:      Cookie;\r\n    };\r\n} return_routability_check;\r\n```\r\n\r\nWhat are the considerations about that select? For me it looks like all \"cases\" are the same? Do I oversee something?\r\n\r\n```\r\nstruct {\r\n    rrc_msg_type msg_type;\r\n    Cookie cookie;\r\n} return_routability_check;\r\n```\r\n",
+      "createdAt": "2022-06-24T11:32:52Z",
+      "updatedAt": "2022-06-24T14:18:42Z",
+      "closedAt": "2022-06-24T14:18:42Z",
+      "comments": [
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> Future extensions or additions to the Return Routability Check protocol may define new message types. Implementations MUST be able to parse and ignore unknown values.\r\n\r\nMaybe the idea of that select is a \"future extension\". If so, \"ignore unknown values\" includes, to skip what ever follows, or?\r\n\r\nThen maybe\r\n\r\n> Implementations MUST be able to parse and ignore unknown values together with the rest of the `return_routability_check` message.\r\n\r\n\r\n",
+          "createdAt": "2022-06-24T11:36:19Z",
+          "updatedAt": "2022-06-24T11:36:44Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Yep, exactly: RRC is not closed (see https://tlswg.org/dtls-rrc/draft-ietf-tls-dtls-rrc.html#section-10.3) so the select anticipates extensions that might need a value different from Cookie.",
+          "createdAt": "2022-06-24T11:47:34Z",
+          "updatedAt": "2022-06-24T11:47:34Z"
+        },
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Thanks. WDYT about the extended formulation:\r\n\r\n> Implementations MUST be able to parse and ignore unknown values together with the rest of the return_routability_check message.\r\n\r\n",
+          "createdAt": "2022-06-24T11:52:43Z",
+          "updatedAt": "2022-06-24T11:52:43Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I think the current text is already saying what you propose :-)\r\n\r\nIn the context of the paragraph, there is no \"rest of the RRC message\" that isn't the \"unknown value\", so the addition seems redundant to me.\r\n\r\n@hannestschofenig WDYT?",
+          "createdAt": "2022-06-24T12:45:04Z",
+          "updatedAt": "2022-06-24T12:45:04Z"
+        },
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Assuming:\r\n\r\n```\r\nstruct {\r\n    rrc_msg_type msg_type;\r\n    select (return_routability_check.msg_type) {\r\n        case path_challenge: Cookie;\r\n        case path_response:  Cookie;\r\n        case path_drop:      Cookie;\r\n        case path_reset:      uint_8 tag;\r\n    };\r\n} return_routability_check;\r\n```\r\n\r\nIf `path_reset` is unknown, what is then to be ignored?\r\n\r\nMaybe:\r\n\r\n> Implementations MUST be able to parse and ignore messages with an unknown `msg_type`.",
+          "createdAt": "2022-06-24T13:23:30Z",
+          "updatedAt": "2022-06-24T13:23:30Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> Implementations MUST be able to parse and ignore messages with an unknown msg_type\r\n\r\nThis is exactly what I wanted the current text to say.  Apparently I failed :-)\r\n\r\nI'll do the suggested tweak.",
+          "createdAt": "2022-06-24T13:31:28Z",
+          "updatedAt": "2022-06-24T13:31:28Z"
+        }
+      ]
+    },
+    {
+      "number": 42,
+      "id": "I_kwDOFigxk85Mg1VL",
+      "title": "SHOULD perform",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/42",
+      "state": "CLOSED",
+      "author": "boaks",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "> the receiver SHOULD perform a return routability check as described\r\n\r\nWhen discussing that in RFC9146, my consideration was, that a \"similar mechanism\" maybe used also on the next layer. With that, I would consider\r\n\r\n> the receiver SHOULD perform a return routability check as described ... or perform an equivalent check by means of one of the next layers.\r\n",
+      "createdAt": "2022-06-24T12:13:22Z",
+      "updatedAt": "2022-06-24T13:41:16Z",
+      "closedAt": "2022-06-24T13:41:16Z",
+      "comments": [
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Just to mention, for me the idea of UDP is:\r\nDo, what could be done, but be also open, to delegate functions to the next layer, if it could be done there maybe more efficient. Therefore RRC with DTLS is great as one option, but other options in upper layers should not be discredited.",
+          "createdAt": "2022-06-24T12:17:55Z",
+          "updatedAt": "2022-06-24T12:17:55Z"
+        }
+      ]
+    },
+    {
+      "number": 44,
+      "id": "I_kwDOFigxk85MhLyp",
+      "title": "on-path attacker ",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/44",
+      "state": "CLOSED",
+      "author": "boaks",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "> An on-path attacker could make a copy of a packet, replace the source address with a spoofed one and forward it to the original destination. If the spoofed packet arrives before the original it will be regarded as a migration, while the original packet will be flagged as a duplicate and dropped.\r\n\r\nFor me this looks more like the off-path case.\r\nOn-path attacker may just replace the original package and only forward the spoofed one.\r\n\r\n> An on-path attacker could replace the source address with a spoofed one and forward it to the destination. Assuming an \"amplified response packet\" this may be misused for a (D)Dos attack.\r\n\r\n",
+      "createdAt": "2022-06-24T13:39:39Z",
+      "updatedAt": "2022-07-06T16:29:46Z",
+      "closedAt": "2022-07-06T16:29:46Z",
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "See also my comment on #48.  We need to rework this section starting from establishing shared terminology.",
+          "createdAt": "2022-06-24T18:09:53Z",
+          "updatedAt": "2022-06-24T18:09:53Z"
+        }
+      ]
+    },
+    {
+      "number": 45,
+      "id": "I_kwDOFigxk85MhOVt",
+      "title": "Implicit mitigation for off-path attack",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/45",
+      "state": "CLOSED",
+      "author": "boaks",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "In difference to the on-path attack, where the original packet (with the original source address) simply may get dropped, and so never reaches the destination, the off-path attack is not able to drop that original packet. Though also this attack is based on a response to that \"malicious source address\", a implementation may use the \"internal processing delay\" and check, if the same packet with the original address arrives. If so, and if that address matches the previously associated address, then the implementation may chose to use the  previously associated address.",
+      "createdAt": "2022-06-24T13:49:04Z",
+      "updatedAt": "2022-07-06T16:29:46Z",
+      "closedAt": "2022-07-06T16:29:46Z",
+      "comments": []
+    },
+    {
+      "number": 46,
+      "id": "I_kwDOFigxk85MhPCg",
+      "title": "previously associated with that CID value",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/46",
+      "state": "CLOSED",
+      "author": "boaks",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": ">  if a record with CID is received that has the source address of the enclosing UDP datagram different from the one previously associated with that CID value, the receiver SHOULD perform a return routability check as described in {{path-validation}}.\r\n\r\nFor me the `previously` is misleading. My understanding was, that RFC9146 recommend to not update the association before passing the address check.\r\n\r\nSo, for me \"currently\" may be the better choice. ",
+      "createdAt": "2022-06-24T13:51:47Z",
+      "updatedAt": "2022-06-24T18:37:17Z",
+      "closedAt": "2022-06-24T18:37:17Z",
+      "comments": []
+    },
+    {
+      "number": 48,
+      "id": "I_kwDOFigxk85MhSWc",
+      "title": "What does \"counter\" mean?",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/48",
+      "state": "CLOSED",
+      "author": "boaks",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "> It is not possible for RRC to counter a man-in-the-middle attacker that is indistinguishable from a genuine network device. Such an attacker could, for example, drop, reorder or delay records at will. Man-in-the-middle attackers cannot craft DTLS records that would successfully pass verification due to the cryptographic protections applied by the DTLS record layer.\r\n\r\nFor me, \"man-in-the-middle\" is a synonym for \"on-path\".\r\nIf that text addresses the general \"on-path\" attacks in order to clarify, that RRC is no mitigation for these general \"on-path-attacks\", I think we should try to find an other text.\r\n\r\nAs idea, we may also refer to ideas to mitigate them, but explicitly exclude that from this draft.\r\ne.g.:\r\n- \"reorder\": don't use the record sequence number window, just drop all packets with no higher number (that drops then reordered packets).\r\n- \"delay records\": maybe the first idea for an extension: execute a fresh RRC exchange and the next ip-packet must have a record sequence number higher as the one of the RRC message.\r\n   ",
+      "createdAt": "2022-06-24T14:03:38Z",
+      "updatedAt": "2022-07-06T16:29:46Z",
+      "closedAt": "2022-07-06T16:29:46Z",
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Right, we need to align the terminology.\r\n\r\nI propose we use the [attacker model from QUIC](https://datatracker.ietf.org/doc/html/draft-ietf-quic-transport-29#section-21.12.3.1) with its three levels:\r\n\r\n* Inspect\r\n* Inject\r\n* Reorder injected\r\n \u2014\u2014\u2014 Off-path \u2014\u2014\u2014\r\n* Reorder original\r\n* Modify un-authenticated portions\r\n \u2014\u2014\u2014 Limited on-path \u2014\u2014\u2014\r\n* Delay\r\n* Drop\r\n* Manipulating the packetization layer\r\n \u2014\u2014\u2014 On-path \u2014\u2014\u2014\r\n\r\nand work from there.",
+          "createdAt": "2022-06-24T18:06:58Z",
+          "updatedAt": "2022-06-24T18:06:58Z"
+        },
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> An on-path attacker can:\r\n> \r\n>    *  Inspect packets\r\n\r\n> An on-path attacker cannot:\r\n> \r\n>    *  Modify an authenticated portion of a packet and cause the\r\n>       recipient to accept that packet\r\n\r\nI miss, that \r\n\r\n> An on-path attacker cannot:\r\n> \r\n>    *  Inspect the encrypted portion of a packet\r\n\r\nI'm not sure, if we should \"repeat\" that. Do you know, if it's possible to just refer to that? ",
+          "createdAt": "2022-06-24T18:23:41Z",
+          "updatedAt": "2022-06-24T18:23:41Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> I'm not sure, if we should \"repeat\" that. Do you know, if it's possible to just refer to that?\r\n\r\nIf it works for us as-is we can just reference the relevant sections.  We need to check that everything applies -- in particular whether we want to make the distinction between \"on-path\" and \"limited on-path\".",
+          "createdAt": "2022-06-30T17:23:37Z",
+          "updatedAt": "2022-06-30T17:23:37Z"
+        }
+      ]
+    },
+    {
+      "number": 53,
+      "id": "I_kwDOFigxk85Mj8k3",
+      "title": "Considerations for combined/secondary attacks ",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/53",
+      "state": "CLOSED",
+      "author": "boaks",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The current RRC version describes, what to do, if a \"single\" \"address change\" event occurs.\r\n\r\nI see two more:\r\n- a cid record with a next \"new address\" for that context arrives while RRC for that context is in progress \r\n- a cid record with a \"new address\" for an other context arrives while RRC for that address is already in progress (for an different context) \r\n\r\nShould we extend to cover such cases \"explicit\" as well?",
+      "createdAt": "2022-06-25T07:39:38Z",
+      "updatedAt": "2022-07-06T16:32:56Z",
+      "closedAt": "2022-07-06T16:32:56Z",
+      "comments": [
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "The analysis didn't show any special treatments, just apply the defined RRC function.",
+          "createdAt": "2022-07-06T16:32:56Z",
+          "updatedAt": "2022-07-06T16:32:56Z"
+        }
+      ]
+    },
+    {
+      "number": 57,
+      "id": "I_kwDOFigxk85Ow8V5",
+      "title": "Potential ambiguity in value of timer",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/57",
+      "state": "CLOSED",
+      "author": "martinthomson",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "> In settings where there is external information about the RTT of the active path, implementations SHOULD use T = 3xRTT.\r\n>\r\n> If an implementation has no way to obtain information regarding the RTT of the active path, a value of 1s SHOULD be used.\r\n\r\nIn this second paragraph, does this mean T=1s or RTT=1s ?",
+      "createdAt": "2022-07-28T20:33:11Z",
+      "updatedAt": "2022-09-09T13:50:48Z",
+      "closedAt": "2022-09-09T13:50:48Z",
+      "comments": [
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "FMPOV: \r\n\r\n`T=1s`\r\n\r\n(because that refers to the default timeout of DTLS 1.2 RFC6347) ",
+          "createdAt": "2022-07-29T06:23:39Z",
+          "updatedAt": "2022-07-29T06:23:39Z"
+        }
+      ]
+    },
+    {
+      "number": 58,
+      "id": "I_kwDOFigxk85Ow9J6",
+      "title": "Figure 8 doesn't show probe on the previous path",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/58",
+      "state": "CLOSED",
+      "author": "martinthomson",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "This is important and so the example should show it.",
+      "createdAt": "2022-07-28T20:36:23Z",
+      "updatedAt": "2022-09-09T13:49:19Z",
+      "closedAt": "2022-09-09T13:49:19Z",
+      "comments": [
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "The draft splits the probes in [Basic](https://tlswg.org/dtls-rrc/draft-ietf-tls-dtls-rrc.html#section-7.1) and [Enhanced](https://tlswg.org/dtls-rrc/draft-ietf-tls-dtls-rrc.html#section-7.2).\r\n\r\nThe example demonstrates the `Basic` so I think, we should add that to the figure description \"Basic Return Routability Example\".\r\n",
+          "createdAt": "2022-07-29T06:36:43Z",
+          "updatedAt": "2022-07-29T06:42:16Z"
+        }
+      ]
+    },
+    {
+      "number": 62,
+      "id": "I_kwDOFigxk85yssEn",
+      "title": "Marco Tiloca's WGLC comments",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/62",
+      "state": "CLOSED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "WGLC"
+      ],
+      "body": "https://mailarchive.ietf.org/arch/msg/tls/a4kehk6vmKuqB40yJMfOKbPOv8w/\r\n\r\n-----\r\n\r\n# Comments\r\n\r\n## Section 1\r\n\r\n* [ ] \"selecting a security context of an incoming DTLS record\"\r\n\r\n   I think you mean \"selecting a security context for processing an incoming DTLS record\"\r\n\r\n* [ ] I think that the text would read better if you swap the two following blocks of text:\r\n\r\n   \"A CID is an identifier carried in ... for DTLS 1.3.\"\r\n\r\n   and\r\n\r\n   \"Without CID, if the ... and negotiated\"\r\n\r\n   hence introducing the concept of CID before using it.\r\n\r\n* [ ] \"Section 6 of [RFC9146] describes how ...\"\r\n\r\n   Aren\u2019t such considerations applicable also to DTLS 1.3? If so, it\u2019s worth mentioning.\r\n\r\n* [ ] \"This is done in order to provide more confidence to the receiving peer that the sending peer is reachable at the indicated address and port.\"\r\n\r\n   I guess you mean: \"the latest indicated address and port\"\r\n\r\n* [ ] \"that a peer is still in possession of its address\"\r\n\r\n   Similar to the previous comment, this can be: \"is still reachable to its last known address\"\r\n\r\n* [ ] \"if RRC has been successfully negotiated\"\r\n\r\n   It should be: \"if the use of RRC has been successfully negotiated\", also consistent with the beginning of Section 3.\r\n\r\n* [ ] That last paragraph uses both \"peer\" and \"endpoint\", apparently interchangeably. Is there any reason to not use only one of the two words? Earlier in the section, only \"peer\" is used.\r\n\r\n   Later in the document, \"endpoint\" is also used. Maybe add a note in Section 2 about the equivalence of the two terms?\r\n\r\n\r\n## Section 4\r\n\r\n* [ ] \"Implementations MUST be able to parse and ignore messages with an unknown msg_type.\"\r\n\r\n   Right, at the same time the intention should be that, if a peer uses RRC, then it MUST support all the three message types defined in this document. It's worth stating it explicitly.\r\n\r\n## Section 5\r\n\r\n* [ ] \"that has the source address of the enclosing UDP datagram different from the one currently associated\"\r\n\r\n   Couldn't (also) the source port number have changed? If so, I think you mean: \"that has the source address and/or source port number of the enclosing UDP datagram different from what is currently associated\"\r\n\r\n* [ ] \"the receiver SHOULD perform a return routability check as described in Section 7, unless an application layer specific address validation mechanism can be triggered instead.\"\r\n\r\n   As an example of alternative mechanism that can be triggered, it's worth mentioning RFC 9175, which describes the exchange of a CoAP response and a follow-up CoAP request, both including a CoAP Echo option with value set by the server sending the response.\r\n\r\n   Besides allowing the server to assert the freshness of the follow-up request, this exchange provides validation of the claimed address of the client sending the request.\r\n\r\n\r\n## Section 6.1\r\n\r\n* [ ] \"(e.g., a CoAP server returning an MTU's worth of data from a 20-bytes GET request)\r\n\r\n   It's worth referring to RFC 7252 and to https://datatracker.ietf.org/doc/draft-irtf-t2trg-amplification-attacks/\r\n\r\n\r\n## Section 6.2\r\n\r\n* [ ] In figure 5, the arrow for message 2 (path-drop) should not be bidirectional, but rather only from the sender to the receiver.\r\n\r\n\r\n## Sections 7.1 and 7.2\r\n\r\n* [ ] s/The receiver creates/The receiver, i.e., the initiator creates\r\n\r\n* [ ] s/The peer endpoint/The other peer, i.e., the responder,\r\n\r\n\r\n## Section 7.4\r\n\r\n* [ ] I think that another requirement should be that the initiator MUST NOT act on more than one valid path_response or path_drop message for each path_challenge message that it has sent.\r\n\r\n\r\n## Section 10\r\n\r\n* [ ] You will need to add a new subsection that provides expert review instructions, for the Designated Experts assigned to the new subregistry defined in Section 10.3.\r\n\r\n\r\n# Nits\r\n\r\n## Section 1\r\n- [ ] s/i.e./i.e.,\r\n- [ ] s/a variety reasons/a variety of reasons\r\n\r\n## Section 4\r\n- [ ] s/path_response and/path_response, and\r\n- [ ] s/a 8-byte/an 8-byte\r\n\r\n## Section 6\r\n- [ ] s/Note that in general,/Note that, in general,\r\n- [ ] s/verification due to/verification, due to\r\n- [ ] s/Figure 2: Attackers capabilities/Figure 2: Attacker's capabilities\r\n\r\n## Section 6.1\r\n- [ ] s/injecting and racing it/injecting, and racing it\r\n\r\n## Section 7\r\n- [ ] s/concerns, the need/concerns, and the need\r\n\r\n## Section 7.2\r\n- [ ] s/i.e./i.e.,\r\n\r\n## Section 8\r\n- [ ] s/In the example/In the example of\r\n- [ ] s/as well as the RRC/as well as for the use of the RRC\r\n- [ ] s/been established the/been established, the\r\n- [ ] s/interaction the IP/interaction, the IP",
+      "createdAt": "2023-10-03T14:47:46Z",
+      "updatedAt": "2023-10-17T15:58:32Z",
+      "closedAt": "2023-10-17T15:58:31Z",
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "CC: [Marco](@marco-tiloca-sics)",
+          "createdAt": "2023-10-05T19:34:44Z",
+          "updatedAt": "2023-10-05T19:34:44Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Addressed in https://github.com/tlswg/dtls-rrc/pull/63\r\n\r\nMarco confirmed on the list that he was OK with the proposed changes: https://mailarchive.ietf.org/arch/msg/tls/uimyEYq0dOGFmWCuUPbbX3ZgTp8/",
+          "createdAt": "2023-10-17T15:58:31Z",
+          "updatedAt": "2023-10-17T15:58:31Z"
+        }
+      ]
+    },
+    {
+      "number": 64,
+      "id": "I_kwDOFigxk850GIGs",
+      "title": "Sean's shepherd review comments",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/64",
+      "state": "CLOSED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "* What section in RFC 6347 and 9147 is updated?  If there\u2019s no behavior changed do we need that header?\r\n\r\n* How about we add a note in the registry that it\u2019s only applicable to DTLS 1.2 and 1.3",
+      "createdAt": "2023-10-17T15:59:54Z",
+      "updatedAt": "2023-11-10T09:03:57Z",
+      "closedAt": "2023-11-10T09:03:57Z",
+      "comments": []
+    },
+    {
+      "number": 67,
+      "id": "I_kwDOFigxk852coTf",
+      "title": "Yaron's review",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/67",
+      "state": "CLOSED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "thomas-fossati"
+      ],
+      "labels": [],
+      "body": "After the WGLC deadline, we received a review from Yaron with some editorial suggestions:\r\n\r\n* [x] General: I'm not clear about the threat model. (Update: this is clarified in Sec. 6, so I would suggest to refer to it when we present the problem in the Introduction - also see my later comment on Sec. 6.2).\r\n* [x] Sec. 4: the use of the word \"protocol\" is not very rigorous. The \"protocol\" is DTLS (or the DTLS record protocol?), and we essentially define a sub-protocol within it.\r\n* [x] Sec. 6.2 goes into details of the protocol which have not been described yet. Maybe all of Sec. 6 can be broken into two parts. A short introductory section that defines the attacker types and the attacks at a high level, and goes early in the document; and another section that shows how these attacks are addressed by the protocol, much later in the document.",
+      "createdAt": "2023-11-10T09:10:15Z",
+      "updatedAt": "2024-01-17T12:33:31Z",
+      "closedAt": "2024-01-17T12:33:31Z",
+      "comments": []
+    },
+    {
+      "number": 71,
+      "id": "I_kwDOFigxk86BZ_zr",
+      "title": "Behavior definition on session resumption?",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/71",
+      "state": "OPEN",
+      "author": "boaks",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "In my experience, using CID obsoletes a session resumption.\r\n\r\nBut if used, should rrc define, if the extension is considered to be repeated, to be changeable, or to be take from the initial handshake?   ",
+      "createdAt": "2024-03-06T09:47:44Z",
+      "updatedAt": "2024-03-23T18:45:45Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> if the extension is considered to be repeated, to be changeable, or to be take from the initial handshake?\r\n\r\nCID is re-negotiated on resumption.  It probably makes sense to do the same with RRC.  (And also to trash any RRC timer values.)",
+          "createdAt": "2024-03-23T18:45:44Z",
+          "updatedAt": "2024-03-23T18:45:44Z"
+        }
+      ]
+    },
+    {
+      "number": 72,
+      "id": "I_kwDOFigxk86B_mDh",
+      "title": "First experimental interop implementation available. ",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/72",
+      "state": "OPEN",
+      "author": "boaks",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I've implemented a first experimental implementation for interoperability tests (Eclipse/Californium - feature/rrc branch).\r\n\r\nFor instructions, please see [README - branch feature/rrc](https://github.com/eclipse-californium/californium/tree/feature/rrc)\r\n\r\nHappy testing.",
+      "createdAt": "2024-03-12T07:38:15Z",
+      "updatedAt": "2024-03-12T15:09:14Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I have successfully tested your server and NAT emulator against my [client](https://github.com/pion/dtls/compare/master...thomas-fossati:dtls-rrc:master), and I can confirm that [extension negotiation](https://www.ietf.org/archive/id/draft-ietf-tls-dtls-rrc-10.html#section-3) and [basic RRC check](https://www.ietf.org/archive/id/draft-ietf-tls-dtls-rrc-10.html#section-7.1) work as expected.\r\n\r\nThat's awesome, thank you for the great work!\r\n\r\n",
+          "createdAt": "2024-03-12T15:09:12Z",
+          "updatedAt": "2024-03-12T15:09:12Z"
+        }
+      ]
     }
   ],
-  "pulls": []
+  "pulls": [
+    {
+      "number": 4,
+      "id": "PR_kwDOFigxk84tjwQt",
+      "title": "Draft Update for IETF#112",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/4",
+      "state": "MERGED",
+      "author": "hannestschofenig",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Updated draft based on feedback from the working group. \r\n\r\nThe following changes have been made:\r\n\r\n   - Usage of the TLS flags extension\r\n   - Enhanced IANA consideration section \r\n   - Expanded example section",
+      "createdAt": "2021-10-22T16:27:39Z",
+      "updatedAt": "2021-10-25T12:12:20Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "46cc88c1f4590622d62c9777f0b267a4ee715042",
+      "headRepository": "hannestschofenig/dtls-rrc",
+      "headRefName": "patch-2",
+      "headRefOid": "25cfec6e77fa7df41e531b549e87a56918739fc0",
+      "closedAt": "2021-10-25T12:12:20Z",
+      "mergedAt": "2021-10-25T12:12:20Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "f9a2e1e42365074c67adc51226d81fed165bafc2"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk84u6xB_",
+          "commit": {
+            "abbreviatedOid": "a89ef38"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-22T18:29:43Z",
+          "updatedAt": "2021-10-22T18:35:40Z",
+          "comments": [
+            {
+              "originalPosition": 102,
+              "body": "just a curiosity: what is the semantic of \"recommended\"?",
+              "createdAt": "2021-10-22T18:29:43Z",
+              "updatedAt": "2021-10-22T18:35:40Z"
+            },
+            {
+              "originalPosition": 100,
+              "body": "This should be CH,SH ?",
+              "createdAt": "2021-10-22T18:34:39Z",
+              "updatedAt": "2021-10-22T18:35:40Z"
+            },
+            {
+              "originalPosition": 93,
+              "body": "I believe the registry should be \"TLS Flags\"",
+              "createdAt": "2021-10-22T18:34:46Z",
+              "updatedAt": "2021-10-22T18:35:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84u7jtK",
+          "commit": {
+            "abbreviatedOid": "a89ef38"
+          },
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-23T06:30:17Z",
+          "updatedAt": "2021-10-23T06:30:17Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "[A Flags Extension for TLS 1.3](https://datatracker.ietf.org/doc/html/draft-ietf-tls-tlsflags). \r\nAre you sure, that this could be used for DTLS 1.2?\r\nMy feeling is, no ,-(.",
+              "createdAt": "2021-10-23T06:30:17Z",
+              "updatedAt": "2021-10-23T06:30:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84u7juR",
+          "commit": {
+            "abbreviatedOid": "a89ef38"
+          },
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-23T06:31:49Z",
+          "updatedAt": "2021-10-23T06:31:49Z",
+          "comments": [
+            {
+              "originalPosition": 93,
+              "body": "Please check, if that is available for DTLS 1.2 at all.",
+              "createdAt": "2021-10-23T06:31:49Z",
+              "updatedAt": "2021-10-23T06:31:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84u7jvP",
+          "commit": {
+            "abbreviatedOid": "a89ef38"
+          },
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-23T06:33:04Z",
+          "updatedAt": "2021-10-23T06:33:04Z",
+          "comments": [
+            {
+              "originalPosition": 102,
+              "body": "AFAIK: \"for general use-cases\", e.g. \"iot\" is not general one. ",
+              "createdAt": "2021-10-23T06:33:04Z",
+              "updatedAt": "2021-10-23T06:33:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84u7k4L",
+          "commit": {
+            "abbreviatedOid": "a89ef38"
+          },
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-23T07:54:49Z",
+          "updatedAt": "2021-10-23T07:54:49Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "See [tls-flags issue 13](https://github.com/tlswg/tls-flags/issues/13). \r\nLooking forward to the answer.",
+              "createdAt": "2021-10-23T07:54:49Z",
+              "updatedAt": "2021-10-23T07:54:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84u8Bvw",
+          "commit": {
+            "abbreviatedOid": "a89ef38"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-24T09:11:35Z",
+          "updatedAt": "2021-10-24T09:11:36Z",
+          "comments": [
+            {
+              "originalPosition": 102,
+              "body": "ok, so this should be Y",
+              "createdAt": "2021-10-24T09:11:35Z",
+              "updatedAt": "2021-10-24T09:11:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84u9mF2",
+          "commit": {
+            "abbreviatedOid": "a89ef38"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "added a few inline suggestions",
+          "createdAt": "2021-10-25T09:52:18Z",
+          "updatedAt": "2021-10-25T09:54:09Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "Let's optimistically assume this is going to be available in 1.2 too.  If not, we'll fix it at the next iteration.",
+              "createdAt": "2021-10-25T09:52:18Z",
+              "updatedAt": "2021-10-25T09:54:09Z"
+            },
+            {
+              "originalPosition": 93,
+              "body": "```suggestion\r\nIANA is requested to allocate an entry to the TLS Flags registry\r\n```",
+              "createdAt": "2021-10-25T09:53:12Z",
+              "updatedAt": "2021-10-25T09:54:09Z"
+            },
+            {
+              "originalPosition": 100,
+              "body": "```suggestion\r\n- Message: CH,SH\r\n```",
+              "createdAt": "2021-10-25T09:53:35Z",
+              "updatedAt": "2021-10-25T09:54:09Z"
+            },
+            {
+              "originalPosition": 102,
+              "body": "```suggestion\r\n- Recommended: Y\r\n```",
+              "createdAt": "2021-10-25T09:53:44Z",
+              "updatedAt": "2021-10-25T09:54:09Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "id": "PR_kwDOFigxk84tlsTh",
+      "title": "rework message format",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/5",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "* explicit challenge/response messages\r\n* fixed size 8 byte cookie\r\n* allow future extensibility of the message types",
+      "createdAt": "2021-10-24T11:40:18Z",
+      "updatedAt": "2021-10-25T12:12:41Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "46cc88c1f4590622d62c9777f0b267a4ee715042",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "message-format",
+      "headRefOid": "1e291fad699c60412c221528d329e896efded729",
+      "closedAt": "2021-10-25T12:12:35Z",
+      "mergedAt": "2021-10-25T12:12:35Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "8b277496d2520879161fded8f8680cf14ca2a675"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk84u8GDN",
+          "commit": {
+            "abbreviatedOid": "1e291fa"
+          },
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-24T12:16:31Z",
+          "updatedAt": "2021-10-24T12:16:32Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "Not that 8 bytes are not OK for me.\r\nBut I see a discussion in the future, that 16 will be better ;-).\r\n(see CCM_8 vs. CCM).",
+              "createdAt": "2021-10-24T12:16:32Z",
+              "updatedAt": "2021-10-24T12:16:32Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84u8L2r",
+          "commit": {
+            "abbreviatedOid": "1e291fa"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-24T16:10:35Z",
+          "updatedAt": "2021-10-24T16:10:35Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "This is a case where 64-bit of entropy are plenty.  Both messages (challenge and response) are _always_ externally protected.",
+              "createdAt": "2021-10-24T16:10:35Z",
+              "updatedAt": "2021-10-24T16:16:01Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84u81X8",
+          "commit": {
+            "abbreviatedOid": "1e291fa"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-10-25T06:30:26Z",
+          "updatedAt": "2021-10-25T06:30:26Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "8 bytes are good for me. ",
+              "createdAt": "2021-10-25T06:30:26Z",
+              "updatedAt": "2021-10-25T06:30:26Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "id": "PR_kwDOFigxk84uUIp8",
+      "title": "Undo the TLS flags extension for negotiating RRC",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/7",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Use a new extension type instead.\r\n\r\nFixes #6",
+      "createdAt": "2021-11-09T22:09:37Z",
+      "updatedAt": "2022-06-24T14:19:08Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "b26245dd7d9ca174a994c9c013f97686921d9f27",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "dont-tlsflag-it",
+      "headRefOid": "4fa4ad125caa7688d9ea13452e6c385859f494b5",
+      "closedAt": "2021-11-26T13:17:35Z",
+      "mergedAt": "2021-11-26T13:17:35Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "e4075ddb9f51cc5e8902313ea0065b08a795206d"
+      },
+      "comments": [
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Yes, if tls-flags are not usable for DTLS 1.2, then go with this.",
+          "createdAt": "2021-11-14T17:52:21Z",
+          "updatedAt": "2021-11-14T17:52:21Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk84wrutz",
+          "commit": {
+            "abbreviatedOid": "f66292f"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-11-26T13:09:33Z",
+          "updatedAt": "2021-11-26T13:09:34Z",
+          "comments": [
+            {
+              "originalPosition": 102,
+              "body": "```suggestion\r\n| Value | Extension Name | TLS 1.3 | DTLS-Only | Recommended | Reference |\r\n```",
+              "createdAt": "2021-11-26T13:09:33Z",
+              "updatedAt": "2021-11-26T13:09:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84wrut8",
+          "commit": {
+            "abbreviatedOid": "f66292f"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-11-26T13:09:34Z",
+          "updatedAt": "2021-11-26T13:09:35Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "```suggestion\r\nthe client includes the `rrc` extension in its ClientHello if it wishes to use\r\n```",
+              "createdAt": "2021-11-26T13:09:34Z",
+              "updatedAt": "2021-11-26T13:09:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84wrux0",
+          "commit": {
+            "abbreviatedOid": "f66292f"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-11-26T13:09:51Z",
+          "updatedAt": "2021-11-26T13:09:51Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "```suggestion\r\n`rrc` extension in its ServerHello.  The `extension_type` value for this\r\n```",
+              "createdAt": "2021-11-26T13:09:51Z",
+              "updatedAt": "2021-11-26T13:09:51Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "id": "PR_kwDOFigxk84uWRk8",
+      "title": "Update draft-ietf-tls-dtls-rrc.md",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/8",
+      "state": "CLOSED",
+      "author": "hannestschofenig",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "test",
+      "createdAt": "2021-11-10T13:19:06Z",
+      "updatedAt": "2021-11-26T13:07:19Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "b26245dd7d9ca174a994c9c013f97686921d9f27",
+      "headRepository": "hannestschofenig/dtls-rrc",
+      "headRefName": "patch-3",
+      "headRefOid": "a2e838d92b5e701ae5d8f057a7fddbbbd91a91ae",
+      "closedAt": "2021-11-26T13:07:15Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 11,
+      "id": "PR_kwDOFigxk84vsPxW",
+      "title": "challenge-response details, including sending threshold",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/11",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fixes #9 and fixes #10",
+      "createdAt": "2021-12-10T17:54:48Z",
+      "updatedAt": "2021-12-21T10:48:13Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "e4075ddb9f51cc5e8902313ea0065b08a795206d",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "challenge-response-refinements",
+      "headRefOid": "6d10e268b4a7f5e46a80f6fd679ebc487f2d3600",
+      "closedAt": "2021-12-21T10:48:09Z",
+      "mergedAt": "2021-12-21T10:48:09Z",
+      "mergedBy": "hannestschofenig",
+      "mergeCommit": {
+        "oid": "c019328bf98e14d4cdec7c04bd301ea4689b024b"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk84xb4fM",
+          "commit": {
+            "abbreviatedOid": "22cc1d8"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "resolve potential ambiguity",
+          "createdAt": "2021-12-10T22:55:12Z",
+          "updatedAt": "2021-12-10T22:55:55Z",
+          "comments": [
+            {
+              "originalPosition": 64,
+              "body": "```suggestion\r\n  DTLS 1.3, and 1.2 when CID is enabled on its sending direction) up to the\r\n```",
+              "createdAt": "2021-12-10T22:55:13Z",
+              "updatedAt": "2021-12-10T22:55:55Z"
+            },
+            {
+              "originalPosition": 78,
+              "body": "```suggestion\r\n  DTLS 1.3, and 1.2 when CID is enabled on its sending direction) up to the\r\n```",
+              "createdAt": "2021-12-10T22:55:30Z",
+              "updatedAt": "2021-12-10T22:55:55Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84xb40W",
+          "commit": {
+            "abbreviatedOid": "f6c4e89"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-12-10T22:58:18Z",
+          "updatedAt": "2021-12-10T22:58:19Z",
+          "comments": [
+            {
+              "originalPosition": 82,
+              "body": "```suggestion\r\n## Timer Choice {#timer-choice}\r\n```",
+              "createdAt": "2021-12-10T22:58:18Z",
+              "updatedAt": "2021-12-10T22:58:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84xcIcU",
+          "commit": {
+            "abbreviatedOid": "a597d78"
+          },
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-12-11T05:29:22Z",
+          "updatedAt": "2021-12-11T05:29:22Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "My feeling, depending on the upper layer protocol and use-case, for very small messages received, I would consider to have also/additionally an absolute threshold. In the scope of the mitigated DoS attack, it should also be clear, if the size to consider is the \"dtls-payload\", the \"udp-payload\", or the \"ip-payload\". Again, for assumed very small IoT messages, that may make the difference.   ",
+              "createdAt": "2021-12-11T05:29:22Z",
+              "updatedAt": "2021-12-11T05:30:02Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84xcIl1",
+          "commit": {
+            "abbreviatedOid": "a597d78"
+          },
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-12-11T05:41:06Z",
+          "updatedAt": "2021-12-11T05:41:06Z",
+          "comments": [
+            {
+              "originalPosition": 92,
+              "body": "The \"default recommendation\" 1s from RFC6347 is already adapted for some upper layer definitions (or experience). I would add to chose the \"default recommendation\" of the use-case, or 1s, if no other assumption is made. E.g.:\r\n- my experience for NB-IoT is about 2.5s.\r\n- CoAP RFC7252 uses 2s (ACK timeout) \r\n ",
+              "createdAt": "2021-12-11T05:41:06Z",
+              "updatedAt": "2021-12-11T05:42:57Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84xcguD",
+          "commit": {
+            "abbreviatedOid": "a597d78"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-12-11T19:30:26Z",
+          "updatedAt": "2021-12-11T19:31:41Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "> My feeling, depending on the upper layer protocol and use-case, for very small messages received, I would consider to have also/additionally an absolute threshold.\r\n\r\nI think there is already an (implicit) upper limit, which is 3xPMTU.\r\n\r\n> In the scope of the mitigated DoS attack, it should also be clear, if the size to consider is the \"dtls-payload\", the \"udp-payload\", or the \"ip-payload\". Again, for assumed very small IoT messages, that may make the difference.\r\n\r\nI don't think we should make assumptions on the underlay.  This refers to data in DTLS Application Data records.  Definitely worth clarifying.",
+              "createdAt": "2021-12-11T19:30:26Z",
+              "updatedAt": "2021-12-11T19:31:41Z"
+            },
+            {
+              "originalPosition": 92,
+              "body": "I hope I have captured that sentiment in the sentence that follows:\r\n_\"If there is a-priori knowledge of the network environment (e.g., endpoints deployed in constrained networks) a different, more suitable value MAY be chosen.\"_\r\nwhich should cater for what you noted without naming names.",
+              "createdAt": "2021-12-11T19:31:32Z",
+              "updatedAt": "2021-12-11T19:31:41Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84xcgwX",
+          "commit": {
+            "abbreviatedOid": "a597d78"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "another fix for clarity",
+          "createdAt": "2021-12-11T19:32:41Z",
+          "updatedAt": "2021-12-11T19:33:18Z",
+          "comments": [
+            {
+              "originalPosition": 64,
+              "body": "```suggestion\r\n  DTLS 1.3 (and in DTLS 1.2, when CID is enabled on its sending direction) up to the\r\n```",
+              "createdAt": "2021-12-11T19:32:41Z",
+              "updatedAt": "2021-12-11T19:33:18Z"
+            },
+            {
+              "originalPosition": 78,
+              "body": "```suggestion\r\n  DTLS 1.3 (and in DTLS 1.2, when CID is enabled on its sending direction) up to the\r\n```",
+              "createdAt": "2021-12-11T19:32:59Z",
+              "updatedAt": "2021-12-11T19:33:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84xchYd",
+          "commit": {
+            "abbreviatedOid": "22cc1d8"
+          },
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-12-11T20:11:43Z",
+          "updatedAt": "2021-12-11T20:11:43Z",
+          "comments": [
+            {
+              "originalPosition": 92,
+              "body": "Hm, yes, I stopped read at the \"1s SHOULD be used\". So, sure, the second sentence covers my cases.\r\nJust as proposal:\r\n\r\n\" If there is a-priori knowledge of the network environment (e.g., endpoints deployed in constrained networks) a different, more suitable value SHOULD be chosen.\r\n\r\nIf an implementation has no way to obtain information regarding the current\r\nRTT, and has no a-priori knowledge of the network environment, a value of 1s, according RFC6347, 4.2.4.1  SHOULD be used.\"\r\n\r\nOtherwise, maybe too many will chose the 1s.\r\n",
+              "createdAt": "2021-12-11T20:11:43Z",
+              "updatedAt": "2021-12-11T20:11:43Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84xcr7s",
+          "commit": {
+            "abbreviatedOid": "c31472f"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-12-12T09:31:31Z",
+          "updatedAt": "2021-12-12T09:31:31Z",
+          "comments": [
+            {
+              "originalPosition": 92,
+              "body": "I don't think a SHOULD without a precise value would work.  I have created https://github.com/thomas-fossati/draft-tls13-iot/issues/18 to deal with this in the IOT-PROFILE draft and the corresponding text in c31472f.",
+              "createdAt": "2021-12-12T09:31:31Z",
+              "updatedAt": "2021-12-13T09:48:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84xeQ6m",
+          "commit": {
+            "abbreviatedOid": "c31472f"
+          },
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-12-13T10:23:28Z",
+          "updatedAt": "2021-12-13T10:23:29Z",
+          "comments": [
+            {
+              "originalPosition": 92,
+              "body": "For me that depends on what should be achieved. \r\n\r\nIf using 1s is considered a good default value, then the text proposed in this PR will be ok. \r\nPlease note, that for the other message exchanges in DTLS 1.2, [RFC6347 4.2.4.1](https://datatracker.ietf.org/doc/html/rfc6347#section-4.2.4.1) that (short) time of 1s is amended by \"double the value at each retransmission, up to no less than the RFC 6298 maximum of 60 seconds.\"\r\nThat helps, for slower paths, even if it may be considered to be not that optimal. \r\nBut for RCC, I don't see a definition, which relaxes that 1s and so using *only* 1s by default, without defining, how that is relaxed, will in my opinion fail on all cases with slower paths.\r\n\r\nTherefore, I would still prefer, to have the \"a-priori knowledge\" listed before that default of 1s.\r\n\r\n> I don't think a SHOULD without a precise value would work.\r\n\r\nI think, a precise `1s` will not work in too many cases.\r\n",
+              "createdAt": "2021-12-13T10:23:28Z",
+              "updatedAt": "2021-12-13T10:23:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84xyInl",
+          "commit": {
+            "abbreviatedOid": "c31472f"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-12-17T13:23:59Z",
+          "updatedAt": "2021-12-17T13:24:00Z",
+          "comments": [
+            {
+              "originalPosition": 50,
+              "body": "1. What happens when the timer expires? \r\n\r\nAdd something like: _\"If the timer expires without receiving a path_response message, the procedure is stopped.\"_\r\n\r\n1. What happens when the initiator receives an invalid path_response message?\r\n\r\nThis would be silently discarded.  (There is no impact on the timer logics.)\r\n",
+              "createdAt": "2021-12-17T13:24:00Z",
+              "updatedAt": "2021-12-17T13:24:00Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84xyJkR",
+          "commit": {
+            "abbreviatedOid": "c31472f"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-12-17T13:28:10Z",
+          "updatedAt": "2021-12-17T13:28:11Z",
+          "comments": [
+            {
+              "originalPosition": 88,
+              "body": "note that RTT in question is the old path's",
+              "createdAt": "2021-12-17T13:28:10Z",
+              "updatedAt": "2021-12-17T13:28:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84xyKCS",
+          "commit": {
+            "abbreviatedOid": "c31472f"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-12-17T13:30:17Z",
+          "updatedAt": "2021-12-17T13:30:18Z",
+          "comments": [
+            {
+              "originalPosition": 90,
+              "body": "lf we want to go the QUIC way, this should be 3x",
+              "createdAt": "2021-12-17T13:30:18Z",
+              "updatedAt": "2021-12-17T13:30:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84xyKoA",
+          "commit": {
+            "abbreviatedOid": "c31472f"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-12-17T13:32:52Z",
+          "updatedAt": "2021-12-17T13:32:53Z",
+          "comments": [
+            {
+              "originalPosition": 68,
+              "body": "add implementation note re: pacing of multiple messages.",
+              "createdAt": "2021-12-17T13:32:52Z",
+              "updatedAt": "2021-12-17T13:32:53Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84xyLE_",
+          "commit": {
+            "abbreviatedOid": "c31472f"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-12-17T13:34:54Z",
+          "updatedAt": "2021-12-17T13:34:55Z",
+          "comments": [
+            {
+              "originalPosition": 62,
+              "body": "make this a MUST and say that the receiver MUST NOT enforce this (because the sender may have no control over the packetization logics of the transport layer)",
+              "createdAt": "2021-12-17T13:34:55Z",
+              "updatedAt": "2021-12-17T14:31:31Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84xyMvz",
+          "commit": {
+            "abbreviatedOid": "c31472f"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-12-17T13:41:58Z",
+          "updatedAt": "2021-12-17T13:41:58Z",
+          "comments": [
+            {
+              "originalPosition": 77,
+              "body": "silently discard such path_response's.",
+              "createdAt": "2021-12-17T13:41:58Z",
+              "updatedAt": "2021-12-17T13:41:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84xyO7N",
+          "commit": {
+            "abbreviatedOid": "c31472f"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-12-17T13:51:05Z",
+          "updatedAt": "2021-12-17T13:51:06Z",
+          "comments": [
+            {
+              "originalPosition": 81,
+              "body": "Remove this.  Replace with text that says that if responder wants to do PMTU discovery it can run another RRC protocol instance with itself as the initiator.",
+              "createdAt": "2021-12-17T13:51:06Z",
+              "updatedAt": "2021-12-17T13:51:06Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84xyYLS",
+          "commit": {
+            "abbreviatedOid": "c31472f"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-12-17T14:27:05Z",
+          "updatedAt": "2021-12-17T14:27:05Z",
+          "comments": [
+            {
+              "originalPosition": 50,
+              "body": "> 1. What happens when the timer expires?\r\n> \r\n> Add something like: _\"If the timer expires without receiving a path_response message, the procedure is stopped.\"_\r\n\r\nThis was already there (hidden by GitHub's UI).",
+              "createdAt": "2021-12-17T14:27:05Z",
+              "updatedAt": "2021-12-17T14:27:05Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84xyZSu",
+          "commit": {
+            "abbreviatedOid": "c31472f"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-12-17T14:31:12Z",
+          "updatedAt": "2021-12-17T14:31:12Z",
+          "comments": [
+            {
+              "originalPosition": 62,
+              "body": "On further reflection, I don't think we can impose a MUST that is outside the control of the DTLS stack.",
+              "createdAt": "2021-12-17T14:31:12Z",
+              "updatedAt": "2021-12-17T14:31:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84xysSZ",
+          "commit": {
+            "abbreviatedOid": "df82fd8"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-12-17T15:37:46Z",
+          "updatedAt": "2021-12-17T15:37:48Z",
+          "comments": [
+            {
+              "originalPosition": 50,
+              "body": "addressed in df82fd8",
+              "createdAt": "2021-12-17T15:37:47Z",
+              "updatedAt": "2021-12-17T15:37:48Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84xysVE",
+          "commit": {
+            "abbreviatedOid": "df82fd8"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-12-17T15:37:56Z",
+          "updatedAt": "2021-12-17T15:37:57Z",
+          "comments": [
+            {
+              "originalPosition": 88,
+              "body": "addressed in df82fd8",
+              "createdAt": "2021-12-17T15:37:56Z",
+              "updatedAt": "2021-12-17T15:37:57Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84xysXK",
+          "commit": {
+            "abbreviatedOid": "df82fd8"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-12-17T15:38:05Z",
+          "updatedAt": "2021-12-17T15:38:05Z",
+          "comments": [
+            {
+              "originalPosition": 90,
+              "body": "addressed in df82fd8",
+              "createdAt": "2021-12-17T15:38:05Z",
+              "updatedAt": "2021-12-17T15:38:05Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84xysZF",
+          "commit": {
+            "abbreviatedOid": "df82fd8"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-12-17T15:38:13Z",
+          "updatedAt": "2021-12-17T15:38:14Z",
+          "comments": [
+            {
+              "originalPosition": 68,
+              "body": "addressed in df82fd8",
+              "createdAt": "2021-12-17T15:38:13Z",
+              "updatedAt": "2021-12-17T15:38:14Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84xysc1",
+          "commit": {
+            "abbreviatedOid": "df82fd8"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-12-17T15:38:27Z",
+          "updatedAt": "2021-12-17T15:38:27Z",
+          "comments": [
+            {
+              "originalPosition": 62,
+              "body": "added a note in df82fd8",
+              "createdAt": "2021-12-17T15:38:27Z",
+              "updatedAt": "2021-12-17T15:38:27Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84xysfg",
+          "commit": {
+            "abbreviatedOid": "df82fd8"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-12-17T15:38:36Z",
+          "updatedAt": "2021-12-17T15:38:37Z",
+          "comments": [
+            {
+              "originalPosition": 77,
+              "body": "addressed in df82fd8",
+              "createdAt": "2021-12-17T15:38:37Z",
+              "updatedAt": "2021-12-17T15:38:37Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk84xysiK",
+          "commit": {
+            "abbreviatedOid": "df82fd8"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2021-12-17T15:38:46Z",
+          "updatedAt": "2021-12-17T15:38:46Z",
+          "comments": [
+            {
+              "originalPosition": 81,
+              "body": "addressed in df82fd8",
+              "createdAt": "2021-12-17T15:38:46Z",
+              "updatedAt": "2021-12-17T15:38:46Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "id": "PR_kwDOFigxk84z5cxu",
+      "title": "Adding the  Off-Path Packet Forwarding text and the no_op message",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/12",
+      "state": "MERGED",
+      "author": "hannestschofenig",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Address #3",
+      "createdAt": "2022-03-03T15:13:24Z",
+      "updatedAt": "2022-06-24T14:19:23Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "c019328bf98e14d4cdec7c04bd301ea4689b024b",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "hannestschofenig-patch-1",
+      "headRefOid": "b489a8bc678b75801fcca10e1d2b5a68939b05ed",
+      "closedAt": "2022-03-07T17:50:00Z",
+      "mergedAt": "2022-03-07T17:50:00Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "921a7aae76e5ca6bbd26764190db0761d784c27d"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk841l88I",
+          "commit": {
+            "abbreviatedOid": "2ea6de9"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-03-03T16:05:07Z",
+          "updatedAt": "2022-03-04T10:40:47Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "any specific reason to jump over 2?",
+              "createdAt": "2022-03-03T16:05:07Z",
+              "updatedAt": "2022-03-04T10:40:47Z"
+            },
+            {
+              "originalPosition": 31,
+              "body": "I guess we can replace this with a reference to the relevant section of QUIC?\r\n```suggestion\r\nThe same off-path attack described in {{Section 9.3.3 of RFC9000}} applies to DTLS sessions that use connection identifiers.\r\n```",
+              "createdAt": "2022-03-04T10:02:31Z",
+              "updatedAt": "2022-03-04T10:40:47Z"
+            },
+            {
+              "originalPosition": 38,
+              "body": "we should define what we mean by \"probing packet\"",
+              "createdAt": "2022-03-04T10:04:01Z",
+              "updatedAt": "2022-03-04T10:40:47Z"
+            },
+            {
+              "originalPosition": 33,
+              "body": "Is this a MUST or a SHOULD?  If it's a MUST it's probably better to describe along  with the path validation algorithm?",
+              "createdAt": "2022-03-04T10:06:46Z",
+              "updatedAt": "2022-03-04T10:40:47Z"
+            },
+            {
+              "originalPosition": 46,
+              "body": "I am probably misunderstanding the mechanics here.  But I'd have thought that if I receive a path_challenge on a path that is active but I don't want to use any more, I should state that explicitly using no_op (which I'd rather call path_drop)?",
+              "createdAt": "2022-03-04T10:40:16Z",
+              "updatedAt": "2022-03-04T10:40:47Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk841qH6D",
+          "commit": {
+            "abbreviatedOid": "2ea6de9"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-03-04T13:39:14Z",
+          "updatedAt": "2022-03-04T13:39:15Z",
+          "comments": [
+            {
+              "originalPosition": 58,
+              "body": "(Add remark that there is no change in connection ID with DTLS 1.2)",
+              "createdAt": "2022-03-04T13:39:14Z",
+              "updatedAt": "2022-03-04T13:39:15Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk841u36F",
+          "commit": {
+            "abbreviatedOid": "2ea6de9"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-03-07T10:09:54Z",
+          "updatedAt": "2022-03-07T10:09:55Z",
+          "comments": [
+            {
+              "originalPosition": 31,
+              "body": "I have re-written the text",
+              "createdAt": "2022-03-07T10:09:55Z",
+              "updatedAt": "2022-03-07T10:09:55Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk841u5OH",
+          "commit": {
+            "abbreviatedOid": "a7323bb"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-03-07T10:14:38Z",
+          "updatedAt": "2022-03-07T10:29:21Z",
+          "comments": [
+            {
+              "originalPosition": 48,
+              "body": "```suggestion\r\nby an attacker and will send a RRC message of type path_challenge (RRC-1)\r\non the old path. \r\n```",
+              "createdAt": "2022-03-07T10:14:38Z",
+              "updatedAt": "2022-03-07T10:29:21Z"
+            },
+            {
+              "originalPosition": 79,
+              "body": "```suggestion\r\nAs shown in {{fig-old-path-dead}}, a RRC message of type path_challenge (RRC-2) needs to be sent on the\r\n```",
+              "createdAt": "2022-03-07T10:18:41Z",
+              "updatedAt": "2022-03-07T10:29:21Z"
+            },
+            {
+              "originalPosition": 81,
+              "body": "I'd remove the parenthetical because this is the overall assumption not something that is specific to this situation.",
+              "createdAt": "2022-03-07T10:20:34Z",
+              "updatedAt": "2022-03-07T10:29:21Z"
+            },
+            {
+              "originalPosition": 148,
+              "body": "```suggestion\r\nin the connection being migrated back to the old path.\r\n```",
+              "createdAt": "2022-03-07T10:22:07Z",
+              "updatedAt": "2022-03-07T10:29:21Z"
+            },
+            {
+              "originalPosition": 219,
+              "body": "```suggestion\r\n1. When the initiator receives and verifies that the `return_routability_check`\r\n```",
+              "createdAt": "2022-03-07T10:23:27Z",
+              "updatedAt": "2022-03-07T10:29:21Z"
+            },
+            {
+              "originalPosition": 220,
+              "body": "the \"updates the peer address binding\" is for when the receiver gets back a verified path_response.  However, at this point it could have received a path_delete, and that'd produce a different action.",
+              "createdAt": "2022-03-07T10:28:25Z",
+              "updatedAt": "2022-03-07T10:29:21Z"
+            },
+            {
+              "originalPosition": 250,
+              "body": "```suggestion\r\n  for each received path_challenge.\r\n```",
+              "createdAt": "2022-03-07T10:29:00Z",
+              "updatedAt": "2022-03-07T10:29:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk841xBlr",
+          "commit": {
+            "abbreviatedOid": "b489a8b"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-03-07T17:49:48Z",
+          "updatedAt": "2022-03-07T17:49:48Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "id": "PR_kwDOFigxk843DOH7",
+      "title": "Editorial pass",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/13",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "* Update DTLS 1.3 and CID refs\r\n* Make the pictures SVG-friendly (see https://tlswg.org/dtls-rrc/update-refs/draft-ietf-tls-dtls-rrc.html#fig-off-path and below.) (Also, see https://github.com/martinthomson/aasvg#usage for installation instructions.)\r\n",
+      "createdAt": "2022-04-29T11:43:28Z",
+      "updatedAt": "2022-05-05T15:57:45Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "2efdd29a9e7a8a761a112de58397db07b66a8d69",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "update-refs",
+      "headRefOid": "974396efedba3ffdcfd81ff9e9e80b24d621a84b",
+      "closedAt": "2022-05-05T15:57:42Z",
+      "mergedAt": "2022-05-05T15:57:42Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "3505ae70b0c36fe6f3805d7ea5eb6e67cd0b091a"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk845bt1G",
+          "commit": {
+            "abbreviatedOid": "529ebe9"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-05-05T15:35:04Z",
+          "updatedAt": "2022-05-05T15:39:19Z",
+          "comments": [
+            {
+              "originalPosition": 115,
+              "body": "```suggestion\r\nthe genuine packet, this will appear as a path change, like in a genuine NAT rebinding occurrence. Any genuine\r\n```",
+              "createdAt": "2022-05-05T15:35:04Z",
+              "updatedAt": "2022-05-05T15:39:19Z"
+            },
+            {
+              "originalPosition": 123,
+              "body": "```suggestion\r\nthe same or better characteristics (e.g., due to a more favourable service level agreements) as the direct path between\r\n```",
+              "createdAt": "2022-05-05T15:36:14Z",
+              "updatedAt": "2022-05-05T15:39:19Z"
+            },
+            {
+              "originalPosition": 141,
+              "body": "```suggestion\r\nmechanisms.\r\n```",
+              "createdAt": "2022-05-05T15:37:19Z",
+              "updatedAt": "2022-05-05T15:39:19Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 21,
+      "id": "PR_kwDOFigxk843Xijl",
+      "title": "s/`path_delete`/`path_drop`",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/21",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix #16\r\n\r\nSigned-off-by: Thomas Fossati <thomas.fossati@arm.com>",
+      "createdAt": "2022-05-05T16:51:28Z",
+      "updatedAt": "2022-05-13T14:02:55Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "3505ae70b0c36fe6f3805d7ea5eb6e67cd0b091a",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "path_drop",
+      "headRefOid": "64aaaf67117e4b5793dd91d2f2507d804bd4b5db",
+      "closedAt": "2022-05-13T14:02:49Z",
+      "mergedAt": "2022-05-13T14:02:49Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "aa3a8bbd6b8118d92a68b70fd6d18b8d0116489d"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 22,
+      "id": "PR_kwDOFigxk843XoQL",
+      "title": "`rrc_msg_type` IANA registry",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/22",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This PR is on top of #21\r\n\r\nFix #14",
+      "createdAt": "2022-05-05T17:19:56Z",
+      "updatedAt": "2022-05-13T14:03:13Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "3505ae70b0c36fe6f3805d7ea5eb6e67cd0b091a",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "msg_type_iana_registry",
+      "headRefOid": "c96173ae83cc7a3e4847afa403a34d0037202b59",
+      "closedAt": "2022-05-13T14:03:10Z",
+      "mergedAt": "2022-05-13T14:03:09Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "b1463677d7b1037b025fdbdfe8937723a07cd0bf"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk845cRbr",
+          "commit": {
+            "abbreviatedOid": "780a328"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-05-05T17:21:16Z",
+          "updatedAt": "2022-05-05T17:21:17Z",
+          "comments": [
+            {
+              "originalPosition": 56,
+              "body": "We should have a `DTLS-only` column as well I guess.",
+              "createdAt": "2022-05-05T17:21:17Z",
+              "updatedAt": "2022-05-05T17:21:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk845cT2Q",
+          "commit": {
+            "abbreviatedOid": "780a328"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-05-05T17:30:14Z",
+          "updatedAt": "2022-05-05T17:30:15Z",
+          "comments": [
+            {
+              "originalPosition": 56,
+              "body": "done in [86f94a7](https://github.com/tlswg/dtls-rrc/pull/22/commits/86f94a76ce500fafb6036b321fba24dbce7e24a6)",
+              "createdAt": "2022-05-05T17:30:15Z",
+              "updatedAt": "2022-05-05T17:30:15Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 23,
+      "id": "PR_kwDOFigxk843X7N_",
+      "title": "IANA Registry for Message Types",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/23",
+      "state": "CLOSED",
+      "author": "hannestschofenig",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-05-05T18:52:54Z",
+      "updatedAt": "2022-06-24T14:19:19Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "3505ae70b0c36fe6f3805d7ea5eb6e67cd0b091a",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "hannestschofenig-patch-2",
+      "headRefOid": "c05f24a8f13b3ab6cdb752f317acdb8f8664c7f6",
+      "closedAt": "2022-05-13T14:03:58Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Dup of #22 ",
+          "createdAt": "2022-05-13T14:03:57Z",
+          "updatedAt": "2022-05-13T14:03:57Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 24,
+      "id": "PR_kwDOFigxk843qswB",
+      "title": "Split section 4 in two",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/24",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix #19",
+      "createdAt": "2022-05-11T17:05:05Z",
+      "updatedAt": "2022-05-13T14:08:11Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "3505ae70b0c36fe6f3805d7ea5eb6e67cd0b091a",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "section-4-restructure",
+      "headRefOid": "b9986ad6e11d221858dfe1c83d7ad86a7e36ba0c",
+      "closedAt": "2022-05-13T14:08:08Z",
+      "mergedAt": "2022-05-13T14:08:08Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "a18e14cf3d106b50eb562c4aeb2bcbddb97d2f49"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 25,
+      "id": "PR_kwDOFigxk843qv7o",
+      "title": "Wrap section 5 into the \"attacker model\" section",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/25",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix #17",
+      "createdAt": "2022-05-11T17:19:32Z",
+      "updatedAt": "2022-05-13T14:10:13Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "3505ae70b0c36fe6f3805d7ea5eb6e67cd0b091a",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "rename-and-move-section-5",
+      "headRefOid": "b2eb94e13ab48d3e3d0ff1632bb414a1f9ebbcff",
+      "closedAt": "2022-05-13T14:10:10Z",
+      "mergedAt": "2022-05-13T14:10:10Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "fb8817be6c74ea9ef0f34f8a40c43da9c5109653"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 26,
+      "id": "PR_kwDOFigxk843utFG",
+      "title": "path validation section reflow",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/26",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "* factor out common text\r\n* remove the spurious \"address confirmation failure\": path validation only fails on timeout\r\n* provide further rationale for choosing between basic and enhanced\r\n\r\nFixes #15\r\nFixes #18",
+      "createdAt": "2022-05-12T15:31:39Z",
+      "updatedAt": "2022-05-13T14:16:46Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "3505ae70b0c36fe6f3805d7ea5eb6e67cd0b091a",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "consistency-check",
+      "headRefOid": "dcef2263a0454812a9fb54f2a11cd74df43f5441",
+      "closedAt": "2022-05-13T14:16:39Z",
+      "mergedAt": "2022-05-13T14:16:39Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "cac13fa42fa5b722a590f1765060f9e04979f645"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 28,
+      "id": "PR_kwDOFigxk843ynXh",
+      "title": "Add missing path_drop",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/28",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix #27\r\n\r\nSigned-off-by: Thomas Fossati <thomas.fossati@arm.com>",
+      "createdAt": "2022-05-13T14:46:43Z",
+      "updatedAt": "2022-05-13T14:47:13Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "cac13fa42fa5b722a590f1765060f9e04979f645",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "bad-path-drop",
+      "headRefOid": "a2bc0c43663eb1b97b382ef0368fe00306e728c6",
+      "closedAt": "2022-05-13T14:47:08Z",
+      "mergedAt": "2022-05-13T14:47:08Z",
+      "mergedBy": "hannestschofenig",
+      "mergeCommit": {
+        "oid": "274ce67cf919ae989942472f8d65fe4e88ce5577"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 32,
+      "id": "PR_kwDOFigxk844pKWw",
+      "title": "fix/improve the \"attacker model\" section",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/32",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "fix/improve the \"attacker model\" section\r\n\r\nFix #31\r\n\r\nSigned-off-by: Thomas Fossati <thomas.fossati@arm.com>",
+      "createdAt": "2022-05-29T17:54:48Z",
+      "updatedAt": "2022-06-23T12:10:25Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "274ce67cf919ae989942472f8d65fe4e88ce5577",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "attacker-model++",
+      "headRefOid": "ccefed5a87f4e9ce53c5cac3cebfa3c9efa0bbad",
+      "closedAt": "2022-06-23T12:10:22Z",
+      "mergedAt": "2022-06-23T12:10:22Z",
+      "mergedBy": "hannestschofenig",
+      "mergeCommit": {
+        "oid": "d80c858665e8ccd07cabf03d2fbceb2d44f4ace6"
+      },
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "CC @boaks",
+          "createdAt": "2022-05-29T17:56:28Z",
+          "updatedAt": "2022-05-29T17:56:28Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk847wqss",
+          "commit": {
+            "abbreviatedOid": "b4b2f2c"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-06-10T11:11:39Z",
+          "updatedAt": "2022-06-10T11:11:40Z",
+          "comments": [
+            {
+              "originalPosition": 21,
+              "body": "```suggestion\r\nthe original packet will be flagged as a duplicate and dropped.\r\n```",
+              "createdAt": "2022-06-10T11:11:40Z",
+              "updatedAt": "2022-06-10T11:11:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk848nH03",
+          "commit": {
+            "abbreviatedOid": "eedda1c"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-06-23T12:10:06Z",
+          "updatedAt": "2022-06-23T12:10:06Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "```suggestion\r\nthe address binding is not altered, thus thwarting the attack.\r\n```",
+              "createdAt": "2022-06-23T12:10:06Z",
+              "updatedAt": "2022-06-23T12:10:06Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 33,
+      "id": "PR_kwDOFigxk844pPJS",
+      "title": "Privacy considerations WRT CID reuse",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/33",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix #30\r\n\r\nSigned-off-by: Thomas Fossati <thomas.fossati@arm.com>",
+      "createdAt": "2022-05-29T19:55:08Z",
+      "updatedAt": "2022-06-23T12:16:20Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "274ce67cf919ae989942472f8d65fe4e88ce5577",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "cid-and-rrc-privacy-cons",
+      "headRefOid": "004c90eb994065477f314b998618e16a768ac7ef",
+      "closedAt": "2022-06-23T12:16:17Z",
+      "mergedAt": "2022-06-23T12:16:16Z",
+      "mergedBy": "hannestschofenig",
+      "mergeCommit": {
+        "oid": "c82b05388a9e5a63140cae44efea9d2cfc6f0a12"
+      },
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "CC @boaks",
+          "createdAt": "2022-05-29T19:55:16Z",
+          "updatedAt": "2022-05-29T19:55:16Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk848QJtS",
+          "commit": {
+            "abbreviatedOid": "f5f9df0"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-06-17T17:57:19Z",
+          "updatedAt": "2022-06-17T17:57:22Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "```suggestion\r\nCIDs as soon as the pool of spare CIDs is depleted (or goes below a threshold).\r\n```",
+              "createdAt": "2022-06-17T17:57:20Z",
+              "updatedAt": "2022-06-17T17:57:22Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk848nIH6",
+          "commit": {
+            "abbreviatedOid": "7c738c0"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-06-23T12:11:06Z",
+          "updatedAt": "2022-06-23T12:11:07Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "```suggestion\r\nnetwork path, as described in {{path-validation}}, as an adversary can otherwise\r\n```",
+              "createdAt": "2022-06-23T12:11:07Z",
+              "updatedAt": "2022-06-23T12:11:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk848nIXj",
+          "commit": {
+            "abbreviatedOid": "9e2cc70"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-06-23T12:11:56Z",
+          "updatedAt": "2022-06-23T12:11:56Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "```suggestion\r\nprovides mechanisms to ensure that a new CID can always be used.  In\r\n```",
+              "createdAt": "2022-06-23T12:11:56Z",
+              "updatedAt": "2022-06-23T12:11:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk848nIi-",
+          "commit": {
+            "abbreviatedOid": "41d994e"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-06-23T12:12:29Z",
+          "updatedAt": "2022-06-23T12:12:29Z",
+          "comments": [
+            {
+              "originalPosition": 9,
+              "body": "```suggestion\r\ngeneral, an endpoint should proactively send a RequestConnectionId message to ask for new\r\n```",
+              "createdAt": "2022-06-23T12:12:29Z",
+              "updatedAt": "2022-06-23T12:12:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk848nJBo",
+          "commit": {
+            "abbreviatedOid": "0b98aa9"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-06-23T12:14:02Z",
+          "updatedAt": "2022-06-23T12:14:03Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "```suggestion\r\nNote that DTLS 1.2 does not offer the ability to request new CIDs during the session lifetime since CIDs have the same life-span\r\n```",
+              "createdAt": "2022-06-23T12:14:02Z",
+              "updatedAt": "2022-06-23T12:14:03Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk848nJQN",
+          "commit": {
+            "abbreviatedOid": "fdd4a5f"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-06-23T12:14:47Z",
+          "updatedAt": "2022-06-23T12:14:47Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "```suggestion\r\nenvironments SHOULD refuse to use CIDs with DTLS 1.2\r\n```",
+              "createdAt": "2022-06-23T12:14:47Z",
+              "updatedAt": "2022-06-23T12:14:47Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk848nJpB",
+          "commit": {
+            "abbreviatedOid": "ccc0ab1"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-06-23T12:16:01Z",
+          "updatedAt": "2022-06-23T12:16:02Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "```suggestion\r\nand switch to DTLS 1.3 if the correlation privacy threat is a concern.\r\n```",
+              "createdAt": "2022-06-23T12:16:01Z",
+              "updatedAt": "2022-06-23T12:16:02Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 34,
+      "id": "PR_kwDOFigxk845dc1w",
+      "title": "add Achim as co-author",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/34",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix #29\r\n\r\nSigned-off-by: Thomas Fossati <thomas.fossati@arm.com>",
+      "createdAt": "2022-06-10T11:30:45Z",
+      "updatedAt": "2022-06-23T12:07:45Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "274ce67cf919ae989942472f8d65fe4e88ce5577",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "add-achim",
+      "headRefOid": "e03bc1a1b41570ff346d56ca22c151bd8ef5320c",
+      "closedAt": "2022-06-23T12:07:42Z",
+      "mergedAt": "2022-06-23T12:07:42Z",
+      "mergedBy": "hannestschofenig",
+      "mergeCommit": {
+        "oid": "1bd33e890bd10adae44970eed7cd1989457c8f13"
+      },
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "cc @boaks\r\n",
+          "createdAt": "2022-06-10T11:31:07Z",
+          "updatedAt": "2022-06-10T11:31:07Z"
+        },
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Thanks! I would put my name on the last position.",
+          "createdAt": "2022-06-18T03:29:39Z",
+          "updatedAt": "2022-06-18T03:29:39Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> Thanks! I would put my name on the last position.\r\n\r\nsorry, reverse alphanumeric it is: T, K, and finally F\r\n\r\n:-)",
+          "createdAt": "2022-06-20T15:46:51Z",
+          "updatedAt": "2022-06-20T15:47:18Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 36,
+      "id": "PR_kwDOFigxk846Ppb1",
+      "title": "Update history for -06",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/36",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix #35\r\n\r\nSigned-off-by: Thomas Fossati <thomas.fossati@arm.com>",
+      "createdAt": "2022-06-23T13:43:30Z",
+      "updatedAt": "2022-06-23T16:54:13Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "c82b05388a9e5a63140cae44efea9d2cfc6f0a12",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "hist",
+      "headRefOid": "58172ce4e78d49545c110e4af13374865a2b3cc3",
+      "closedAt": "2022-06-23T16:54:09Z",
+      "mergedAt": "2022-06-23T16:54:09Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "4627d5c0909e4a690947e54d404c54668cfdf6d4"
+      },
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "cc @boaks",
+          "createdAt": "2022-06-23T13:43:45Z",
+          "updatedAt": "2022-06-23T13:43:45Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 38,
+      "id": "PR_kwDOFigxk846PqhC",
+      "title": "mark 9147 as updated by RRC",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/38",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix #37\r\n\r\nSigned-off-by: Thomas Fossati <thomas.fossati@arm.com>",
+      "createdAt": "2022-06-23T13:46:56Z",
+      "updatedAt": "2022-06-23T15:31:11Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "c82b05388a9e5a63140cae44efea9d2cfc6f0a12",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "update",
+      "headRefOid": "bc64ac979ec7438ee39f71c7286ccaca05ef8ed9",
+      "closedAt": "2022-06-23T15:20:28Z",
+      "mergedAt": "2022-06-23T15:20:28Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "df4f2cc91696f2794a42dbf07933a3dd4e80e4d3"
+      },
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "cc @boaks",
+          "createdAt": "2022-06-23T13:47:06Z",
+          "updatedAt": "2022-06-23T13:47:06Z"
+        },
+        {
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Makes sense to me",
+          "createdAt": "2022-06-23T15:14:16Z",
+          "updatedAt": "2022-06-23T15:14:16Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 39,
+      "id": "PR_kwDOFigxk846QQUz",
+      "title": "Proposed text about the attacker model",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/39",
+      "state": "MERGED",
+      "author": "hannestschofenig",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2022-06-23T15:41:12Z",
+      "updatedAt": "2022-06-23T16:52:17Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "df4f2cc91696f2794a42dbf07933a3dd4e80e4d3",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "hannestschofenig-patch-3",
+      "headRefOid": "a39751f743f0eb8a281c83f2d59deee96ccde4bf",
+      "closedAt": "2022-06-23T16:52:13Z",
+      "mergedAt": "2022-06-23T16:52:13Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "933b35eea66f6c789185d6060acea948bae47555"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk848ojxk",
+          "commit": {
+            "abbreviatedOid": "75f83a3"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-06-23T15:50:38Z",
+          "updatedAt": "2022-06-23T15:54:03Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "```suggestion\r\nIt is not possible for RRC to counter a man-in-the-middle attacker that is\r\n```",
+              "createdAt": "2022-06-23T15:50:38Z",
+              "updatedAt": "2022-06-23T15:54:03Z"
+            },
+            {
+              "originalPosition": 16,
+              "body": "```suggestion\r\nindistinguishable from a genuine network device. Such an attacker could, for \r\nexample, drop, reorder or delay records at will. Man-in-the-middle attackers cannot\r\n```",
+              "createdAt": "2022-06-23T15:53:09Z",
+              "updatedAt": "2022-06-23T15:54:03Z"
+            },
+            {
+              "originalPosition": 18,
+              "body": "```suggestion\r\ncryptographic protections applied by the DTLS record layer.\r\n```",
+              "createdAt": "2022-06-23T15:53:35Z",
+              "updatedAt": "2022-06-23T15:54:03Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk848o3qN",
+          "commit": {
+            "abbreviatedOid": "85a7603"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-06-23T16:47:26Z",
+          "updatedAt": "2022-06-23T16:47:26Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOFigxk848o4uM",
+          "commit": {
+            "abbreviatedOid": "85a7603"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-06-23T16:50:59Z",
+          "updatedAt": "2022-06-23T16:51:00Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "```suggestion\r\nIt is not possible for RRC to counter a man-in-the-middle attacker that is\r\nindistinguishable from a genuine network device. Such an attacker could, for\r\nexample, drop, reorder or delay records at will. Man-in-the-middle attackers cannot\r\ncraft DTLS records that would successfully pass verification due to the\r\ncryptographic protections applied by the DTLS record layer.\r\n```",
+              "createdAt": "2022-06-23T16:50:59Z",
+              "updatedAt": "2022-06-23T16:51:00Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 40,
+      "id": "PR_kwDOFigxk846Tpwn",
+      "title": "Add tls12_cid(25) to content types.",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/40",
+      "state": "MERGED",
+      "author": "boaks",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "No big thing, but I would mention the related tls12_cid content type as well.\r\n\r\nSigned-off-by: Achim Kraus <achim.kraus@cloudcoap.net>",
+      "createdAt": "2022-06-24T11:29:14Z",
+      "updatedAt": "2022-06-24T11:50:42Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "4627d5c0909e4a690947e54d404c54668cfdf6d4",
+      "headRepository": "boaks/dtls-rrc",
+      "headRefName": "add_cid_to_content_type",
+      "headRefOid": "0ed3f24a5c8fde58ea4a144924b4234beaa7c42f",
+      "closedAt": "2022-06-24T11:50:41Z",
+      "mergedAt": "2022-06-24T11:50:41Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "0533d67f78487d2c73de8fbbbbf96c07de064c3f"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk848su7X",
+          "commit": {
+            "abbreviatedOid": "0ed3f24"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2022-06-24T11:41:50Z",
+          "updatedAt": "2022-06-24T11:41:50Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 43,
+      "id": "PR_kwDOFigxk846T7a1",
+      "title": "Explain when an endpoint can avoid doing RRC",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/43",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix #42\r\n\r\nSigned-off-by: Thomas Fossati <thomas.fossati@arm.com>",
+      "createdAt": "2022-06-24T12:52:01Z",
+      "updatedAt": "2022-06-24T14:19:07Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "0533d67f78487d2c73de8fbbbbf96c07de064c3f",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "why-not-must-use",
+      "headRefOid": "83d13b0c5c965aae69fbba451efbee01781b5ca6",
+      "closedAt": "2022-06-24T13:41:16Z",
+      "mergedAt": "2022-06-24T13:41:16Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "7be61af14a680e985ad529c39916a5d04b068ab8"
+      },
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "cc @boaks ",
+          "createdAt": "2022-06-24T12:52:14Z",
+          "updatedAt": "2022-06-24T12:52:14Z"
+        },
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Works for me.",
+          "createdAt": "2022-06-24T13:34:17Z",
+          "updatedAt": "2022-06-24T13:34:17Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 47,
+      "id": "PR_kwDOFigxk846UJmO",
+      "title": "Clarify \"ignore-unkown\" rule",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/47",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix #41\r\n\r\nSigned-off-by: Thomas Fossati <thomas.fossati@arm.com>",
+      "createdAt": "2022-06-24T13:52:18Z",
+      "updatedAt": "2022-06-24T14:18:45Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "7be61af14a680e985ad529c39916a5d04b068ab8",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "clarify-ignore-unknown-rule",
+      "headRefOid": "d7b8799b67370fd998f3962ab54ffc7ada00b7d4",
+      "closedAt": "2022-06-24T14:18:42Z",
+      "mergedAt": "2022-06-24T14:18:42Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "5aad907ca817320655e842a1b60431c228fba7c9"
+      },
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "cc @boaks ",
+          "createdAt": "2022-06-24T13:52:35Z",
+          "updatedAt": "2022-06-24T13:52:35Z"
+        },
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Works for me.",
+          "createdAt": "2022-06-24T13:53:13Z",
+          "updatedAt": "2022-06-24T13:53:13Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 49,
+      "id": "PR_kwDOFigxk846Unc7",
+      "title": "Add the rrc_msg_type to the description of the procedures.",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/49",
+      "state": "MERGED",
+      "author": "boaks",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Signed-off-by: Achim Kraus <achim.kraus@cloudcoap.net>",
+      "createdAt": "2022-06-24T15:59:51Z",
+      "updatedAt": "2022-06-30T17:18:32Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "5aad907ca817320655e842a1b60431c228fba7c9",
+      "headRepository": "boaks/dtls-rrc",
+      "headRefName": "add_rrc_msg_type",
+      "headRefOid": "3f7b8a009fdc33396adf128f4b6d01ae3f1d7ed1",
+      "closedAt": "2022-06-30T17:18:32Z",
+      "mergedAt": "2022-06-30T17:18:32Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "dfcdd59e2dac89188cad242d3ce78387bae11ac5"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk848ughl",
+          "commit": {
+            "abbreviatedOid": "58fcbcd"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-06-24T18:23:41Z",
+          "updatedAt": "2022-06-24T18:23:42Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "```suggestion\r\n1. The peer endpoint cryptographically verifies the received\r\n   `return_routability_check` message of\r\n   type `path_challenge` and responds by echoing the cookie value in a\r\n```",
+              "createdAt": "2022-06-24T18:23:41Z",
+              "updatedAt": "2022-06-24T18:23:42Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk848ugpl",
+          "commit": {
+            "abbreviatedOid": "3f7b8a0"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "LGTM",
+          "createdAt": "2022-06-24T18:24:12Z",
+          "updatedAt": "2022-06-24T18:24:12Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 50,
+      "id": "PR_kwDOFigxk846Uotb",
+      "title": "Add fieldname for Cookie.",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/50",
+      "state": "CLOSED",
+      "author": "boaks",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Signed-off-by: Achim Kraus <achim.kraus@cloudcoap.net>",
+      "createdAt": "2022-06-24T16:05:42Z",
+      "updatedAt": "2022-06-24T18:24:51Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "5aad907ca817320655e842a1b60431c228fba7c9",
+      "headRepository": "boaks/dtls-rrc",
+      "headRefName": "add_cookie_fieldname",
+      "headRefOid": "35be6938b046a56bd8524f7b0117bc88d9e9069e",
+      "closedAt": "2022-06-24T18:24:51Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Cool, I wasn't aware of that.",
+          "createdAt": "2022-06-24T18:24:51Z",
+          "updatedAt": "2022-06-24T18:24:51Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk848uf7Q",
+          "commit": {
+            "abbreviatedOid": "35be693"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "Field labels are optional (see [here](https://datatracker.ietf.org/doc/html/rfc8446#section-3.8)).\r\n\r\nThey seem to not add much.",
+          "createdAt": "2022-06-24T18:21:08Z",
+          "updatedAt": "2022-06-24T18:21:08Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 51,
+      "id": "PR_kwDOFigxk846UqAA",
+      "title": "Fix markdown table.",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/51",
+      "state": "MERGED",
+      "author": "boaks",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Signed-off-by: Achim Kraus <achim.kraus@cloudcoap.net>",
+      "createdAt": "2022-06-24T16:12:10Z",
+      "updatedAt": "2022-06-30T17:17:23Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "a204745637e2bb9f6845a92805c5ed69fe0948cf",
+      "headRepository": "boaks/dtls-rrc",
+      "headRefName": "fix_md_table",
+      "headRefOid": "70f6967415b7d3de4413afac814a790cbd2eb2fa",
+      "closedAt": "2022-06-30T17:17:23Z",
+      "mergedAt": "2022-06-30T17:17:22Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "2b4a0ac6a84c2811df94bb5646b0bcf48cbfb4bd"
+      },
+      "comments": [
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "AFAIK, if you view the table on github directly [draft-ietf-tls-dtls-rrc.md](https://github.com/tlswg/dtls-rrc/blob/master/draft-ietf-tls-dtls-rrc.md#new-tls-contenttype), it's broken (Firefox, Opera). \r\nIf the second line is adjusted, it's shown proper.",
+          "createdAt": "2022-06-24T18:29:30Z",
+          "updatedAt": "2022-06-24T18:29:30Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Ah, ok! Note though that the important thing for us is the rendering obtained via kdrfc / xml2rfc.  Have you tried locally to see if the change displays correctly with those tools?",
+          "createdAt": "2022-06-24T18:36:53Z",
+          "updatedAt": "2022-06-24T18:36:53Z"
+        },
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> Have you tried locally to see if the change displays correctly with those tools?\r\n\r\nNo, I will do that on Monday.",
+          "createdAt": "2022-06-24T18:59:22Z",
+          "updatedAt": "2022-06-24T18:59:22Z"
+        },
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> kdrfc / xml2rfc\r\n\r\nIs there a link to download or package to install?\r\n\r\n",
+          "createdAt": "2022-06-24T19:07:38Z",
+          "updatedAt": "2022-06-24T19:07:38Z"
+        },
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "[xml2rfc](https://pypi.org/project/xml2rfc/)\r\n\r\n> ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\r\n> breathe 4.25.1 requires Sphinx<3.4,>=3.0, but you have sphinx 3.4.1 which is incompatible.\r\n\r\n",
+          "createdAt": "2022-06-24T19:12:36Z",
+          "updatedAt": "2022-06-24T19:12:36Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> > kdrfc / xml2rfc\r\n> \r\n> Is there a link to download or package to install?\r\n\r\nSee https://github.com/martinthomson/i-d-template/blob/main/doc/SETUP.md for a pretty complete setup.",
+          "createdAt": "2022-06-24T19:15:06Z",
+          "updatedAt": "2022-06-24T19:15:06Z"
+        },
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "```\r\npip3 install --user xml2rfc\r\n```\r\n\r\nworks. Is there a guide how to execute it?\r\n",
+          "createdAt": "2022-06-24T19:18:30Z",
+          "updatedAt": "2022-06-24T19:18:30Z"
+        },
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> Error: Unable to parse the XML document: draft-ietf-tls-dtls-rrc.md\r\n\r\nIs there a guide, which tools are required, to convert a .md file and how to install and run them?\r\n ",
+          "createdAt": "2022-06-24T19:22:40Z",
+          "updatedAt": "2022-06-24T19:22:40Z"
+        },
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "kramdown-rfc requires ruby ...\r\n\r\nMay experience with such \"import all tools of the world\" is, \r\nthat my PC stops to work for the things which are important for me.\r\n\r\nMaybe there is a docker image with the tools?",
+          "createdAt": "2022-06-24T19:27:01Z",
+          "updatedAt": "2022-06-24T19:27:01Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> Maybe there is a docker image with the tools?\r\n\r\nyou can try this: https://github.com/larseggert/i-d-toolchain\r\n\r\nor this: https://github.com/martinthomson/i-d-template/tree/main/docker/action",
+          "createdAt": "2022-06-24T20:41:58Z",
+          "updatedAt": "2022-06-24T20:42:09Z"
+        },
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I applied [i-d-toolchain via web ui](https://github.com/larseggert/i-d-toolchain#via-a-web-ui). It works with the changed table as well.\r\n\r\nI don't insist in this change, though the \"i-d-toolchain\" doesn't depend on it, \r\nbut for me it is more compliant to [markdown tables](https://www.markdownguide.org/extended-syntax/#tables).\r\n",
+          "createdAt": "2022-06-25T14:36:17Z",
+          "updatedAt": "2022-06-25T14:36:17Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk848ue3y",
+          "commit": {
+            "abbreviatedOid": "d166a97"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "not sure what does this fix :-) It already seem to render correctly, see [here](https://tlswg.org/dtls-rrc/draft-ietf-tls-dtls-rrc.html#table-1)",
+          "createdAt": "2022-06-24T18:16:44Z",
+          "updatedAt": "2022-06-24T18:16:44Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 52,
+      "id": "PR_kwDOFigxk846VCR5",
+      "title": "s/previously/currently/",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/52",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix #46\r\n\r\nSigned-off-by: Thomas Fossati <thomas.fossati@arm.com>",
+      "createdAt": "2022-06-24T18:11:58Z",
+      "updatedAt": "2022-06-24T18:37:18Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "5aad907ca817320655e842a1b60431c228fba7c9",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "currently",
+      "headRefOid": "1133ed1d24b7508cf4a1aba71f63a50b0d224f9d",
+      "closedAt": "2022-06-24T18:37:17Z",
+      "mergedAt": "2022-06-24T18:37:17Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "a204745637e2bb9f6845a92805c5ed69fe0948cf"
+      },
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "cc @boaks ",
+          "createdAt": "2022-06-24T18:12:09Z",
+          "updatedAt": "2022-06-24T18:12:09Z"
+        },
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "works for me",
+          "createdAt": "2022-06-24T18:31:27Z",
+          "updatedAt": "2022-06-24T18:31:27Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 54,
+      "id": "PR_kwDOFigxk846uRRw",
+      "title": "Attacker model revamp",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/54",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix #44\r\nFix #45\r\nFix #48\r\n\r\nSigned-off-by: Thomas Fossati <thomas.fossati@arm.com>",
+      "createdAt": "2022-07-01T17:48:46Z",
+      "updatedAt": "2022-07-06T16:29:50Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "dfcdd59e2dac89188cad242d3ce78387bae11ac5",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "attacker-revamp",
+      "headRefOid": "c4ccb1b6b43b1fb78b7399cd4113ac5e77144d18",
+      "closedAt": "2022-07-06T16:29:46Z",
+      "mergedAt": "2022-07-06T16:29:46Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "b38a7d5c15c77529e22aeac6cf71bb889c8c997a"
+      },
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "cc @boaks ",
+          "createdAt": "2022-07-01T17:48:55Z",
+          "updatedAt": "2022-07-01T17:48:55Z"
+        },
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "From my side LGTM.",
+          "createdAt": "2022-07-04T13:58:31Z",
+          "updatedAt": "2022-07-04T13:58:31Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk849P13o",
+          "commit": {
+            "abbreviatedOid": "6273565"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-07-04T13:31:42Z",
+          "updatedAt": "2022-07-04T13:31:42Z",
+          "comments": [
+            {
+              "originalPosition": 26,
+              "body": "```suggestion\r\n  packets, race its copies to either peer and consistently wins the race.\r\n```",
+              "createdAt": "2022-07-04T13:31:42Z",
+              "updatedAt": "2022-07-04T13:31:42Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk849QQhW",
+          "commit": {
+            "abbreviatedOid": "6273565"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-07-04T15:02:55Z",
+          "updatedAt": "2022-07-04T15:02:56Z",
+          "comments": [
+            {
+              "originalPosition": 26,
+              "body": "In this case \"win\" is an infinitive with an elided \"to\" for brevity / to avoid redundancy.\r\n\r\nIt'd be _\"[...] to race its copies to either peer and to consistently win the race.\"_",
+              "createdAt": "2022-07-04T15:02:56Z",
+              "updatedAt": "2022-07-04T15:03:06Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk849Zpss",
+          "commit": {
+            "abbreviatedOid": "6273565"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-07-06T13:50:56Z",
+          "updatedAt": "2022-07-06T13:50:57Z",
+          "comments": [
+            {
+              "originalPosition": 26,
+              "body": "Ok. Then, ignore my comment\r\n",
+              "createdAt": "2022-07-06T13:50:57Z",
+              "updatedAt": "2022-07-06T13:50:57Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk849adch",
+          "commit": {
+            "abbreviatedOid": "6273565"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-07-06T16:00:36Z",
+          "updatedAt": "2022-07-06T16:00:36Z",
+          "comments": [
+            {
+              "originalPosition": 44,
+              "body": "inspect unencrypted portions",
+              "createdAt": "2022-07-06T16:00:36Z",
+              "updatedAt": "2022-07-06T16:00:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk849adul",
+          "commit": {
+            "abbreviatedOid": "6273565"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2022-07-06T16:01:26Z",
+          "updatedAt": "2022-07-06T16:01:26Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "```suggestion\r\ncapabilities (see {{fig-attacker-capabilities}}) partly following terminology introduced in QUIC {{RFC9000}}:\r\n```",
+              "createdAt": "2022-07-06T16:01:26Z",
+              "updatedAt": "2022-07-06T16:02:08Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 56,
+      "id": "PR_kwDOFigxk847N8u6",
+      "title": "fix names in acknowledgments",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/56",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Signed-off-by: Thomas Fossati <thomas.fossati@arm.com>",
+      "createdAt": "2022-07-11T20:13:54Z",
+      "updatedAt": "2022-09-09T09:50:42Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "b38a7d5c15c77529e22aeac6cf71bb889c8c997a",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "fix-acks",
+      "headRefOid": "e9eaf586fcd09a43d302bac716dc00ddb9465802",
+      "closedAt": "2022-09-09T09:50:40Z",
+      "mergedAt": "2022-09-09T09:50:40Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "b14451df13342bc41929b6394f5c74014ca47d3c"
+      },
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Also, remove @boaks who's now a co-author.",
+          "createdAt": "2022-07-11T20:14:19Z",
+          "updatedAt": "2022-07-11T20:14:19Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 59,
+      "id": "PR_kwDOFigxk84-qn2S",
+      "title": "remove potential ambiguity in timer setting ",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/59",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix #57 \r\n\r\n/cc @boaks \r\n\r\nSigned-off-by: Thomas Fossati <thomas.fossati@arm.com>",
+      "createdAt": "2022-09-09T09:52:08Z",
+      "updatedAt": "2022-09-09T13:50:50Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "b14451df13342bc41929b6394f5c74014ca47d3c",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "timer-setting-ambiguity",
+      "headRefOid": "e6ee21073d27f4f75dbfc5d055b7edfa686eb7b0",
+      "closedAt": "2022-09-09T13:50:47Z",
+      "mergedAt": "2022-09-09T13:50:47Z",
+      "mergedBy": "hannestschofenig",
+      "mergeCommit": {
+        "oid": "252a82ec1dc048b3493f3171e55f8622d4590c38"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 60,
+      "id": "PR_kwDOFigxk84-qvo_",
+      "title": "fix caption and text surrounding fig 8",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/60",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix #58\r\n\r\n/cc @boaks \r\n\r\nSigned-off-by: Thomas Fossati <thomas.fossati@arm.com>",
+      "createdAt": "2022-09-09T10:24:29Z",
+      "updatedAt": "2022-09-09T13:49:21Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "b14451df13342bc41929b6394f5c74014ca47d3c",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "fix-figure-8-caption",
+      "headRefOid": "6f28cf1df385cdd421b8288fd993f3fdcb5f97c5",
+      "closedAt": "2022-09-09T13:49:18Z",
+      "mergedAt": "2022-09-09T13:49:18Z",
+      "mergedBy": "hannestschofenig",
+      "mergeCommit": {
+        "oid": "35e87a11d9171d0efa27031a43a4011dd8ff9c3e"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 61,
+      "id": "PR_kwDOFigxk84-ru6s",
+      "title": "acks += martin + update changelog",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/61",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Signed-off-by: Thomas Fossati <thomas.fossati@arm.com>",
+      "createdAt": "2022-09-09T14:27:29Z",
+      "updatedAt": "2022-09-09T14:28:18Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "252a82ec1dc048b3493f3171e55f8622d4590c38",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "acks",
+      "headRefOid": "cf81ed3432e9cf79553b4a0652f98860fa0da5f5",
+      "closedAt": "2022-09-09T14:28:18Z",
+      "mergedAt": "2022-09-09T14:28:18Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "96b2d8d94aa74ef32ba08769581c14c5a79c2e13"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 63,
+      "id": "PR_kwDOFigxk85cIDmN",
+      "title": "Marco Tiloca's WGLC comments",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/63",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This is my initial attempt at addressing Marco's review comments ( #62 ).\r\n\r\nMost of his comments were very precise and sensible, so I just applied the suggestion more or less verbatim.\r\n\r\n----\r\n\r\nThings not (yet) addressed, which we need to discuss:\r\n\r\n* _\"I think that another requirement should be that the initiator MUST NOT act on more than one valid path_response or path_drop message for each path_challenge message that it has sent.\"_\r\n\r\nI am not sure about this because that's a state that can't materialise if the responder obeys the specified MUSTs:\r\n\r\n* _\"The responder MUST send exactly one path_response or path_drop message for each received path_challenge.\"_\r\n\r\n----\r\n\r\nWhile in the flow, I reworked / streamlined a bit the intro material.  Specifically, I removed the first paragraph fundamentally because it's CID background, which does not really belong here and it's easy to factor out with a single reference to 9146.  Besides, Marco's suggested reflow made me realise this paragraph didn't connect well with the surrounding text.\r\n\r\n----\r\n\r\nAnother bit I've changed is the registration policy for the RRC messages registry.  I think it is for a STD/BCP document to change the contents of the registry, rather than pushing the responsibility to the DE.\r\n\r\n\r\n----\r\n\r\nrendered at: https://tlswg.org/dtls-rrc/marco-wglc-review/draft-ietf-tls-dtls-rrc.html\r\n",
+      "createdAt": "2023-10-06T15:49:48Z",
+      "updatedAt": "2023-10-09T13:52:26Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "d756ce49917371a4e1ce89a2cea1f5a379674a39",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "marco-wglc-review",
+      "headRefOid": "a69e9a2f49c884074bfa0de4d7097e90e7b729ac",
+      "closedAt": "2023-10-09T13:52:17Z",
+      "mergedAt": "2023-10-09T13:52:17Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "f25745d7fc43fd3d892ad956c28aae7d028fed37"
+      },
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@boaks @hannestschofenig: if you have time before Monday please have a look and comment, otherwise we will look at it in our call.",
+          "createdAt": "2023-10-06T15:51:30Z",
+          "updatedAt": "2023-10-06T15:51:30Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@hannestschofenig @boaks: Given [Marco's ACK](https://mailarchive.ietf.org/arch/msg/tls/uimyEYq0dOGFmWCuUPbbX3ZgTp8/) on the mailing list, I'll go ahead and merge this as agreed in our call this morning.",
+          "createdAt": "2023-10-09T13:51:45Z",
+          "updatedAt": "2023-10-09T13:52:05Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk85jIvGR",
+          "commit": {
+            "abbreviatedOid": "6a84fa7"
+          },
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-10-08T13:10:48Z",
+          "updatedAt": "2023-10-08T13:10:48Z",
+          "comments": [
+            {
+              "originalPosition": 40,
+              "body": "Assuming \"multiple address changes\" and potential \"multiple RRC\", the phrase \"latest indicated address and port\" doesn't fit. Isn't it the \"tested\" one? Or something in that direction.  ",
+              "createdAt": "2023-10-08T13:10:48Z",
+              "updatedAt": "2023-10-08T13:10:48Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk85jIvHm",
+          "commit": {
+            "abbreviatedOid": "6a84fa7"
+          },
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-10-08T13:11:32Z",
+          "updatedAt": "2023-10-08T13:11:32Z",
+          "comments": [
+            {
+              "originalPosition": 49,
+              "body": "\"known\" or \"verified\"?",
+              "createdAt": "2023-10-08T13:11:32Z",
+              "updatedAt": "2023-10-08T13:11:32Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk85jIvhz",
+          "commit": {
+            "abbreviatedOid": "6a84fa7"
+          },
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-10-08T13:25:06Z",
+          "updatedAt": "2023-10-08T13:25:07Z",
+          "comments": [
+            {
+              "originalPosition": 211,
+              "body": "TLS? CID is not supported for TLS, instead it's DTLS only, or?",
+              "createdAt": "2023-10-08T13:25:07Z",
+              "updatedAt": "2023-10-08T13:25:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk85jK8vL",
+          "commit": {
+            "abbreviatedOid": "6a84fa7"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-10-09T06:55:48Z",
+          "updatedAt": "2023-10-09T06:55:48Z",
+          "comments": [
+            {
+              "originalPosition": 211,
+              "body": "Fixed in [a2c7fd8](https://github.com/tlswg/dtls-rrc/pull/63/commits/a2c7fd8d91103cf047fb69ae02d9892593ce5e88)",
+              "createdAt": "2023-10-09T06:55:48Z",
+              "updatedAt": "2023-10-09T06:55:48Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk85jLAmO",
+          "commit": {
+            "abbreviatedOid": "6a84fa7"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-10-09T07:09:12Z",
+          "updatedAt": "2023-10-09T07:09:12Z",
+          "comments": [
+            {
+              "originalPosition": 40,
+              "body": "I think in this case _indicated_ is not wrong (maybe there's a more fitting English word but my mastery of the language is limited.)\r\n\r\nThe wannabe sending peer (or some other box on the path) has _indicated_ its transport address in the UDP (or DCCP?) / IP header, which RRC needs to _test_ to confirm (or deny) actual reachability.",
+              "createdAt": "2023-10-09T07:09:12Z",
+              "updatedAt": "2023-10-09T07:09:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk85jLBe-",
+          "commit": {
+            "abbreviatedOid": "6a84fa7"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-10-09T07:12:09Z",
+          "updatedAt": "2023-10-09T07:12:09Z",
+          "comments": [
+            {
+              "originalPosition": 49,
+              "body": "In this context I don't think there is any substantial difference between the two terms.",
+              "createdAt": "2023-10-09T07:12:09Z",
+              "updatedAt": "2023-10-09T08:29:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk85jL1rd",
+          "commit": {
+            "abbreviatedOid": "6a84fa7"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-10-09T09:27:36Z",
+          "updatedAt": "2023-10-09T09:27:36Z",
+          "comments": [
+            {
+              "originalPosition": 40,
+              "body": "As per f2f discussion: clarified in [a69e9a2](https://github.com/tlswg/dtls-rrc/pull/63/commits/a69e9a2f49c884074bfa0de4d7097e90e7b729ac)",
+              "createdAt": "2023-10-09T09:27:36Z",
+              "updatedAt": "2023-10-09T09:27:36Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 65,
+      "id": "PR_kwDOFigxk85dCV3W",
+      "title": "Sean's shepherd review comments",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/65",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix #64",
+      "createdAt": "2023-10-17T16:11:34Z",
+      "updatedAt": "2023-11-10T09:03:59Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "f25745d7fc43fd3d892ad956c28aae7d028fed37",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "sean",
+      "headRefOid": "a78891635cc7785c14aa5984ab7276812a04140c",
+      "closedAt": "2023-11-10T09:03:56Z",
+      "mergedAt": "2023-11-10T09:03:56Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "16e599b0fb9b1ee2fe29c715ab865bb492dd93ba"
+      },
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "CC: @boaks ",
+          "createdAt": "2023-10-17T16:12:15Z",
+          "updatedAt": "2023-10-17T16:12:15Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "OK, hearing no pushback I am going to merge this one.",
+          "createdAt": "2023-11-10T09:03:52Z",
+          "updatedAt": "2023-11-10T09:03:52Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 66,
+      "id": "PR_kwDOFigxk85dCdef",
+      "title": "IANA tweak",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/66",
+      "state": "CLOSED",
+      "author": "seanturner",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Probably worth noting that the `rrc` content type is only applicable to DTLS 1.2 & 1.3. And, we need to say explicitly how to set the DTLS-OK column.",
+      "createdAt": "2023-10-17T16:31:38Z",
+      "updatedAt": "2023-10-17T17:48:06Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "f25745d7fc43fd3d892ad956c28aae7d028fed37",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "seanturner-iana-tweak",
+      "headRefOid": "ef9a20c5d4e821652eda0cd848e1643b3871e661",
+      "closedAt": "2023-10-17T16:36:08Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Apologies, I hadn't seen this :-(",
+          "createdAt": "2023-10-17T17:48:06Z",
+          "updatedAt": "2023-10-17T17:48:06Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 68,
+      "id": "PR_kwDOFigxk85fHov5",
+      "title": "Yaron's review",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/68",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "* add fwd reference to the threat model when the problem is presented in the intro\r\n* RRC is a sub-protocol\r\n* separate description of attack from its mitigation\r\n* ack Yaron\r\n\r\nFix #67",
+      "createdAt": "2023-11-10T09:11:40Z",
+      "updatedAt": "2024-01-17T12:33:33Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "16e599b0fb9b1ee2fe29c715ab865bb492dd93ba",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "yaron-review",
+      "headRefOid": "c91df609f8a94508ec783d21099b99b78c385e17",
+      "closedAt": "2024-01-17T12:33:30Z",
+      "mergedAt": "2024-01-17T12:33:30Z",
+      "mergedBy": "hannestschofenig",
+      "mergeCommit": {
+        "oid": "1b755c9ca5df9fad82e9ab8c8443bf05ce65ca87"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk85mx8Ma",
+          "commit": {
+            "abbreviatedOid": "5f4db85"
+          },
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-11-10T09:27:54Z",
+          "updatedAt": "2023-11-10T09:27:54Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "Just as proposal:\r\n\r\n`s/who try/trying/`\r\n\r\n",
+              "createdAt": "2023-11-10T09:27:54Z",
+              "updatedAt": "2023-11-10T09:27:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk85mx_iG",
+          "commit": {
+            "abbreviatedOid": "5f4db85"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-11-10T09:35:25Z",
+          "updatedAt": "2023-11-10T09:35:25Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "```suggestion\r\nThis mechanism is designed to counteract off-path attackers trying to place themselves on-path by racing packets that trigger address rebinding at the receiver.\r\n```",
+              "createdAt": "2023-11-10T09:35:25Z",
+              "updatedAt": "2023-11-10T09:35:25Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk85myAKh",
+          "commit": {
+            "abbreviatedOid": "5f4db85"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-11-10T09:36:59Z",
+          "updatedAt": "2023-11-10T09:36:59Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "done in [c91df60](https://github.com/tlswg/dtls-rrc/pull/68/commits/c91df609f8a94508ec783d21099b99b78c385e17)",
+              "createdAt": "2023-11-10T09:36:59Z",
+              "updatedAt": "2023-11-10T09:36:59Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 69,
+      "id": "PR_kwDOFigxk85gUjk4",
+      "title": "Add Private Use Space",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/69",
+      "state": "MERGED",
+      "author": "seanturner",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "During early IANA code point assignment call, Rich suggested Private Use space.",
+      "createdAt": "2023-11-24T16:23:59Z",
+      "updatedAt": "2024-01-17T12:33:47Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "16e599b0fb9b1ee2fe29c715ab865bb492dd93ba",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "seanturner-private-use-space",
+      "headRefOid": "efc219ee4e0c44c8ce19fb959e8f1fa1cd38cb3f",
+      "closedAt": "2024-01-17T12:33:44Z",
+      "mergedAt": "2024-01-17T12:33:44Z",
+      "mergedBy": "hannestschofenig",
+      "mergeCommit": {
+        "oid": "8b00c118be76e9874c98e7cf609ed162441bb8a9"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk85oNYUV",
+          "commit": {
+            "abbreviatedOid": "efc219e"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "sounds sensible, thanks!",
+          "createdAt": "2023-11-24T18:54:06Z",
+          "updatedAt": "2023-11-24T18:54:06Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 70,
+      "id": "PR_kwDOFigxk85n1qfn",
+      "title": "Better Terminology Alignment with QUIC",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/70",
+      "state": "CLOSED",
+      "author": "hannestschofenig",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-02-25T10:51:37Z",
+      "updatedAt": "2024-03-03T08:29:47Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "8b00c118be76e9874c98e7cf609ed162441bb8a9",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "hannestschofenig-patch-1",
+      "headRefOid": "b4f527a562e1ec2e7cbc6b65e1cce55692b5b1a0",
+      "closedAt": "2024-03-03T08:29:21Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I have closed this PR since the new text is unlikely to improve readability of the document. ",
+          "createdAt": "2024-03-03T08:29:46Z",
+          "updatedAt": "2024-03-03T08:29:46Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk85xOmPx",
+          "commit": {
+            "abbreviatedOid": "b4f527a"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-25T10:59:23Z",
+          "updatedAt": "2024-02-25T10:59:23Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "Attackers are not assumed to have control over L3 routing.  Instead, they can observe packets on one network segment and make (modified) copies on another segment and win the race to the destination due to, e.g., better SLA.",
+              "createdAt": "2024-02-25T10:59:23Z",
+              "updatedAt": "2024-02-25T10:59:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk85xOmSM",
+          "commit": {
+            "abbreviatedOid": "b4f527a"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-25T11:00:35Z",
+          "updatedAt": "2024-02-25T11:00:35Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "This is what the original L179-182 try to convey.",
+              "createdAt": "2024-02-25T11:00:35Z",
+              "updatedAt": "2024-02-25T11:00:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk85xOmf_",
+          "commit": {
+            "abbreviatedOid": "b4f527a"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-25T11:05:22Z",
+          "updatedAt": "2024-02-25T11:05:22Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "I copied the text from of Section 21.1 of QUIC. ",
+              "createdAt": "2024-02-25T11:05:22Z",
+              "updatedAt": "2024-02-25T11:05:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk85xOmgd",
+          "commit": {
+            "abbreviatedOid": "b4f527a"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-25T11:05:35Z",
+          "updatedAt": "2024-02-25T11:05:35Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "https://www.rfc-editor.org/rfc/rfc9000#name-overview-of-security-proper\r\n",
+              "createdAt": "2024-02-25T11:05:35Z",
+              "updatedAt": "2024-02-25T11:05:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk85xOoJD",
+          "commit": {
+            "abbreviatedOid": "b4f527a"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-25T11:45:24Z",
+          "updatedAt": "2024-02-25T11:45:25Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "Ah ok.  Reading that bit from QUIC makes it seem the attacker is more powerful than it needs to be though.   In my understanding, it is actually a very specific L4 routing manipulation that is assumed, rather than full-blown control over L3 paths.",
+              "createdAt": "2024-02-25T11:45:25Z",
+              "updatedAt": "2024-02-25T11:45:25Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk85xOoQg",
+          "commit": {
+            "abbreviatedOid": "b4f527a"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-25T11:48:13Z",
+          "updatedAt": "2024-02-25T11:48:13Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "Obviously, if the attacker is a router that can inject \"better routes\" through itself, it can be classified as an off-path attacker in our (i.e., QUIC) terminology.  But, it's not necessary to be that powerful.",
+              "createdAt": "2024-02-25T11:48:13Z",
+              "updatedAt": "2024-02-25T11:48:13Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 73,
+      "id": "PR_kwDOFigxk858iiTg",
+      "title": "chore: update CI",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/73",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-09-24T15:52:42Z",
+      "updatedAt": "2024-09-24T15:53:27Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "8b00c118be76e9874c98e7cf609ed162441bb8a9",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "ci-fix",
+      "headRefOid": "3e662fdd2dc450326983ea3e8710d4db16f965f9",
+      "closedAt": "2024-09-24T15:53:23Z",
+      "mergedAt": "2024-09-24T15:53:23Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "081ea4d492277461eac3c066278758f88ce3c7f9"
+      },
+      "comments": [],
+      "reviews": []
+    }
+  ]
 }
