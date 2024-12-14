@@ -28,12 +28,14 @@ pi:
 author:
   - ins: H. Tschofenig
     name: Hannes Tschofenig
+    org: University of Applied Sciences Bonn-Rhein-Sieg
+    abbrev: H-BRS
     role: editor
-    email: hannes.tschofenig@gmx.net
-  - ins: A. Kraus
+    email: Hannes.Tschofenig@gmx.net
+ - ins: A. Kraus
     name: Achim Kraus
     email: achimkraus@gmx.net
-  - ins: T. Fossati
+ - ins: T. Fossati
     name: Thomas Fossati
     organization: Linaro
     email: thomas.fossati@linaro.org
