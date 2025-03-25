@@ -32,10 +32,10 @@ author:
     abbrev: H-BRS
     role: editor
     email: Hannes.Tschofenig@gmx.net
- - ins: A. Kraus
+  - ins: A. Kraus
     name: Achim Kraus
     email: achimkraus@gmx.net
- - ins: T. Fossati
+  - ins: T. Fossati
     name: Thomas Fossati
     organization: Linaro
     email: thomas.fossati@linaro.org
@@ -436,6 +436,8 @@ the initiator and responder roles, broken down per protocol phase.
 
 ## Basic {#regular}
 
+The basic return routability check comprises the following steps:
+
 1. The receiver (i.e., the initiator) creates a `return_routability_check` message of
    type `path_challenge` and places the unpredictable cookie into the message.
 1. The message is sent to the observed new address and a timer T (see
@@ -450,6 +452,8 @@ the initiator and responder roles, broken down per protocol phase.
 1. If T expires the peer address binding is not updated.
 
 ## Enhanced {#enhanced}
+
+The enhanced return routability check comprises the following steps:
 
 1. The receiver (i.e., the initiator) creates a `return_routability_check` message of
    type `path_challenge` and places the unpredictable cookie into the message.
