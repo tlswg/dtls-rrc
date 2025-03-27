@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-25T01:54:11.155582+00:00",
+  "timestamp": "2025-03-27T01:53:06.971947+00:00",
   "repo": "tlswg/dtls-rrc",
   "labels": [
     {
@@ -4016,6 +4016,34 @@
       "mergedBy": "thomas-fossati",
       "mergeCommit": {
         "oid": "081ea4d492277461eac3c066278758f88ce3c7f9"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 74,
+      "id": "PR_kwDOFigxk86QDNK6",
+      "title": "fix compilation",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/74",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The compilation was broken (invalid markdown)",
+      "createdAt": "2025-03-25T13:58:34Z",
+      "updatedAt": "2025-03-25T13:58:49Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "135f655e7fbe4f727ad2f46263533186b06ca601",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "fix",
+      "headRefOid": "5f1edb445b0eae738e2bf8257d91ba854676cef8",
+      "closedAt": "2025-03-25T13:58:44Z",
+      "mergedAt": "2025-03-25T13:58:44Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "2773c8d3ae86ad6942948beea480b0408b456585"
       },
       "comments": [],
       "reviews": []
