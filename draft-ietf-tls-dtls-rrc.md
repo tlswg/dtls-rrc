@@ -679,9 +679,9 @@ IANA is requested to allocate the extension code point (TBD1) for the `rrc`
 extension to the `TLS ExtensionType Values` registry as described in
 {{tbl-ext}}.
 
-| Value | Extension Name | TLS 1.3 | DTLS-Only  | Recommended  | Reference |
-| ----- | -------------- | ------- | ---------- | ------------ | --------- |
-| TBD1  | rrc            | CH, SH  | Y          | N            | {{&SELF}} |
+| Value | Extension Name | TLS 1.3 | DTLS-Only  | Recommended  | Reference | Comment |
+| ----- | -------------- | ------- | ---------- | ------------ | --------- | ------- |
+| TBD1  | rrc            | CH, SH  | Y          | N            | {{&SELF}} |         |
 {: #tbl-ext align="left"
    title="rrc entry in the TLS ExtensionType Values registry" }
 
@@ -707,15 +707,18 @@ all the entries in this registry
 Reference:
 : a reference document
 
+Comment:
+: any relevant notes or comments that relate to this entry
+
 The initial state of this sub-registry is as follows:
 
-| Value | Description    | DTLS-Only | Reference |
-|-------|----------------|-----------|-----------|
-| 0     | path_challenge | Y         | {{&SELF}} |
-| 1     | path_response  | Y         | {{&SELF}} |
-| 2     | path_drop      | Y         | {{&SELF}} |
-| 3-253 | Unassigned     |           |           |
-| 254-255 | Reserved for Private Use | Y          | {{&SELF}} |
+| Value | Description    | DTLS-Only | Reference | Comment |
+|-------|----------------|-----------|-----------|---------|
+| 0     | path_challenge | Y         | {{&SELF}} |         |
+| 1     | path_response  | Y         | {{&SELF}} |         |
+| 2     | path_drop      | Y         | {{&SELF}} |         |
+| 3-253 | Unassigned     |           |           |         |
+| 254-255 | Reserved for Private Use | Y          | {{&SELF}} | |
 {: #tbl-rrc-mt align="left"
    title="Initial Entries in RRC Message Type registry" }
 
