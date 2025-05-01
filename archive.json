@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-30T02:01:33.826197+00:00",
+  "timestamp": "2025-05-01T02:08:13.617622+00:00",
   "repo": "tlswg/dtls-rrc",
   "labels": [
     {
@@ -4047,6 +4047,46 @@
       },
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 75,
+      "id": "PR_kwDOFigxk86Ufasw",
+      "title": "align with rfc8447bis",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/75",
+      "state": "OPEN",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "* Add a Comment column to the RRC Message Type registry\r\n* Add a Comment column to the rrc ExtensionType registry addition",
+      "createdAt": "2025-04-30T11:45:46Z",
+      "updatedAt": "2025-05-01T01:52:41Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "2773c8d3ae86ad6942948beea480b0408b456585",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "comments",
+      "headRefOid": "22dd7ba44ad240ef3f363a2350e59f5a1147d1e7",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk86nbf6y",
+          "commit": {
+            "abbreviatedOid": "22dd7ba"
+          },
+          "author": "seanturner",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "It might end up changing to \"Comments\", because both \"Comment\" and \"Comments\" was used in -rfc8447bis. We can harmonize on this later though.",
+          "createdAt": "2025-05-01T01:52:41Z",
+          "updatedAt": "2025-05-01T01:52:41Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
