@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-01T02:08:13.617622+00:00",
+  "timestamp": "2025-05-04T02:09:30.382167+00:00",
   "repo": "tlswg/dtls-rrc",
   "labels": [
     {
@@ -4060,7 +4060,7 @@
       "labels": [],
       "body": "* Add a Comment column to the RRC Message Type registry\r\n* Add a Comment column to the rrc ExtensionType registry addition",
       "createdAt": "2025-04-30T11:45:46Z",
-      "updatedAt": "2025-05-01T01:52:41Z",
+      "updatedAt": "2025-05-01T12:30:29Z",
       "baseRepository": "tlswg/dtls-rrc",
       "baseRefName": "master",
       "baseRefOid": "2773c8d3ae86ad6942948beea480b0408b456585",
@@ -4071,7 +4071,22 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> It might end up changing to \"Comments\", because both \"Comment\" and \"Comments\" was used in -rfc8447bis. We can harmonize on this later though.\r\n\r\nWe can also wait to merge this until we are certain of the singular/plural. It shouldn\u2019t take long, right?",
+          "createdAt": "2025-05-01T07:25:22Z",
+          "updatedAt": "2025-05-01T07:25:45Z"
+        },
+        {
+          "author": "seanturner",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I am hoping that we'll settle by 5/22, which is when the -rfc8447bis I-D is on the IESG telechat.  There will no doubt be some directorate review comments that we need to incorporate before this I-D gets to the IESG, so we will be able to land this PR with those PRs.",
+          "createdAt": "2025-05-01T12:30:28Z",
+          "updatedAt": "2025-05-01T12:30:28Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOFigxk86nbf6y",
