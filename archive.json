@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-04T02:09:30.382167+00:00",
+  "timestamp": "2025-05-29T02:03:11.765288+00:00",
   "repo": "tlswg/dtls-rrc",
   "labels": [
     {
@@ -856,6 +856,42 @@
           "updatedAt": "2024-03-12T15:09:12Z"
         }
       ]
+    },
+    {
+      "number": 76,
+      "id": "I_kwDOFigxk864c8DC",
+      "title": "Mark Section 11 to be removed by the RFC Editor :P",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/76",
+      "state": "OPEN",
+      "author": "paulwouters",
+      "authorAssociation": "NONE",
+      "assignees": [
+        "thomas-fossati"
+      ],
+      "labels": [],
+      "body": "It is the Open Issues section :P \n",
+      "createdAt": "2025-05-27T17:00:11Z",
+      "updatedAt": "2025-05-27T17:46:16Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 78,
+      "id": "I_kwDOFigxk864ppNU",
+      "title": "RRC Message Type Sub-registry should be Expert Review",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/78",
+      "state": "OPEN",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "thomas-fossati"
+      ],
+      "labels": [],
+      "body": "As the title says.  There is no good reason for skipping DE checks for those registrations.\n\n(This was noted by @richsalz in his [expert review feedback email](https://mailarchive.ietf.org/arch/msg/tls/8x3f5T3EZbJv2vIYfpyNKMlcQUQ/).)",
+      "createdAt": "2025-05-28T16:27:51Z",
+      "updatedAt": "2025-05-28T16:27:54Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -4102,6 +4138,40 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 77,
+      "id": "PR_kwDOFigxk86X0uU-",
+      "title": "add note to remove useless sections",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/77",
+      "state": "OPEN",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix #76",
+      "createdAt": "2025-05-27T17:45:48Z",
+      "updatedAt": "2025-05-27T17:46:27Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "2773c8d3ae86ad6942948beea480b0408b456585",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "issues",
+      "headRefOid": "b6b1d5873556b0da355f84afc836293fc603a3ba",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "cc [paulwouters](https://github.com/paulwouters)",
+          "createdAt": "2025-05-27T17:46:26Z",
+          "updatedAt": "2025-05-27T17:46:26Z"
+        }
+      ],
+      "reviews": []
     }
   ]
 }
