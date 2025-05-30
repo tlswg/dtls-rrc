@@ -663,8 +663,6 @@ and switch to DTLS 1.3 if the correlation privacy threat is a concern.
 
 [^to-be-removed]
 
-[^to-be-removed]: RFC Editor: please replace {{&SELF}} with this RFC number and remove this note.
-
 ## New TLS ContentType
 
 IANA is requested to allocate an entry to the TLS `ContentType`
@@ -723,6 +721,8 @@ The initial state of this sub-registry is as follows:
 
 # Open Issues
 
+[^rfced-remove]
+
 Issues against this document are tracked at https://github.com/tlswg/dtls-rrc/issues
 
 # Acknowledgments
@@ -743,7 +743,7 @@ for their input to this document.
 
 # History
 
-<cref>RFC EDITOR: PLEASE REMOVE THIS SECTION</cref>
+[^rfced-remove]
 
 draft-ietf-tls-dtls-rrc-10:
 
@@ -811,3 +811,7 @@ draft-tschofenig-tls-dtls-rrc-01
 draft-tschofenig-tls-dtls-rrc-00
 
    - Initial version
+
+
+[^rfced-remove]: RFC Editor: please remove this section before publishing as an RFC.
+[^to-be-removed]: RFC Editor: please replace {{&SELF}} with this RFC number and remove this note.
