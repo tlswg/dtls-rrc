@@ -752,13 +752,14 @@ We would like to thank
 Eric Rescorla,
 Hanno Becker,
 {{{Hanno Böck}}},
+Joe Clarke,
 {{{Manuel Pégourié-Gonnard}}},
 Marco Tiloca,
 Martin Thomson,
 Mohit Sahni,
 Rich Salz,
-Yaron Sheffer and
-Sean Turner
+Sean Turner, and
+Yaron Sheffer
 for their input to this document.
 
 --- back
