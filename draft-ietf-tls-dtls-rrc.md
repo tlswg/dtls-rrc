@@ -679,45 +679,66 @@ IANA is requested to allocate the extension code point (TBD1) for the `rrc`
 extension to the `TLS ExtensionType Values` registry as described in
 {{tbl-ext}}.
 
-| Value | Extension Name | TLS 1.3 | DTLS-Only  | Recommended  | Reference |
-| ----- | -------------- | ------- | ---------- | ------------ | --------- |
-| TBD1  | rrc            | CH, SH  | Y          | N            | {{&SELF}} |
+| Value | Extension Name | TLS 1.3 | DTLS-Only  | Recommended  | Reference | Comment |
+| ----- | -------------- | ------- | ---------- | ------------ | --------- | ------- |
+| TBD1  | rrc            | CH, SH  | Y          | N            | {{&SELF}} |         |
 {: #tbl-ext align="left"
    title="rrc entry in the TLS ExtensionType Values registry" }
 
 ## New RRC Message Type Sub-registry
 
-IANA is requested to create a new sub-registry for RRC Message Types in the TLS
-Parameters registry {{!IANA.tls-parameters}}, with the policy "Standards Action"
-{{!RFC8126}}.
+IANA is requested to create a new registry for RRC Message Types within the TLS Parameters registry group {{!IANA.tls-parameters}}.
+This registry will be administered under the "Expert Review" policy ({{Section 4.5 of !RFC8126}}).
 
-Each entry in the registry must include:
+Follow the procedures in {{Section 16 of !I-D.ietf-tls-rfc8447bis}} to submit registration requests.
+
+Each entry in the registry must include the following fields:
 
 {:vspace}
 Value:
-: A number in the range from 0 to 255 (decimal)
+: A (decimal) number in the range 0 to 253
 
 Description:
-: a brief description of the message
+: A brief description of the RRC message
 
 DTLS-Only:
-: RRC is only available in DTLS, therefore this column will be set to `Y` for
-all the entries in this registry
+: Whether the message applies only to DTLS.
+Since RRC is only available in DTLS, this column will be set to `Y` for all the entries in this registry
+
+Recommended:
+: Whether the message is recommended for implementations to support.
+The semantics for this field is defined in {{Section 5 of !RFC8447}} and updated in {{Section 3 of !I-D.ietf-tls-rfc8447bis}}
 
 Reference:
-: a reference document
+: A reference to a publicly available specification for the value
+
+Comment:
+: Any relevant notes or comments that relate to this entry
 
 The initial state of this sub-registry is as follows:
 
-| Value | Description    | DTLS-Only | Reference |
-|-------|----------------|-----------|-----------|
-| 0     | path_challenge | Y         | {{&SELF}} |
-| 1     | path_response  | Y         | {{&SELF}} |
-| 2     | path_drop      | Y         | {{&SELF}} |
-| 3-253 | Unassigned     |           |           |
-| 254-255 | Reserved for Private Use | Y          | {{&SELF}} |
+| Value | Description    | DTLS-Only | Recommended |  Reference | Comment |
+|-------|----------------|-----------|-------------|------------|---------|
+| 0     | path_challenge | Y         | Y           | {{&SELF}}  |         |
+| 1     | path_response  | Y         | Y           | {{&SELF}}  |         |
+| 2     | path_drop      | Y         | Y           | {{&SELF}}  |         |
+| 3-253 | Unassigned     |           |             |            |         |
+| 254-255 | Reserved for Private Use | Y | | {{&SELF}} | |
 {: #tbl-rrc-mt align="left"
    title="Initial Entries in RRC Message Type registry" }
+
+IANA is requested to add the following note for additional information regarding the use of RRC message codepoints in experiments:
+
+Note:
+: As specified in {{!RFC8126}}, assignments made in the Private Use space are not generally useful for broad interoperability.
+Those making use of the Private Use range are responsible for ensuring that no conflicts occur within the intended scope of use.
+For widespread experiments, provisional registrations ({{Section 4.13 of !RFC8126}}) are available.
+
+### Designated Expert Instructions
+
+To enable a broadly informed review of registration decisions, it is recommended that multiple Designated Experts be appointed who are able to represent the perspectives of both the transport and security areas.
+
+In cases where a registration decision could be perceived as creating a conflict of interest for a particular Expert, that Expert SHOULD defer to the judgment of the other Experts.
 
 # Open Issues
 
@@ -728,6 +749,7 @@ Issues against this document are tracked at https://github.com/tlswg/dtls-rrc/is
 # Acknowledgments
 
 We would like to thank
+Eric Rescorla,
 Hanno Becker,
 {{{Hanno Böck}}},
 {{{Manuel Pégourié-Gonnard}}},
