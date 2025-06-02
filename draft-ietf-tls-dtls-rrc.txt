@@ -865,10 +865,10 @@ Auth | {CertificateVerify}
 
 12.  Acknowledgments
 
-   We would like to thank Eric Rescorla, Hanno Becker, Hanno Böck,
-   Manuel Pégourié-Gonnard, Marco Tiloca, Martin Thomson, Mohit Sahni,
-   Rich Salz, Yaron Sheffer and Sean Turner for their input to this
-   document.
+   We would like to thank Eric Rescorla, Hanno Becker, Hanno Böck, Joe
+   Clarke, Manuel Pégourié-Gonnard, Marco Tiloca, Martin Thomson, Mohit
+   Sahni, Rich Salz, Sean Turner, and Yaron Sheffer for their input to
+   this document.
 
 13.  References
 
