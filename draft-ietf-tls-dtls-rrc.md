@@ -159,7 +159,7 @@ struct {
 Future extensions to the Return Routability Check sub-protocol may
 define new message types.  Implementations MUST be able to parse and ignore
 messages with an unknown `msg_type`.
-(Naturally, implementation MUST be able to parse and understand the three RRC message types defined in this document.)
+(Naturally, implementations MUST be able to parse and understand the three RRC message types defined in this document.)
 
 # RRC and CID Interplay
 
@@ -414,7 +414,7 @@ DTLS 1.2.
 
 # Path Validation Procedure {#path-validation}
 
-The receiver that observes the peer's address or port update MUST stop sending
+The receiver that observes the peer's address or port change MUST stop sending
 any buffered application data, or limit the data sent to the unvalidated
 address to the anti-amplification limit.
 
@@ -426,7 +426,7 @@ attacker scenario described in {{off-path}} is to be taken into account or not.
 may also be influenced by other considerations.  Examples of impacting factors
 include: the need to minimise implementation complexity, privacy concerns, and the
 need to reduce the time it takes to switch path.  The choice may be offered as
-a configuration option to the user.)
+a configuration option to the user of the TLS implementation.)
 
 After the path validation procedure is completed, any pending send operation is
 resumed to the bound peer address.
