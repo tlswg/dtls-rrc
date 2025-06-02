@@ -1227,6 +1227,11 @@ protocol versions 1.2 and 1.3.<a href="#section-abstract-1" class="pilcrow">¶</
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.3">
                 <p id="section-toc.1-1.10.2.3.1"><a href="#section-10.3" class="auto internal xref">10.3</a>.  <a href="#name-new-rrc-message-type-sub-re" class="internal xref">New RRC Message Type Sub-registry</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.3.2.1">
+                    <p id="section-toc.1-1.10.2.3.2.1.1"><a href="#section-10.3.1" class="auto internal xref">10.3.1</a>.  <a href="#name-designated-expert-instructi" class="internal xref">Designated Expert Instructions</a></p>
+</li>
+                </ul>
 </li>
             </ul>
 </li>
@@ -2235,6 +2240,7 @@ extension to the <code>TLS ExtensionType Values</code> registry as described in
               <th class="text-left" rowspan="1" colspan="1">DTLS-Only</th>
               <th class="text-left" rowspan="1" colspan="1">Recommended</th>
               <th class="text-left" rowspan="1" colspan="1">Reference</th>
+              <th class="text-left" rowspan="1" colspan="1">Comment</th>
             </tr>
           </thead>
           <tbody>
@@ -2245,6 +2251,7 @@ extension to the <code>TLS ExtensionType Values</code> registry as described in
               <td class="text-left" rowspan="1" colspan="1">Y</td>
               <td class="text-left" rowspan="1" colspan="1">N</td>
               <td class="text-left" rowspan="1" colspan="1">RFCthis</td>
+              <td class="text-left" rowspan="1" colspan="1"> </td>
             </tr>
           </tbody>
         </table>
@@ -2256,34 +2263,45 @@ extension to the <code>TLS ExtensionType Values</code> registry as described in
         <h3 id="name-new-rrc-message-type-sub-re">
 <a href="#section-10.3" class="section-number selfRef">10.3. </a><a href="#name-new-rrc-message-type-sub-re" class="section-name selfRef">New RRC Message Type Sub-registry</a>
         </h3>
-<p id="section-10.3-1">IANA is requested to create a new sub-registry for RRC Message Types in the TLS
-Parameters registry <span>[<a href="#IANA.tls-parameters" class="cite xref">IANA.tls-parameters</a>]</span>, with the policy "Standards Action"
-<span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>.<a href="#section-10.3-1" class="pilcrow">¶</a></p>
-<p id="section-10.3-2">Each entry in the registry must include:<a href="#section-10.3-2" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="dlNewline" id="section-10.3-3">
-          <dt id="section-10.3-3.1">Value:</dt>
-          <dd style="margin-left: 1.5em" id="section-10.3-3.2">
-            <p id="section-10.3-3.2.1">A number in the range from 0 to 255 (decimal)<a href="#section-10.3-3.2.1" class="pilcrow">¶</a></p>
+<p id="section-10.3-1">IANA is requested to create a new registry for RRC Message Types within the TLS Parameters registry group <span>[<a href="#IANA.tls-parameters" class="cite xref">IANA.tls-parameters</a>]</span>.
+This registry will be administered under the "Expert Review" policy (<span><a href="https://rfc-editor.org/rfc/rfc8126#section-4.5" class="relref">Section 4.5</a> of [<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>).<a href="#section-10.3-1" class="pilcrow">¶</a></p>
+<p id="section-10.3-2">Follow the procedures in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-tls-rfc8447bis-13#section-16" class="relref">Section 16</a> of [<a href="#I-D.ietf-tls-rfc8447bis" class="cite xref">I-D.ietf-tls-rfc8447bis</a>]</span> to submit registration requests.<a href="#section-10.3-2" class="pilcrow">¶</a></p>
+<p id="section-10.3-3">Each entry in the registry must include the following fields:<a href="#section-10.3-3" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlNewline" id="section-10.3-4">
+          <dt id="section-10.3-4.1">Value:</dt>
+          <dd style="margin-left: 1.5em" id="section-10.3-4.2">
+            <p id="section-10.3-4.2.1">A (decimal) number in the range 0 to 253<a href="#section-10.3-4.2.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-10.3-3.3">Description:</dt>
-          <dd style="margin-left: 1.5em" id="section-10.3-3.4">
-            <p id="section-10.3-3.4.1">a brief description of the message<a href="#section-10.3-3.4.1" class="pilcrow">¶</a></p>
+<dt id="section-10.3-4.3">Description:</dt>
+          <dd style="margin-left: 1.5em" id="section-10.3-4.4">
+            <p id="section-10.3-4.4.1">A brief description of the RRC message<a href="#section-10.3-4.4.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-10.3-3.5">DTLS-Only:</dt>
-          <dd style="margin-left: 1.5em" id="section-10.3-3.6">
-            <p id="section-10.3-3.6.1">RRC is only available in DTLS, therefore this column will be set to <code>Y</code> for
-all the entries in this registry<a href="#section-10.3-3.6.1" class="pilcrow">¶</a></p>
+<dt id="section-10.3-4.5">DTLS-Only:</dt>
+          <dd style="margin-left: 1.5em" id="section-10.3-4.6">
+            <p id="section-10.3-4.6.1">Whether the message applies only to DTLS.
+Since RRC is only available in DTLS, this column will be set to <code>Y</code> for all the entries in this registry<a href="#section-10.3-4.6.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-10.3-3.7">Reference:</dt>
-          <dd style="margin-left: 1.5em" id="section-10.3-3.8">
-            <p id="section-10.3-3.8.1">a reference document<a href="#section-10.3-3.8.1" class="pilcrow">¶</a></p>
+<dt id="section-10.3-4.7">Recommended:</dt>
+          <dd style="margin-left: 1.5em" id="section-10.3-4.8">
+            <p id="section-10.3-4.8.1">Whether the message is recommended for implementations to support.
+The semantics for this field is defined in <span><a href="https://rfc-editor.org/rfc/rfc8447#section-5" class="relref">Section 5</a> of [<a href="#RFC8447" class="cite xref">RFC8447</a>]</span> and updated in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-tls-rfc8447bis-13#section-3" class="relref">Section 3</a> of [<a href="#I-D.ietf-tls-rfc8447bis" class="cite xref">I-D.ietf-tls-rfc8447bis</a>]</span><a href="#section-10.3-4.8.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-10.3-4.9">Reference:</dt>
+          <dd style="margin-left: 1.5em" id="section-10.3-4.10">
+            <p id="section-10.3-4.10.1">A reference to a publicly available specification for the value<a href="#section-10.3-4.10.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-10.3-4.11">Comment:</dt>
+          <dd style="margin-left: 1.5em" id="section-10.3-4.12">
+            <p id="section-10.3-4.12.1">Any relevant notes or comments that relate to this entry<a href="#section-10.3-4.12.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 </dl>
-<p id="section-10.3-4">The initial state of this sub-registry is as follows:<a href="#section-10.3-4" class="pilcrow">¶</a></p>
+<p id="section-10.3-5">The initial state of this sub-registry is as follows:<a href="#section-10.3-5" class="pilcrow">¶</a></p>
 <span id="name-initial-entries-in-rrc-mess"></span><div id="tbl-rrc-mt">
 <table class="left" id="table-2">
           <caption>
@@ -2295,7 +2313,9 @@ all the entries in this registry<a href="#section-10.3-3.6.1" class="pilcrow">¶
               <th class="text-left" rowspan="1" colspan="1">Value</th>
               <th class="text-left" rowspan="1" colspan="1">Description</th>
               <th class="text-left" rowspan="1" colspan="1">DTLS-Only</th>
+              <th class="text-left" rowspan="1" colspan="1">Recommended</th>
               <th class="text-left" rowspan="1" colspan="1">Reference</th>
+              <th class="text-left" rowspan="1" colspan="1">Comment</th>
             </tr>
           </thead>
           <tbody>
@@ -2303,23 +2323,31 @@ all the entries in this registry<a href="#section-10.3-3.6.1" class="pilcrow">¶
               <td class="text-left" rowspan="1" colspan="1">0</td>
               <td class="text-left" rowspan="1" colspan="1">path_challenge</td>
               <td class="text-left" rowspan="1" colspan="1">Y</td>
+              <td class="text-left" rowspan="1" colspan="1">Y</td>
               <td class="text-left" rowspan="1" colspan="1">RFCthis</td>
+              <td class="text-left" rowspan="1" colspan="1"> </td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">1</td>
               <td class="text-left" rowspan="1" colspan="1">path_response</td>
               <td class="text-left" rowspan="1" colspan="1">Y</td>
+              <td class="text-left" rowspan="1" colspan="1">Y</td>
               <td class="text-left" rowspan="1" colspan="1">RFCthis</td>
+              <td class="text-left" rowspan="1" colspan="1"> </td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">2</td>
               <td class="text-left" rowspan="1" colspan="1">path_drop</td>
               <td class="text-left" rowspan="1" colspan="1">Y</td>
+              <td class="text-left" rowspan="1" colspan="1">Y</td>
               <td class="text-left" rowspan="1" colspan="1">RFCthis</td>
+              <td class="text-left" rowspan="1" colspan="1"> </td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">3-253</td>
               <td class="text-left" rowspan="1" colspan="1">Unassigned</td>
+              <td class="text-left" rowspan="1" colspan="1"> </td>
+              <td class="text-left" rowspan="1" colspan="1"> </td>
               <td class="text-left" rowspan="1" colspan="1"> </td>
               <td class="text-left" rowspan="1" colspan="1"> </td>
             </tr>
@@ -2327,10 +2355,31 @@ all the entries in this registry<a href="#section-10.3-3.6.1" class="pilcrow">¶
               <td class="text-left" rowspan="1" colspan="1">254-255</td>
               <td class="text-left" rowspan="1" colspan="1">Reserved for Private Use</td>
               <td class="text-left" rowspan="1" colspan="1">Y</td>
+              <td class="text-left" rowspan="1" colspan="1"> </td>
               <td class="text-left" rowspan="1" colspan="1">RFCthis</td>
+              <td class="text-left" rowspan="1" colspan="1"> </td>
             </tr>
           </tbody>
         </table>
+</div>
+<p id="section-10.3-7">IANA is requested to add the following note for additional information regarding the use of RRC message codepoints in experiments:<a href="#section-10.3-7" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-10.3-8">
+          <dt id="section-10.3-8.1">Note:</dt>
+          <dd style="margin-left: 1.5em" id="section-10.3-8.2">
+            <p id="section-10.3-8.2.1">As specified in <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>, assignments made in the Private Use space are not generally useful for broad interoperability.
+Those making use of the Private Use range are responsible for ensuring that no conflicts occur within the intended scope of use.
+For widespread experiments, provisional registrations (<span><a href="https://rfc-editor.org/rfc/rfc8126#section-4.13" class="relref">Section 4.13</a> of [<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>) are available.<a href="#section-10.3-8.2.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+</dl>
+<div id="designated-expert-instructions">
+<section id="section-10.3.1">
+          <h4 id="name-designated-expert-instructi">
+<a href="#section-10.3.1" class="section-number selfRef">10.3.1. </a><a href="#name-designated-expert-instructi" class="section-name selfRef">Designated Expert Instructions</a>
+          </h4>
+<p id="section-10.3.1-1">To enable a broadly informed review of registration decisions, it is recommended that multiple Designated Experts be appointed who are able to represent the perspectives of both the transport and security areas.<a href="#section-10.3.1-1" class="pilcrow">¶</a></p>
+<p id="section-10.3.1-2">In cases where a registration decision could be perceived as creating a conflict of interest for a particular Expert, that Expert <span class="bcp14">SHOULD</span> defer to the judgment of the other Experts.<a href="#section-10.3.1-2" class="pilcrow">¶</a></p>
+</section>
 </div>
 </section>
 </div>
@@ -2351,6 +2400,7 @@ all the entries in this registry<a href="#section-10.3-3.6.1" class="pilcrow">¶
 <a href="#section-12" class="section-number selfRef">12. </a><a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
       </h2>
 <p id="section-12-1">We would like to thank
+Eric Rescorla,
 Hanno Becker,
 <span class="contact-name">Hanno Böck</span>,
 <span class="contact-name">Manuel Pégourié-Gonnard</span>,
@@ -2374,6 +2424,10 @@ for their input to this document.<a href="#section-12-1" class="pilcrow">¶</a><
 <a href="#section-13.1" class="section-number selfRef">13.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
+<dt id="I-D.ietf-tls-rfc8447bis">[I-D.ietf-tls-rfc8447bis]</dt>
+        <dd>
+<span class="refAuthor">Salowey, J. A.</span> and <span class="refAuthor">S. Turner</span>, <span class="refTitle">"IANA Registry Updates for TLS and DTLS"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-tls-rfc8447bis-13</span>, <time datetime="2025-05-29" class="refDate">29 May 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-tls-rfc8447bis-13">https://datatracker.ietf.org/doc/html/draft-ietf-tls-rfc8447bis-13</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="IANA.tls-parameters">[IANA.tls-parameters]</dt>
         <dd>
 <span class="refAuthor">IANA</span>, <span class="refTitle">"Transport Layer Security (TLS) Parameters"</span>, <span>&lt;<a href="https://www.iana.org/assignments/tls-parameters">https://www.iana.org/assignments/tls-parameters</a>&gt;</span>. </dd>
@@ -2393,6 +2447,10 @@ for their input to this document.<a href="#section-12-1" class="pilcrow">¶</a><
 <dt id="RFC8446">[RFC8446]</dt>
         <dd>
 <span class="refAuthor">Rescorla, E.</span>, <span class="refTitle">"The Transport Layer Security (TLS) Protocol Version 1.3"</span>, <span class="seriesInfo">RFC 8446</span>, <span class="seriesInfo">DOI 10.17487/RFC8446</span>, <time datetime="2018-08" class="refDate">August 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8446">https://www.rfc-editor.org/rfc/rfc8446</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8447">[RFC8447]</dt>
+        <dd>
+<span class="refAuthor">Salowey, J.</span> and <span class="refAuthor">S. Turner</span>, <span class="refTitle">"IANA Registry Updates for TLS and DTLS"</span>, <span class="seriesInfo">RFC 8447</span>, <span class="seriesInfo">DOI 10.17487/RFC8447</span>, <time datetime="2018-08" class="refDate">August 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8447">https://www.rfc-editor.org/rfc/rfc8447</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9146">[RFC9146]</dt>
         <dd>
