@@ -690,6 +690,8 @@ extension to the `TLS ExtensionType Values` registry as described in
 IANA is requested to create a new registry for RRC Message Types within the TLS Parameters registry group {{!IANA.tls-parameters}}.
 This registry will be administered under the "Expert Review" policy ({{Section 4.5 of !RFC8126}}).
 
+Follow the procedures in {{Section 16 of !I-D.ietf-tls-rfc8447bis}} to submit registration requests.
+
 Each entry in the registry must include the following fields:
 
 {:vspace}
