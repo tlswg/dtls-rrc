@@ -1048,11 +1048,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">DTLS Return Routability Check</td>
-<td class="right">May 2025</td>
+<td class="right">June 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Tschofenig, et al.</td>
-<td class="center">Expires 1 December 2025</td>
+<td class="center">Expires 4 December 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1065,12 +1065,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-tls-dtls-rrc-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-05-30" class="published">30 May 2025</time>
+<time datetime="2025-06-02" class="published">2 June 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-12-01">1 December 2025</time></dd>
+<dd class="expires"><time datetime="2025-12-04">4 December 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1125,7 +1125,7 @@ protocol versions 1.2 and 1.3.<a href="#section-abstract-1" class="pilcrow">¶</
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 1 December 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 4 December 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1377,7 +1377,7 @@ struct {
 <p id="section-4-6">Future extensions to the Return Routability Check sub-protocol may
 define new message types.  Implementations <span class="bcp14">MUST</span> be able to parse and ignore
 messages with an unknown <code>msg_type</code>.
-(Naturally, implementation <span class="bcp14">MUST</span> be able to parse and understand the three RRC message types defined in this document.)<a href="#section-4-6" class="pilcrow">¶</a></p>
+(Naturally, implementations <span class="bcp14">MUST</span> be able to parse and understand the three RRC message types defined in this document.)<a href="#section-4-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="rrc-and-cid-interplay">
@@ -1859,7 +1859,7 @@ DTLS 1.2.<a href="#section-6.2.1-14" class="pilcrow">¶</a></p>
       <h2 id="name-path-validation-procedure">
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-path-validation-procedure" class="section-name selfRef">Path Validation Procedure</a>
       </h2>
-<p id="section-7-1">The receiver that observes the peer's address or port update <span class="bcp14">MUST</span> stop sending
+<p id="section-7-1">The receiver that observes the peer's address or port change <span class="bcp14">MUST</span> stop sending
 any buffered application data, or limit the data sent to the unvalidated
 address to the anti-amplification limit.<a href="#section-7-1" class="pilcrow">¶</a></p>
 <p id="section-7-2">It then initiates the return routability check that proceeds as described
@@ -1869,7 +1869,7 @@ attacker scenario described in <a href="#off-path" class="auto internal xref">Se
 may also be influenced by other considerations.  Examples of impacting factors
 include: the need to minimise implementation complexity, privacy concerns, and the
 need to reduce the time it takes to switch path.  The choice may be offered as
-a configuration option to the user.)<a href="#section-7-3" class="pilcrow">¶</a></p>
+a configuration option to the user of the TLS implementation.)<a href="#section-7-3" class="pilcrow">¶</a></p>
 <p id="section-7-4">After the path validation procedure is completed, any pending send operation is
 resumed to the bound peer address.<a href="#section-7-4" class="pilcrow">¶</a></p>
 <p id="section-7-5"><a href="#path-challenge-reqs" class="auto internal xref">Section 7.3</a> and <a href="#path-response-reqs" class="auto internal xref">Section 7.4</a> list the requirements for
