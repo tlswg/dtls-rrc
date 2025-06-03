@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-01T02:28:20.505830+00:00",
+  "timestamp": "2025-06-03T02:05:17.363892+00:00",
   "repo": "tlswg/dtls-rrc",
   "labels": [
     {
@@ -892,6 +892,30 @@
       "updatedAt": "2025-05-28T16:27:54Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 79,
+      "id": "I_kwDOFigxk865VaVc",
+      "title": "OPSDIR review",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/79",
+      "state": "CLOSED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "[Joe Clarke\u2019s OPSDIR review](https://mailarchive.ietf.org/arch/msg/tls/gprUSCEBbGuyM0kaWRU2EgKcLbE/)\n\nSome nits:\n```\nSection 4:\n\ns/Naturally, implementation MUST/Naturally, implementations MUST/\n\nI think the plural reads better.\n\nSection 7:\n\nIn the first sentence, the word \"update\" threw me initially.  Wouldn't \"change\"\nbe a better choice here?\n\nWhen you say, the choice may be offered as a configuration option to the user,\nwho is the user in this case?  Is this the client, initiator, responder?  This\nfelt vague to me.\n```\n\nAn overarching question:\n```\nMy overarching question on the OPS front is, while it might be out of scope for\nthis document, would it be valuable to mention any operational logging or\nstatistics that may be required around RRC?  that is, logging RRC failures,\ncounting the number of times an RRC is needed, recording the time it takes to\nvalidate RRCs?  The details might spawn other work, but noting any interesting\noperational events could be helpful for implementors.\n```",
+      "createdAt": "2025-06-02T09:41:13Z",
+      "updatedAt": "2025-06-02T18:33:20Z",
+      "closedAt": "2025-06-02T18:33:20Z",
+      "comments": [
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> would it be valuable to mention any operational logging or\nstatistics that may be required around RRC?\n\nFMPOV, an analysis depends a lot on the cases and \"upper protocols\".\n\nOn-path attacker DoS:\nUsing CID for amplification attacks changing the source address. Requires larger response size.\nIf CoAP is used on the top, that usually causes more retransmissions, because the original peer will likely retransmit the request.\n\nOff-path attacker route-migration:\nIn that case the DTLS layer will frequently see the same record with different source addresses. \n\n ",
+          "createdAt": "2025-06-02T10:10:00Z",
+          "updatedAt": "2025-06-02T10:10:00Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -4089,24 +4113,26 @@
       "id": "PR_kwDOFigxk86Ufasw",
       "title": "align with rfc8447bis (+ DE rather than standards action)",
       "url": "https://github.com/tlswg/dtls-rrc/pull/75",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "thomas-fossati",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "* Add a Comment column to the RRC Message Type registry\r\n* Add a Comment column to the rrc ExtensionType registry addition\r\n\r\nEDIT: Also move the allocation policy of the RRC message registry back to Expert Review.",
       "createdAt": "2025-04-30T11:45:46Z",
-      "updatedAt": "2025-05-30T18:02:42Z",
+      "updatedAt": "2025-06-02T18:33:41Z",
       "baseRepository": "tlswg/dtls-rrc",
       "baseRefName": "master",
       "baseRefOid": "d838df8cbbbc569b19baa997f987d40bdaa58c47",
       "headRepository": "tlswg/dtls-rrc",
       "headRefName": "comments",
-      "headRefOid": "06bf59908ae21045dc2dcb3a9187042492975523",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "3005cdd644a079a844933cd9e212e963279107a8",
+      "closedAt": "2025-06-02T18:33:38Z",
+      "mergedAt": "2025-06-02T18:33:38Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "a47c3293432d016aecbedfcacac43b712bd4034e"
+      },
       "comments": [
         {
           "author": "thomas-fossati",
@@ -4121,6 +4147,20 @@
           "body": "I am hoping that we'll settle by 5/22, which is when the -rfc8447bis I-D is on the IESG telechat.  There will no doubt be some directorate review comments that we need to incorporate before this I-D gets to the IESG, so we will be able to land this PR with those PRs.",
           "createdAt": "2025-05-01T12:30:28Z",
           "updatedAt": "2025-05-01T12:30:28Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> Just need to include pointer describing where to send the requests.\r\n\r\nThanks!",
+          "createdAt": "2025-06-02T14:25:12Z",
+          "updatedAt": "2025-06-02T14:25:12Z"
+        },
+        {
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I am fine with the registry policy change",
+          "createdAt": "2025-06-02T18:18:02Z",
+          "updatedAt": "2025-06-02T18:18:02Z"
         }
       ],
       "reviews": [
@@ -4135,6 +4175,39 @@
           "body": "It might end up changing to \"Comments\", because both \"Comment\" and \"Comments\" was used in -rfc8447bis. We can harmonize on this later though.",
           "createdAt": "2025-05-01T01:52:41Z",
           "updatedAt": "2025-05-01T01:52:41Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOFigxk86sLBcU",
+          "commit": {
+            "abbreviatedOid": "06bf599"
+          },
+          "author": "seanturner",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-06-02T14:03:56Z",
+          "updatedAt": "2025-06-02T14:03:56Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "```suggestion\r\nThis registry will be administered under the \"Expert Review\" policy ({{Section 4.5 of !RFC8126}}).\r\n\r\nFollow the procedures in {{Section 16 of !I-D.ietf-tls-rfc8447bis}} to submit registration requests.\r\n```\r\n\r\nJust need to tell people how to send in the requests :)",
+              "createdAt": "2025-06-02T14:03:56Z",
+              "updatedAt": "2025-06-02T14:03:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk86sLB53",
+          "commit": {
+            "abbreviatedOid": "06bf599"
+          },
+          "author": "seanturner",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "Just need to include pointer describing where to send the requests.",
+          "createdAt": "2025-06-02T14:04:30Z",
+          "updatedAt": "2025-06-02T14:04:30Z",
           "comments": []
         }
       ]
@@ -4174,6 +4247,56 @@
         }
       ],
       "reviews": []
+    },
+    {
+      "number": 80,
+      "id": "PR_kwDOFigxk86Yl962",
+      "title": "Joe Clarke's editorial suggestions",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/80",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix #79 ",
+      "createdAt": "2025-06-02T10:21:42Z",
+      "updatedAt": "2025-06-02T18:33:19Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "d838df8cbbbc569b19baa997f987d40bdaa58c47",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "ops",
+      "headRefOid": "feb0f01f75db8b8b9a2f1e1f05e8825664c3ebe4",
+      "closedAt": "2025-06-02T18:33:19Z",
+      "mergedAt": "2025-06-02T18:33:19Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "f9f1bfae40bd3c853c587cd2129efd6ed53d6440"
+      },
+      "comments": [
+        {
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "The changes are good for me.",
+          "createdAt": "2025-06-02T18:16:15Z",
+          "updatedAt": "2025-06-02T18:16:15Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk86sLCSt",
+          "commit": {
+            "abbreviatedOid": "feb0f01"
+          },
+          "author": "seanturner",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-06-02T14:04:58Z",
+          "updatedAt": "2025-06-02T14:04:58Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
