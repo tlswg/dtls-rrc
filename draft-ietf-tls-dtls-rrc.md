@@ -53,14 +53,14 @@ protocol versions 1.2 and 1.3.
 
 # Introduction
 
-A CID is an identifier carried in the record layer header of a DTLS datagram
+A Connection ID (CID) is an identifier carried in the record layer header of a DTLS datagram
 that gives the receiver additional information for selecting the appropriate
 security context.  The CID mechanism has been specified in {{!RFC9146}} for
 DTLS 1.2 and in {{!RFC9147}} for DTLS 1.3.
 
 Section 6 of {{!RFC9146}} describes how the use of CID increases the attack
 surface of DTLS 1.2 and 1.3 by providing both on-path and off-path attackers an opportunity for
-(D)DoS.  It then goes on describing the steps a DTLS principal must take when a
+(D)DoS.  It also describes the steps a DTLS principal must take when a
 record with a CID is received that has a source address (and/or port) different
 from the one currently associated with the DTLS connection.  However, the
 actual mechanism for ensuring that the new peer address is willing to receive
@@ -252,7 +252,7 @@ the ability to observe or drop all subsequent packets.
 
 This style of attack relies on the attacker using a path that has
 the same or better characteristics (e.g., due to a more favourable service level agreements) as the direct path between
-endpoints. The attack is more reliable if relatively few packets are
+endpoints. The attack is more effective if relatively few packets are
 sent or if packet loss coincides with the attempted attack.
 
 A data packet received on the original path that increases the
@@ -420,7 +420,7 @@ address to the anti-amplification limit.
 
 It then initiates the return routability check that proceeds as described
 either in {{enhanced}} or {{regular}}, depending on whether the off-path
-attacker scenario described in {{off-path}} is to be taken into account or not.
+attacker scenario described in {{off-path}} is to be taken into account.
 
 (The decision on what strategy to choose depends mainly on the threat model, but
 may also be influenced by other considerations.  Examples of impacting factors
@@ -458,7 +458,7 @@ The enhanced return routability check comprises the following steps:
 1. The receiver (i.e., the initiator) creates a `return_routability_check` message of
    type `path_challenge` and places the unpredictable cookie into the message.
 1. The message is sent to the previously valid address, which corresponds to the
-   old path. Additionally, a timer T, see {{timer-choice}}, is started.
+   old path. Additionally, a timer T is started, see {{timer-choice}}.
 1. If the path is still functional, the peer (i.e., the responder) cryptographically verifies the received
    `return_routability_check` message of
    type `path_challenge`.
@@ -527,7 +527,7 @@ active path, T SHOULD be set to 1s.
 
 Profiles for specific deployment environments -- for example, constrained
 networks {{?I-D.ietf-uta-tls13-iot-profile}} -- MAY specify a different, more
-suitable value.
+suitable value for T.
 
 # Example
 
@@ -635,13 +635,15 @@ IP address.
 ~~~
 {: #fig-rrc-example title='"Basic" Return Routability Example'}
 
-# Security and Privacy Considerations
+# Security Considerations
 
 Note that the return routability checks do not protect against flooding of
 third-parties if the attacker is on-path, as the attacker can redirect the
 return routability checks to the real peer (even if those datagrams are
 cryptographically authenticated).  On-path adversaries can, in general, pose a
 harm to connectivity.
+
+# Privacy Considerations
 
 When using DTLS 1.3, peers SHOULD avoid using the same CID on multiple network
 paths, in particular when initiating connection migration or when probing a new
