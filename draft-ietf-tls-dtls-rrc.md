@@ -53,14 +53,14 @@ protocol versions 1.2 and 1.3.
 
 # Introduction
 
-A CID is an identifier carried in the record layer header of a DTLS datagram
+A Connection ID (CID) is an identifier carried in the record layer header of a DTLS datagram
 that gives the receiver additional information for selecting the appropriate
 security context.  The CID mechanism has been specified in {{!RFC9146}} for
 DTLS 1.2 and in {{!RFC9147}} for DTLS 1.3.
 
 Section 6 of {{!RFC9146}} describes how the use of CID increases the attack
 surface of DTLS 1.2 and 1.3 by providing both on-path and off-path attackers an opportunity for
-(D)DoS.  It then goes on describing the steps a DTLS principal must take when a
+(D)DoS.  It also describes the steps a DTLS principal must take when a
 record with a CID is received that has a source address (and/or port) different
 from the one currently associated with the DTLS connection.  However, the
 actual mechanism for ensuring that the new peer address is willing to receive
@@ -107,6 +107,18 @@ If the server is capable of meeting this requirement, it responds with a
 extension is TBD1 and the `extension_data` field of this extension is empty.
 The client and server MUST NOT use RRC unless both sides have successfully
 exchanged `rrc` extensions.
+A client offering the `rrc` extension MUST also offer the `connection_id` extension {{!RFC9146}}.
+
+## RRC and CID Interplay
+
+RRC offers an in-protocol mechanism to perform peer address validation that
+complements the "peer address update" procedure described in {{Section 6 of
+RFC9146}}.  Specifically, when both CID {{RFC9146}} and RRC have been
+successfully negotiated for the session, if a record with CID is received that
+has the source address and/or source port number of the enclosing UDP datagram different from what is
+currently associated with that CID value, the receiver SHOULD perform a return
+routability check as described in {{path-validation}}, unless an application
+layer specific address validation mechanism can be triggered instead (e.g., CoAP Echo {{?RFC9175}}).
 
 # Return Routability Check Message Types
 
@@ -117,7 +129,7 @@ The RRC sub-protocol consists of three message types: `path_challenge`, `path_re
 and `path_drop` that are used for path validation and selection as described in
 {{path-validation}}.
 
-Each message carries a Cookie, an 8-byte field containing arbitrary data.
+Each message carries a Cookie, an 8-byte field containing 64 bits of entropy (e.g., obtained from the CSPRNG used by the TLS implementation, see {{Appendix C.1 of !RFC8446}}).
 
 The `return_routability_check` message MUST be authenticated and encrypted
 using the currently active security context.
@@ -157,20 +169,9 @@ struct {
    title="Return Routability Check Message"}
 
 Future extensions to the Return Routability Check sub-protocol may
-define new message types.  Implementations MUST be able to parse and ignore
-messages with an unknown `msg_type`.
-(Naturally, implementations MUST be able to parse and understand the three RRC message types defined in this document.)
-
-# RRC and CID Interplay
-
-RRC offers an in-protocol mechanism to perform peer address validation that
-complements the "peer address update" procedure described in {{Section 6 of
-RFC9146}}.  Specifically, when both CID {{RFC9146}} and RRC have been
-successfully negotiated for the session, if a record with CID is received that
-has the source address and/or source port number of the enclosing UDP datagram different from what is
-currently associated with that CID value, the receiver SHOULD perform a return
-routability check as described in {{path-validation}}, unless an application
-layer specific address validation mechanism can be triggered instead (e.g., CoAP Echo {{?RFC9175}}).
+define new message types.
+Implementations MUST be able to parse and understand the three RRC message types defined in this document.
+In addition, implementations MUST be able to parse and gracefully ignore messages with an unknown `msg_type`.
 
 # Attacker Model {#attacker}
 
@@ -252,7 +253,7 @@ the ability to observe or drop all subsequent packets.
 
 This style of attack relies on the attacker using a path that has
 the same or better characteristics (e.g., due to a more favourable service level agreements) as the direct path between
-endpoints. The attack is more reliable if relatively few packets are
+endpoints. The attack is more effective if relatively few packets are
 sent or if packet loss coincides with the attempted attack.
 
 A data packet received on the original path that increases the
@@ -420,7 +421,7 @@ address to the anti-amplification limit.
 
 It then initiates the return routability check that proceeds as described
 either in {{enhanced}} or {{regular}}, depending on whether the off-path
-attacker scenario described in {{off-path}} is to be taken into account or not.
+attacker scenario described in {{off-path}} is to be taken into account.
 
 (The decision on what strategy to choose depends mainly on the threat model, but
 may also be influenced by other considerations.  Examples of impacting factors
@@ -458,7 +459,7 @@ The enhanced return routability check comprises the following steps:
 1. The receiver (i.e., the initiator) creates a `return_routability_check` message of
    type `path_challenge` and places the unpredictable cookie into the message.
 1. The message is sent to the previously valid address, which corresponds to the
-   old path. Additionally, a timer T, see {{timer-choice}}, is started.
+   old path. Additionally, a timer T is started, see {{timer-choice}}.
 1. If the path is still functional, the peer (i.e., the responder) cryptographically verifies the received
    `return_routability_check` message of
    type `path_challenge`.
@@ -527,7 +528,7 @@ active path, T SHOULD be set to 1s.
 
 Profiles for specific deployment environments -- for example, constrained
 networks {{?I-D.ietf-uta-tls13-iot-profile}} -- MAY specify a different, more
-suitable value.
+suitable value for T.
 
 # Example
 
@@ -635,13 +636,15 @@ IP address.
 ~~~
 {: #fig-rrc-example title='"Basic" Return Routability Example'}
 
-# Security and Privacy Considerations
+# Security Considerations
 
 Note that the return routability checks do not protect against flooding of
 third-parties if the attacker is on-path, as the attacker can redirect the
 return routability checks to the real peer (even if those datagrams are
 cryptographically authenticated).  On-path adversaries can, in general, pose a
 harm to connectivity.
+
+# Privacy Considerations
 
 When using DTLS 1.3, peers SHOULD avoid using the same CID on multiple network
 paths, in particular when initiating connection migration or when probing a new
@@ -740,12 +743,6 @@ To enable a broadly informed review of registration decisions, it is recommended
 
 In cases where a registration decision could be perceived as creating a conflict of interest for a particular Expert, that Expert SHOULD defer to the judgment of the other Experts.
 
-# Open Issues
-
-[^rfced-remove]
-
-Issues against this document are tracked at https://github.com/tlswg/dtls-rrc/issues
-
 # Acknowledgments
 
 We would like to thank
@@ -763,78 +760,6 @@ Yaron Sheffer
 for their input to this document.
 
 --- back
-
-# History
-
-[^rfced-remove]
-
-draft-ietf-tls-dtls-rrc-10:
-
-   - WGLC comments from Marco Tiloca
-   - Change registration policy for new RRC messages to STD action (from expert review)
-
-draft-ietf-tls-dtls-rrc-09:
-
-   - Refresh document while queueing for WGLC
-
-draft-ietf-tls-dtls-rrc-08
-
-   - Refresh document while queueing for WGLC
-
-draft-ietf-tls-dtls-rrc-07
-
-   - Fix ambiguous wording around timer settings
-   - Clarify that the detailed protocol flow describes "basic" RRC
-
-draft-ietf-tls-dtls-rrc-06
-
-   - Add Achim as co-author
-   - Added IANA registry for RRC message types (#14)
-   - Small fix in the path validation algorithm (#15)
-   - Renamed `path_delete` to `path_drop` (#16)
-   - Added an "attacker model" section (#17, #31, #44, #45, #48)
-   - Add criteria for choosing between basic and enhanced path validation (#18)
-   - Reorganise Section 4 a bit (#19)
-   - Small fix in Path Response/Drop Requirements section (#20)
-   - Add privacy considerations wrt CID reuse (#30)
-
-draft-ietf-tls-dtls-rrc-05
-
-   - Added text about off-path packet forwarding
-
-draft-ietf-tls-dtls-rrc-04
-
-   -  Re-submitted draft to fix references
-
-draft-ietf-tls-dtls-rrc-03
-
-   -  Added details for challenge-response exchange
-
-draft-ietf-tls-dtls-rrc-02
-
-   - Undo the TLS flags extension for negotiating RRC, use a new extension type
-
-draft-ietf-tls-dtls-rrc-01
-
-   - Use the TLS flags extension for negotiating RRC
-   - Enhanced IANA consideration section
-   - Expanded example section
-   - Revamp message layout:
-     - Use 8-byte fixed size cookies
-     - Explicitly separate path challenge from response
-
-draft-ietf-tls-dtls-rrc-00
-
-   - Draft name changed after WG adoption
-
-draft-tschofenig-tls-dtls-rrc-01
-
-   - Removed text that overlapped with draft-ietf-tls-dtls-connection-id
-
-draft-tschofenig-tls-dtls-rrc-00
-
-   - Initial version
-
 
 [^rfced-remove]: RFC Editor: please remove this section before publishing as an RFC.
 [^to-be-removed]: RFC Editor: please replace {{&SELF}} with this RFC number and remove this note.
