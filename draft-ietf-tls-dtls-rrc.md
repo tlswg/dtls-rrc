@@ -107,6 +107,7 @@ If the server is capable of meeting this requirement, it responds with a
 extension is TBD1 and the `extension_data` field of this extension is empty.
 The client and server MUST NOT use RRC unless both sides have successfully
 exchanged `rrc` extensions.
+A client offering the `rrc` extension MUST also offer the `connection_id` extension {{!RFC9146}}.
 
 ## RRC and CID Interplay
 
