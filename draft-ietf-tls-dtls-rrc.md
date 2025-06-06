@@ -129,7 +129,7 @@ The RRC sub-protocol consists of three message types: `path_challenge`, `path_re
 and `path_drop` that are used for path validation and selection as described in
 {{path-validation}}.
 
-Each message carries a Cookie, an 8-byte field containing arbitrary data obtained from an entropy source (e.g., the CSPRNG used by the TLS implementation, see {{Appendix C.1 of !RFC8446}}).
+Each message carries a Cookie, an 8-byte field containing 64 bits of entropy (e.g., obtained from the CSPRNG used by the TLS implementation, see {{Appendix C.1 of !RFC8446}}).
 
 The `return_routability_check` message MUST be authenticated and encrypted
 using the currently active security context.
