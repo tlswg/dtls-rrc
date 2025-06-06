@@ -662,6 +662,19 @@ of the connection.  Therefore, deployments that use DTLS in multihoming
 environments SHOULD refuse to use CIDs with DTLS 1.2
 and switch to DTLS 1.3 if the correlation privacy threat is a concern.
 
+# Operational Considerations
+
+## Logging Anomalous Events
+
+Logging of RRC operations at both ends of the protocol can be generally useful for the users of an implementation.
+In particular, for security information and event management (SIEM) and troubleshooting purposes, it is strongly advised that implementations collect statistics about any unsuccessful RRC operations, as they could represent security-relevant events when they coincide with attempts by an attacker to interfere with the end-to-end path.
+
+## Middlebox Interference
+
+Since the DTLS 1.3 encrypted packet's record type is opaque to on-path observers, RRC messages are immune to middlebox interference when using DTLS 1.3.
+In contrast, DTLS 1.2 RRC messages that are not wrapped in the `tls12_cid` record (e.g., in the server-to-client direction if the server didn't negotiate a CID or it negotiated a zero-length CID) have the `return_routability_check` content type in plain text, making them susceptible to interference (e.g., dropping of `path_challenge` messages), which would hinder the RRC functionality altogether.
+Therefore, when using RRC in DTLS 1.2, it is recommended to enable CID in both directions.
+
 # IANA Considerations
 
 [^to-be-removed]
