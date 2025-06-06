@@ -890,8 +890,8 @@ Auth | {CertificateVerify}
 
    We would like to thank Eric Rescorla, Hanno Becker, Hanno Böck, Joe
    Clarke, Manuel Pégourié-Gonnard, Marco Tiloca, Martin Thomson, Mohit
-   Sahni, Rich Salz, Sean Turner, and Yaron Sheffer for their input to
-   this document.
+   Sahni, Rich Salz, Russ Housley, Sean Turner, and Yaron Sheffer for
+   their input to this document.
 
 13.  References
 
