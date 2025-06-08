@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-05T02:04:17.478028+00:00",
+  "timestamp": "2025-06-08T02:19:47.874014+00:00",
   "repo": "tlswg/dtls-rrc",
   "labels": [
     {
@@ -946,15 +946,15 @@
       "id": "I_kwDOFigxk86506HS",
       "title": "security implication of predictable cookie",
       "url": "https://github.com/tlswg/dtls-rrc/issues/82",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thomas-fossati",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "> _\"The security consideration need to discuss the consequences of a predictable cookie value. This will probably require a reference to RFC 4086.\u201d_",
       "createdAt": "2025-06-04T12:25:47Z",
-      "updatedAt": "2025-06-04T13:57:02Z",
-      "closedAt": null,
+      "updatedAt": "2025-06-06T14:34:25Z",
+      "closedAt": "2025-06-06T14:34:24Z",
       "comments": [
         {
           "author": "thomas-fossati",
@@ -976,6 +976,27 @@
           "body": "Same would apply to DTLS alert records. The two bytes of an alert record may be even easier to predict. If that is an issue, I guess, it would require some more corrections, maybe varying the length with padding.",
           "createdAt": "2025-06-04T13:56:25Z",
           "updatedAt": "2025-06-04T13:57:02Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "ACTION: Say that if you don\u2019t enable the anti-replay window, you must ignore RRC messages with \u201cold\u201d seqno\u2019s (see also similar consideration in the CID RFC).",
+          "createdAt": "2025-06-06T13:11:28Z",
+          "updatedAt": "2025-06-06T13:11:28Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> Unless I am mistaken, if the cookie has been previously used in this session and anti-replay is not enabled (unsure who doesn\u2019t use anti-replay, but strictly speaking it is a SHOULD in 1.3 and also not required in 1.2), an (on-/off-path) attacker could force a migration to a path of choice.\n\nActually, I was mistaken :-) If A has captured a previous RRC exchange with a given cookie X, it cannot fool both sides: it can challenge one side with the replayed RRC but the unsolicited response will be dropped by the other end.",
+          "createdAt": "2025-06-06T14:23:33Z",
+          "updatedAt": "2025-06-06T14:23:33Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Since we now require the cookie to contain 64 bits of entropy, this can be closed.",
+          "createdAt": "2025-06-06T14:34:24Z",
+          "updatedAt": "2025-06-06T14:34:24Z"
         }
       ]
     },
@@ -984,15 +1005,15 @@
       "id": "I_kwDOFigxk86507dN",
       "title": "Figure 2 is complex",
       "url": "https://github.com/tlswg/dtls-rrc/issues/83",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thomas-fossati",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "This seems fairly complex figure to say:\n\n   Off-path and on-path attackers can:\n      * Inspect un-encrypted portions of datagrams;\n      * Inject datagrams;\n      * Reorder datagrams; and\n      * Modify portions of datagrams that are not integrity protected.\n\n   In addition, on-path attackers can:\n      * Delay datagrams;\n      * Drop datagrams; and\n      * Manipulate the packetization layer.\n",
       "createdAt": "2025-06-04T12:27:44Z",
-      "updatedAt": "2025-06-04T15:26:06Z",
-      "closedAt": null,
+      "updatedAt": "2025-06-06T13:50:14Z",
+      "closedAt": "2025-06-06T13:50:13Z",
       "comments": [
         {
           "author": "thomas-fossati",
@@ -1007,6 +1028,13 @@
           "body": "May be more like \"layer blocks\", e.g.:\n\n``` \n.------------------------------------.\n| off-path     | on-path             |         \n.------------------------------------.\n|              | Manipulate the      |\n|              | packetization layer |\n+------------------------------------+\n|              | Drop                |\n+------------------------------------+\n|              | Delay               |\n+------------------------------------+\n| Modify un-authenticated portions   |\n+------------------------------------+\n| Reorder                            |\n+------------------------------------+\n| Inject                             |\n+------------------------------------+\n| Inspect un-encrypted portions      |\n'------------------------------------'          \n``` \n",
           "createdAt": "2025-06-04T15:26:05Z",
           "updatedAt": "2025-06-04T15:26:05Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "We discussed the three options (current (Thomas), text-only (Russ), new pic (Achim)) and found no compelling reason to change the status quo.",
+          "createdAt": "2025-06-06T13:50:13Z",
+          "updatedAt": "2025-06-06T13:50:13Z"
         }
       ]
     },
@@ -1022,7 +1050,7 @@
       "labels": [],
       "body": "> _\"I think there should be a MUST statement that the client MUST NOT offer the RRC extension without also offering the CID extension.\u201d_\n",
       "createdAt": "2025-06-04T12:30:25Z",
-      "updatedAt": "2025-06-04T15:19:04Z",
+      "updatedAt": "2025-06-06T14:36:12Z",
       "closedAt": null,
       "comments": [
         {
@@ -1035,9 +1063,47 @@
         {
           "author": "boaks",
           "authorAssociation": "CONTRIBUTOR",
-          "body": "I my be wrong but \"MUST NOT\" is something, which should be omitted at all and requires a rephrase. My be a sentence with MUST, e.g. \"Using RRC  MUST be used with CID, and must not be used without CID\" but I'm not the wording expert.",
+          "body": "I may be wrong but \"MUST NOT\" is something, which should be omitted at all and requires a rephrase. My be a sentence with MUST, e.g. \"Using RRC  MUST be used with CID, and must not be used without CID\" but I'm not the wording expert.",
           "createdAt": "2025-06-04T15:19:03Z",
-          "updatedAt": "2025-06-04T15:19:03Z"
+          "updatedAt": "2025-06-05T08:08:53Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "As per f2f discussion between @thomas-fossati and @boaks, let\u2019s make this change.  (Phrasing in the positive.)",
+          "createdAt": "2025-06-06T13:16:33Z",
+          "updatedAt": "2025-06-06T13:16:33Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "addressed in [3d6cc27](https://github.com/tlswg/dtls-rrc/pull/85/commits/3d6cc2751b3a67632aef01069330d0fe964e1a79)",
+          "createdAt": "2025-06-06T14:36:11Z",
+          "updatedAt": "2025-06-06T14:36:11Z"
+        }
+      ]
+    },
+    {
+      "number": 86,
+      "id": "I_kwDOFigxk866FZK3",
+      "title": "OPSDIR review (redux)",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/86",
+      "state": "OPEN",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The conversation with Joe continued on the list, and he made a concrete proposal to recommend logging RRC failures.  These are potentially security-relevant if they coincide with attempts by an attacker to interfere with the end-to-end path...\n\nOn top of that, I started musing a bit about how middleboxes (e.g., firewalls and other security boxes) could interfere with RRC, given that it\u2019s a brand-new content type.\n\nPutting the two together, I was thinking that we may want to add a small \u201coperational considerations\u201d section with the following:\n\n\n## Operational Considerations\n\n### Logging anomalous events\n\nLogging of RRC operations at both ends of the protocol can be generally useful for the users of an implementation.\nIn particular, for security information and event management (SIEM) and troubleshooting purposes, it is strongly advised that implementations collect statistics about any unsuccessful RRC operations, as they could represent security-relevant events when they coincide with attempts by an attacker to interfere with the end-to-end path.\n\n### Middlebox interference\n\nSince the DTLS 1.3 encrypted packet's record type is opaque to on-path observers, RRC messages are immune to middlebox interference.\nIn contrast, TLS 1.2 RRC messages that are not wrapped in the `tls12_cid` record (e.g., in the server-to-client direction if the server didn't negotiate a CID or it negotiated a zero-length CID) have the `return_routability_check` content type in plain text, making them susceptible to interference (e.g., dropping of `path_challenge` messages), which would hinder the RRC functionality altogether.\n\n\n\n",
+      "createdAt": "2025-06-05T17:08:24Z",
+      "updatedAt": "2025-06-06T13:24:19Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Add a sentence to recommend using CID in both directions to avoid any trouble, even with 1.2.",
+          "createdAt": "2025-06-06T13:24:18Z",
+          "updatedAt": "2025-06-06T13:24:18Z"
         }
       ]
     }
@@ -4434,13 +4500,39 @@
       "labels": [],
       "body": "Fix #81",
       "createdAt": "2025-06-04T13:08:55Z",
-      "updatedAt": "2025-06-04T13:09:05Z",
+      "updatedAt": "2025-06-06T14:36:23Z",
       "baseRepository": "tlswg/dtls-rrc",
       "baseRefName": "master",
       "baseRefOid": "375eb9ded374e2f340cbd8e659b05eafcca957db",
       "headRepository": "tlswg/dtls-rrc",
       "headRefName": "artart",
-      "headRefOid": "248baa96133b451b651c05c81d42cbe1ec6bf36d",
+      "headRefOid": "867f1e03dce9681755011be5b82d01630142fb51",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 87,
+      "id": "PR_kwDOFigxk86ZZzjY",
+      "title": "Add an \"Operational Considerations\" section",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/87",
+      "state": "OPEN",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix #86 \r\n\r\nThis is on top of #85.\r\n\r\nThe relevant commit is [9751b96](https://github.com/tlswg/dtls-rrc/pull/87/commits/9751b960334477bba2281f6fffa9485561243f73)",
+      "createdAt": "2025-06-06T14:43:07Z",
+      "updatedAt": "2025-06-06T16:37:47Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "375eb9ded374e2f340cbd8e659b05eafcca957db",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "opsdir-redux",
+      "headRefOid": "7bbb9c1845693c0cdc34ebe84b0d2ebaa27d42d7",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
