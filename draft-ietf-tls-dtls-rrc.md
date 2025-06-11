@@ -178,7 +178,7 @@ In addition, implementations MUST be able to parse and gracefully ignore message
 
 We define two classes of attackers, off-path and on-path, with increasing
 capabilities (see {{fig-attacker-capabilities}}) partly following terminology
-introduced in QUIC ({{Section 21.1 of RFC9000}}:
+introduced in QUIC ({{Section 21.1 of RFC9000}}):
 
 * An off-path attacker is not on the original path between the DTLS peers, but
   is able to observe packets on the original path and has faster routing
