@@ -108,6 +108,7 @@ extension is TBD1 and the `extension_data` field of this extension is empty.
 The client and server MUST NOT use RRC unless both sides have successfully
 exchanged `rrc` extensions.
 A client offering the `rrc` extension MUST also offer the `connection_id` extension {{!RFC9146}}.
+A client offering the `connection_id` extension SHOULD also offer the `rrc` extension, unless the application using DTLS has its own address validation mechanism.
 
 ## RRC and CID Interplay
 
@@ -177,7 +178,7 @@ In addition, implementations MUST be able to parse and gracefully ignore message
 
 We define two classes of attackers, off-path and on-path, with increasing
 capabilities (see {{fig-attacker-capabilities}}) partly following terminology
-introduced in QUIC {{RFC9000}}:
+introduced in QUIC ({{Section 21.1 of RFC9000}}:
 
 * An off-path attacker is not on the original path between the DTLS peers, but
   is able to observe packets on the original path and has faster routing
@@ -231,7 +232,7 @@ attacker can use the server as a traffic amplifier toward the victim.
 
 ### Mitigation Strategy
 
-When receiving a packet with a known CID and a spoofed source address, an
+When receiving a packet with a known CID that has a source address different from the one currently associated with the DTLS connection, an
 RRC-capable endpoint will not send a (potentially large) response but instead a
 small `path_challenge` message to the victim host.  Since the host is not able
 to decrypt it and generate a valid `path_response`, the address validation
@@ -267,7 +268,7 @@ mechanisms.
 
 {{fig-off-path}} illustrates the case where a receiver receives a
 packet with a new source IP address and/or new port number. In order
-to determine whether this path change was not triggered
+to determine that this path change was not triggered
 by an off-path attacker, the receiver will send a RRC message of type
 `path_challenge` (1) on the old path.
 
@@ -418,11 +419,10 @@ DTLS 1.2.
 The receiver that observes the peer's address or port change MUST stop sending
 any buffered application data, or limit the data sent to the unvalidated
 address to the anti-amplification limit.
+It then initiates the return routability check.
 
-It then initiates the return routability check that proceeds as described
-either in {{enhanced}} or {{regular}}, depending on whether the off-path
-attacker scenario described in {{off-path}} is to be taken into account.
-
+This document describes two kinds of checks: basic ({{regular}}) and enhanced ({{enhanced}}).
+The choice of one or the other depends on whether the off-path attacker scenario described in {{off-path}} is to be considered.
 (The decision on what strategy to choose depends mainly on the threat model, but
 may also be influenced by other considerations.  Examples of impacting factors
 include: the need to minimise implementation complexity, privacy concerns, and the
@@ -766,6 +766,7 @@ Joe Clarke,
 {{{Manuel Pégourié-Gonnard}}},
 Marco Tiloca,
 Martin Thomson,
+Mike Ounsworth,
 Mohit Sahni,
 Rich Salz,
 Russ Housley,
