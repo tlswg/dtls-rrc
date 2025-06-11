@@ -1335,7 +1335,8 @@ If the server is capable of meeting this requirement, it responds with a
 extension is TBD1 and the <code>extension_data</code> field of this extension is empty.
 The client and server <span class="bcp14">MUST NOT</span> use RRC unless both sides have successfully
 exchanged <code>rrc</code> extensions.
-A client offering the <code>rrc</code> extension <span class="bcp14">MUST</span> also offer the <code>connection_id</code> extension <span>[<a href="#RFC9146" class="cite xref">RFC9146</a>]</span>.<a href="#section-3-1" class="pilcrow">¶</a></p>
+A client offering the <code>rrc</code> extension <span class="bcp14">MUST</span> also offer the <code>connection_id</code> extension <span>[<a href="#RFC9146" class="cite xref">RFC9146</a>]</span>.
+A client offering the <code>connection_id</code> extension <span class="bcp14">SHOULD</span> also offer the <code>rrc</code> extension, unless the application using DTLS has its own address validation mechanism.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <div id="rrc-and-cid-interplay">
 <section id="section-3.1">
         <h3 id="name-rrc-and-cid-interplay">
@@ -1417,7 +1418,7 @@ In addition, implementations <span class="bcp14">MUST</span> be able to parse an
       </h2>
 <p id="section-5-1">We define two classes of attackers, off-path and on-path, with increasing
 capabilities (see <a href="#fig-attacker-capabilities" class="auto internal xref">Figure 2</a>) partly following terminology
-introduced in QUIC <span>[<a href="#RFC9000" class="cite xref">RFC9000</a>]</span>:<a href="#section-5-1" class="pilcrow">¶</a></p>
+introduced in QUIC (<span><a href="https://rfc-editor.org/rfc/rfc9000#section-21.1" class="relref">Section 21.1</a> of [<a href="#RFC9000" class="cite xref">RFC9000</a>]</span>:<a href="#section-5-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5-2.1">
           <p id="section-5-2.1.1">An off-path attacker is not on the original path between the DTLS peers, but
@@ -1513,7 +1514,7 @@ attacker can use the server as a traffic amplifier toward the victim.<a href="#s
           <h4 id="name-mitigation-strategy">
 <a href="#section-5.1.1" class="section-number selfRef">5.1.1. </a><a href="#name-mitigation-strategy" class="section-name selfRef">Mitigation Strategy</a>
           </h4>
-<p id="section-5.1.1-1">When receiving a packet with a known CID and a spoofed source address, an
+<p id="section-5.1.1-1">When receiving a packet with a known CID that has a source address different from the one currently associated with the DTLS connection, an
 RRC-capable endpoint will not send a (potentially large) response but instead a
 small <code>path_challenge</code> message to the victim host.  Since the host is not able
 to decrypt it and generate a valid <code>path_response</code>, the address validation
@@ -1554,7 +1555,7 @@ mechanisms.<a href="#section-5.2-3" class="pilcrow">¶</a></p>
           </h4>
 <p id="section-5.2.1-1"><a href="#fig-off-path" class="auto internal xref">Figure 3</a> illustrates the case where a receiver receives a
 packet with a new source IP address and/or new port number. In order
-to determine whether this path change was not triggered
+to determine that this path change was not triggered
 by an off-path attacker, the receiver will send a RRC message of type
 <code>path_challenge</code> (1) on the old path.<a href="#section-5.2.1-1" class="pilcrow">¶</a></p>
 <span id="name-off-path-packet-forwarding-"></span><div id="fig-off-path">
@@ -1877,19 +1878,19 @@ DTLS 1.2.<a href="#section-5.2.1-14" class="pilcrow">¶</a></p>
       </h2>
 <p id="section-6-1">The receiver that observes the peer's address or port change <span class="bcp14">MUST</span> stop sending
 any buffered application data, or limit the data sent to the unvalidated
-address to the anti-amplification limit.<a href="#section-6-1" class="pilcrow">¶</a></p>
-<p id="section-6-2">It then initiates the return routability check that proceeds as described
-either in <a href="#enhanced" class="auto internal xref">Section 6.2</a> or <a href="#regular" class="auto internal xref">Section 6.1</a>, depending on whether the off-path
-attacker scenario described in <a href="#off-path" class="auto internal xref">Section 5.2</a> is to be taken into account.<a href="#section-6-2" class="pilcrow">¶</a></p>
-<p id="section-6-3">(The decision on what strategy to choose depends mainly on the threat model, but
+address to the anti-amplification limit.
+It then initiates the return routability check.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-2">This document describes two kinds of checks: basic (<a href="#regular" class="auto internal xref">Section 6.1</a>) and enhanced (<a href="#enhanced" class="auto internal xref">Section 6.2</a>).
+The choice of one or the other depends on whether the off-path attacker scenario described in <a href="#off-path" class="auto internal xref">Section 5.2</a> is to be considered.
+(The decision on what strategy to choose depends mainly on the threat model, but
 may also be influenced by other considerations.  Examples of impacting factors
 include: the need to minimise implementation complexity, privacy concerns, and the
 need to reduce the time it takes to switch path.  The choice may be offered as
-a configuration option to the user of the TLS implementation.)<a href="#section-6-3" class="pilcrow">¶</a></p>
-<p id="section-6-4">After the path validation procedure is completed, any pending send operation is
-resumed to the bound peer address.<a href="#section-6-4" class="pilcrow">¶</a></p>
-<p id="section-6-5"><a href="#path-challenge-reqs" class="auto internal xref">Section 6.3</a> and <a href="#path-response-reqs" class="auto internal xref">Section 6.4</a> list the requirements for
-the initiator and responder roles, broken down per protocol phase.<a href="#section-6-5" class="pilcrow">¶</a></p>
+a configuration option to the user of the TLS implementation.)<a href="#section-6-2" class="pilcrow">¶</a></p>
+<p id="section-6-3">After the path validation procedure is completed, any pending send operation is
+resumed to the bound peer address.<a href="#section-6-3" class="pilcrow">¶</a></p>
+<p id="section-6-4"><a href="#path-challenge-reqs" class="auto internal xref">Section 6.3</a> and <a href="#path-response-reqs" class="auto internal xref">Section 6.4</a> list the requirements for
+the initiator and responder roles, broken down per protocol phase.<a href="#section-6-4" class="pilcrow">¶</a></p>
 <div id="regular">
 <section id="section-6.1">
         <h3 id="name-basic">
@@ -2442,6 +2443,7 @@ Joe Clarke,
 <span class="contact-name">Manuel Pégourié-Gonnard</span>,
 Marco Tiloca,
 Martin Thomson,
+Mike Ounsworth,
 Mohit Sahni,
 Rich Salz,
 Russ Housley,
