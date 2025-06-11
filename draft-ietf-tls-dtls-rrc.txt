@@ -243,7 +243,7 @@ Table of Contents
 
    We define two classes of attackers, off-path and on-path, with
    increasing capabilities (see Figure 2) partly following terminology
-   introduced in QUIC (Section 21.1 of [RFC9000]:
+   introduced in QUIC (Section 21.1 of [RFC9000]):
 
    *  An off-path attacker is not on the original path between the DTLS
       peers, but is able to observe packets on the original path and has
