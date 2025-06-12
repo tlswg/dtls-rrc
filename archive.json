@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-08T02:19:47.874014+00:00",
+  "timestamp": "2025-06-12T02:04:32.102447+00:00",
   "repo": "tlswg/dtls-rrc",
   "labels": [
     {
@@ -930,15 +930,15 @@
       "id": "I_kwDOFigxk865yVyW",
       "title": "Artart review",
       "url": "https://github.com/tlswg/dtls-rrc/issues/81",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thomas-fossati",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "[Russ\u2019s review](https://mailarchive.ietf.org/arch/msg/tls/mk3YNRbb6_MA4MUrzNMl-Dyw8Ag/)\n\n## Major Concerns\n\n* [x] Section 4: The text says:\n\n   Each message carries a Cookie, an 8-byte field containing arbitrary\n   data.\n\nIn Section 7, the reader learns that is is incomplete.  The cookie MUST\nbe unpredictable.\n\n* [x] Section 4: In the last sentence, a MUST statement appears an a\nparenthetical.  Please reword.  I suggest:\n\n   Implementations MUST be able to parse and understand the three RRC\n   message types defined in this document.  In addition, implementations\n   MUST be able to parse and gracefully ignore messages with an unknown\n   msg_type.\n\n* [x] Section 5: This seems like an odd placement of this information in the\ndocument.  I propose that this information be put in Section 3.\n\n## Minor Concerns\n\n* [x] Section 11: It seems like a good time to drop this section.\n\n* [x] Appendix A: It seems like a good time to drop this section.\n\n\n## Nits\n\n* [x] Section 1: Please spell out CID on the first use in the document body.\n\n* [x] Section 1: s/It then goes on describing the steps a DTLS principal must/\n            /It also describes the steps a DTLS principal must/\n\n* [x] Section 6.2: s/attack is more reliable if/attack is more effective if/\n\n* [ ] Figure 4: The difference between a dash and a dot is unclear.\n\n* [ ] Figures 4, 5 and 6: The purpose of lines without numbers is unclear.\n\n* [x] Section 7: s/taken into account or not/taken into account/\n\n* [x] Section 7.2: s/timer T, see Section 7.5, is started./\n              /timer T is started, see Section 7.5./\n\n* [x] Section 7.5: s/more suitable value/more suitable value for T.\n\n* [x] Section 9: IDnits gets confused because the Privacy Considerations and\nthe Security Considerations are in one section.  Please avoid this\nsituation by separating them.\n",
       "createdAt": "2025-06-04T08:34:46Z",
-      "updatedAt": "2025-06-04T12:30:38Z",
-      "closedAt": null,
+      "updatedAt": "2025-06-11T06:55:33Z",
+      "closedAt": "2025-06-11T06:55:33Z",
       "comments": []
     },
     {
@@ -1043,15 +1043,15 @@
       "id": "I_kwDOFigxk86509WY",
       "title": "Section 5 missing MUST",
       "url": "https://github.com/tlswg/dtls-rrc/issues/84",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thomas-fossati",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "> _\"I think there should be a MUST statement that the client MUST NOT offer the RRC extension without also offering the CID extension.\u201d_\n",
       "createdAt": "2025-06-04T12:30:25Z",
-      "updatedAt": "2025-06-06T14:36:12Z",
-      "closedAt": null,
+      "updatedAt": "2025-06-11T06:55:33Z",
+      "closedAt": "2025-06-11T06:55:33Z",
       "comments": [
         {
           "author": "thomas-fossati",
@@ -1088,15 +1088,15 @@
       "id": "I_kwDOFigxk866FZK3",
       "title": "OPSDIR review (redux)",
       "url": "https://github.com/tlswg/dtls-rrc/issues/86",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thomas-fossati",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "The conversation with Joe continued on the list, and he made a concrete proposal to recommend logging RRC failures.  These are potentially security-relevant if they coincide with attempts by an attacker to interfere with the end-to-end path...\n\nOn top of that, I started musing a bit about how middleboxes (e.g., firewalls and other security boxes) could interfere with RRC, given that it\u2019s a brand-new content type.\n\nPutting the two together, I was thinking that we may want to add a small \u201coperational considerations\u201d section with the following:\n\n\n## Operational Considerations\n\n### Logging anomalous events\n\nLogging of RRC operations at both ends of the protocol can be generally useful for the users of an implementation.\nIn particular, for security information and event management (SIEM) and troubleshooting purposes, it is strongly advised that implementations collect statistics about any unsuccessful RRC operations, as they could represent security-relevant events when they coincide with attempts by an attacker to interfere with the end-to-end path.\n\n### Middlebox interference\n\nSince the DTLS 1.3 encrypted packet's record type is opaque to on-path observers, RRC messages are immune to middlebox interference.\nIn contrast, TLS 1.2 RRC messages that are not wrapped in the `tls12_cid` record (e.g., in the server-to-client direction if the server didn't negotiate a CID or it negotiated a zero-length CID) have the `return_routability_check` content type in plain text, making them susceptible to interference (e.g., dropping of `path_challenge` messages), which would hinder the RRC functionality altogether.\n\n\n\n",
       "createdAt": "2025-06-05T17:08:24Z",
-      "updatedAt": "2025-06-06T13:24:19Z",
-      "closedAt": null,
+      "updatedAt": "2025-06-11T06:55:50Z",
+      "closedAt": "2025-06-11T06:55:50Z",
       "comments": [
         {
           "author": "thomas-fossati",
@@ -1104,6 +1104,30 @@
           "body": "Add a sentence to recommend using CID in both directions to avoid any trouble, even with 1.2.",
           "createdAt": "2025-06-06T13:24:18Z",
           "updatedAt": "2025-06-06T13:24:18Z"
+        }
+      ]
+    },
+    {
+      "number": 88,
+      "id": "I_kwDOFigxk866tNXG",
+      "title": "Secdir review",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/88",
+      "state": "CLOSED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "[Mike O\u2019s secdir review](https://mailarchive.ietf.org/arch/msg/tls/4eRnkXRPTCLu2KZqI5X6wPL8Erc/):\n\n* [ ] Na\u00efve question (I am not a DTLS / routing expert). Does this spec introduce a new DDoS surface in the case that the new (preferred) path is longer, and therefore the connection will keep pausing to do this path-check? I expected to see somewhere a recommendation for a guard against that \u2013 only do this once per pair of paths, or something similar.\n\n* [x] I would like to see the Introduction add a paragraph about mandatory-to-implement and interop implications of this draft; give a sense of whether this is a mandatory-to-implement extension to DTLS, or optional, and whether one side of the connection can perform this successfully even if the other end does not support it. I think the text I\u2019m looking for is: \u201cThis specification defines a RECOMMENDED mechanism for DTLS 1.2 and 1.3. DTLS 1.2 and 1.3 implementations SHOULD implement this and include it in all DTLS ClientHellos, but note that no security value is obtained unless both parties support it\u201d, but I\u2019ll leave it to the experts to frame the correct wording.\n\n* [ ] Intro needs more description of what the vulnerability is, and which party is gaining protection against which type of adversary by implementing this. You have this nicely and in great detail in Section 6, but I would pull a short summary up to the Intro. After reading section 6, I see that you are solving two problems: amplification-to-a-victim, and path-hijacking. You have some good sentences in Section 6 that you could pull up into a short summary of the issue and fix.\n\n* [ ] Nit: Section 4: \u201cFuture extensions to the Return Routability Check sub-protocol may define new message types.\u201d \u2026 should that be a normative \u201cMAY\u201d?\n\n* [ ] Section 6: It would be nice if you synced up with the terminology for type of attack / attacker as defined in Section 3 of RFC3552. What you have is close to S. 3.2 of RFC3552; probably just needs a reference and a sentence \u201cWe extend the definitions of \u201con-path\u201d and \u201coff-path\u201d attackers as given in [RFC3552] to more precisely fit the specifics addressed by this specification\u201d. Could / should also site definitions in RFC 4949.\n\n* [x] Section 6.1.1: \u201cWhen receiving a packet with a known CID and a spoofed source address, an RRC-capable endpoint will\u2026\u201d  Technically, the endpoint doesn\u2019t know for a fact that it\u2019s spoofed, right? I assume that the whole point of defining a challenge-response sub-protocol here is to distinguish the legitimate path-changes from attacks, right? I would say instead \u201cWhen receiving a packet with a known CID and a source address that does not match, the RRC-capable endpoints will begin by assuming that it is spoofed and verify by \u2026\u201d\n\n* [ ] Section 6: \u201cThe attack is more reliable if relatively few packets are sent or if packet loss coincides with the attempted attack.\u201d I\u2019m a little confused about the grammar of this sentence. I could see this meaning one of several things: That the attack is harder if the victim channel has some naturally-occuring (unrelated) packet loss that the attacker has no control over, but happens to coincide with the attack. That the attacker needs to induce packet loss in order to perform the attack, and this is easier if it\u2019s an otherwise noise-free channel. That the off-path that the attacker is trying to migrate to should be noise-free. Either way, making this sentence more precise would help\n\n* [x] Grammar: \u201cIn order to determine whether this path change was not triggered by an off-path attacker\u201d In English, you don\u2019t use the \u201cwhether \u2026 not\u201d construction. I would suggest either: \u201c... determine whether this path change was triggered by \u2026\u201d or \u201c... determine that this path change was not triggered by \u2026\u201d\n\n* [ ] Joke: Figure 5 looks like what happens when I try to change my tax address with the government; and this triggers all sorts of paper mail to all my registered addresses.\n\n* [ ] You use language like \u201cattacker trying to place itself on path\u201d. Would it be more evocative to say \u201chijack the path\u201d? Your described attack here seems to agree with the definition of \u201cHijack Attack\u201d given in RFC 4949.\n\n* [ ] \u201cIf the path via the attacker is reliably faster than the old path despite multiple attempts to use that old path, it is not possible to distinguish between an attack and an improvement in routing.\u201d This is funny. I am picturing a Wired.com article titled \u201cActor X hijacks the entire internet by providing faster, more reliable service\u201d. Right. Hard to really call that an attack.\n\n* [ ] Section 7 intro: I feel like this needs some tie-back to the negotiation done during the ClientHello / ServerHello step. Like, the entirety of Section 7 only happens if this session negotiated to use RRC, right?\n\n* [x] Section 7.2 / 7.3 is literally the first time in the document that the terms \u201cBasic\u201d / \u201cEnhanced\u201d appear. You at least need to introduce this at the top of section 7. Basic vs Enhanced something that needs to be negotiated? Are these interop-equivalent and therefore implementer\u2019s choice? \u2026 some introduction needed.\n```\n",
+      "createdAt": "2025-06-10T07:07:14Z",
+      "updatedAt": "2025-06-11T09:48:31Z",
+      "closedAt": "2025-06-11T09:48:31Z",
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Fixed by #89 ",
+          "createdAt": "2025-06-11T09:48:31Z",
+          "updatedAt": "2025-06-11T09:48:31Z"
         }
       ]
     }
@@ -4493,52 +4517,126 @@
       "id": "PR_kwDOFigxk86ZBZ-s",
       "title": "ARTART review",
       "url": "https://github.com/tlswg/dtls-rrc/pull/85",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "thomas-fossati",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Fix #81",
       "createdAt": "2025-06-04T13:08:55Z",
-      "updatedAt": "2025-06-06T14:36:23Z",
+      "updatedAt": "2025-06-11T06:55:35Z",
       "baseRepository": "tlswg/dtls-rrc",
       "baseRefName": "master",
       "baseRefOid": "375eb9ded374e2f340cbd8e659b05eafcca957db",
       "headRepository": "tlswg/dtls-rrc",
       "headRefName": "artart",
       "headRefOid": "867f1e03dce9681755011be5b82d01630142fb51",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-06-11T06:55:32Z",
+      "mergedAt": "2025-06-11T06:55:32Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "565f862da31596a538152a2aa071c54a19de6de8"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk86tvggU",
+          "commit": {
+            "abbreviatedOid": "867f1e0"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "This clean-up looks good to me.",
+          "createdAt": "2025-06-10T20:08:44Z",
+          "updatedAt": "2025-06-10T20:08:44Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 87,
       "id": "PR_kwDOFigxk86ZZzjY",
       "title": "Add an \"Operational Considerations\" section",
       "url": "https://github.com/tlswg/dtls-rrc/pull/87",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "thomas-fossati",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Fix #86 \r\n\r\nThis is on top of #85.\r\n\r\nThe relevant commit is [9751b96](https://github.com/tlswg/dtls-rrc/pull/87/commits/9751b960334477bba2281f6fffa9485561243f73)",
       "createdAt": "2025-06-06T14:43:07Z",
-      "updatedAt": "2025-06-06T16:37:47Z",
+      "updatedAt": "2025-06-11T06:55:53Z",
       "baseRepository": "tlswg/dtls-rrc",
       "baseRefName": "master",
       "baseRefOid": "375eb9ded374e2f340cbd8e659b05eafcca957db",
       "headRepository": "tlswg/dtls-rrc",
       "headRefName": "opsdir-redux",
       "headRefOid": "7bbb9c1845693c0cdc34ebe84b0d2ebaa27d42d7",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-06-11T06:55:49Z",
+      "mergedAt": "2025-06-11T06:55:49Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "796ead333e6605cb76a941a8c2adac19cc9a52e6"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk86tvf5I",
+          "commit": {
+            "abbreviatedOid": "7bbb9c1"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "Adding the operational consideration section talking about logging and middlebox interference is a useful addition",
+          "createdAt": "2025-06-10T20:07:58Z",
+          "updatedAt": "2025-06-10T20:07:58Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 89,
+      "id": "PR_kwDOFigxk86Z4Yq0",
+      "title": "Secdir review",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/89",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This sits on top of \"opsdir-redux\" #87 ",
+      "createdAt": "2025-06-10T15:04:28Z",
+      "updatedAt": "2025-06-11T06:56:10Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "375eb9ded374e2f340cbd8e659b05eafcca957db",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "secdir",
+      "headRefOid": "bdae90c41713dc4436dc3d31e5e93836097633ea",
+      "closedAt": "2025-06-11T06:56:06Z",
+      "mergedAt": "2025-06-11T06:56:06Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "3cac230773d217cdaaff6fed94b36a857efba863"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk86tvfHY",
+          "commit": {
+            "abbreviatedOid": "bdae90c"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "Great work, Thomas & Achim!",
+          "createdAt": "2025-06-10T20:07:01Z",
+          "updatedAt": "2025-06-10T20:07:01Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
