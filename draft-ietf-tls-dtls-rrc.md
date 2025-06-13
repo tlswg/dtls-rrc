@@ -522,7 +522,7 @@ When setting T, implementations are cautioned that the new path could have a
 longer RTT than the original.
 
 In settings where there is external information about the RTT of the active
-path, implementations SHOULD use T = 3xRTT.
+path (i.e., the old path), implementations SHOULD use T = 3xRTT.
 
 If an implementation has no way to obtain information regarding the RTT of the
 active path, T SHOULD be set to 1s.
