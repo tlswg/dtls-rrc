@@ -760,6 +760,7 @@ In cases where a registration decision could be perceived as creating a conflict
 # Acknowledgments
 
 We would like to thank
+Colin Perkins,
 Eric Rescorla,
 Hanno Becker,
 {{{Hanno Böck}}},
