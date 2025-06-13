@@ -493,6 +493,8 @@ The enhanced return routability check comprises the following steps:
   * The transmission of subsequent `path_challenge` messages SHOULD be paced to
     decrease the chance of loss.
   * Each `path_challenge` message MUST contain random data.
+  * In general, the number of "backup" `path_challenge` messages depends on the application, since some are more sensitive to latency caused by changes in the path than others.
+In the absence of application-specific requirements, the initiator can send a `path_challenge` message once per round-trip time (RTT), up to the anti-amplification limit.
 * The initiator MAY use padding using the record padding mechanism available in
   DTLS 1.3 (and in DTLS 1.2, when CID is enabled on the sending direction) up
   to the anti-amplification limit to probe if the path MTU (PMTU) for the new
@@ -518,7 +520,7 @@ validation procedure.
 ## Timer Choice {#timer-choice}
 
 When setting T, implementations are cautioned that the new path could have a
-longer round-trip time (RTT) than the original.
+longer RTT than the original.
 
 In settings where there is external information about the RTT of the active
 path, implementations SHOULD use T = 3xRTT.
