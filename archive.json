@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-12T02:04:32.102447+00:00",
+  "timestamp": "2025-06-15T02:21:34.355939+00:00",
   "repo": "tlswg/dtls-rrc",
   "labels": [
     {
@@ -1130,6 +1130,78 @@
           "updatedAt": "2025-06-11T09:48:31Z"
         }
       ]
+    },
+    {
+      "number": 90,
+      "id": "I_kwDOFigxk867LsX8",
+      "title": "Tsvart review",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/90",
+      "state": "OPEN",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "[Colin\u2019s review](https://mailarchive.ietf.org/arch/msg/tls/Si3kVBjH8CwgHCnqA4LZdNCqseA/)\n\n* [x] Section 6 describes the basic and enhanced path validation procedures, and states that \u201cThe decision on what strategy to choose depends mainly on the threat model, but may also be influenced by other considerations. Examples of impacting factors include: the need to minimise implementation complexity, privacy concerns, and the need to reduce the time it takes to switch path. The choice may be offered as a configuration option to the user of the TLS implementation\u201d. I agree that those factors influence the decision on what to implement, but I was surprised that the draft did not give clearer guidance on whether the basic or enhanced check was recommended.\n\n> At present, we do not have sufficient operational experience to make a recommendation.\n\n* [x] Section 6.3 states that \u201cEach path_challenge message MUST contain random data\u201d. I presume the intent is that each path_challenge message contains a new cookie with random contents, rather than a single random cookie being generated once and resent in each retransmission, but it would be helpful to clarify.\n\n> Both should work.\n\n* [x] Section 6.4 states that \u201cThe initiator MUST silently discard any invalid path_response or path_drop it receives\u201d \u2013 this is appropriate, but I wonder what would happen if another NAT rebinding occurred while the check was ongoing, such that the path_response arrived from neither the original address nor the new address but rather from a third address? Would this be counted as invalid, would it move the path to the third address, or would it trigger another check?\n\n> The current algorithm is not designed to handle \u201cnested\u201d rebindings. If this occurs (hopefully rarely), the path response is dropped, and path validation eventually times out. The address is not updated, and a new path validation will be triggered when new data is received.\n\n",
+      "createdAt": "2025-06-12T13:54:59Z",
+      "updatedAt": "2025-06-13T13:15:41Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 91,
+      "id": "I_kwDOFigxk867XAe8",
+      "title": "no guidance about sending duplicate path challenges",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/91",
+      "state": "OPEN",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Section 6.3 states that the return_routability_check messages MAY be sent multiple times to account for packet loss. This is appropriate, but I would expect to see some guidance on how often and how frequently these packets should be resent. For example, should the initiator send the message when the timer expires, or after one RTT, or more often? Appropriate timing is likely to be application dependent, since some applications are more sensitive to path change latency than others, but some guidance (perhaps once per RTT, up to the anti-amplification limit?) might be appropriate.",
+      "createdAt": "2025-06-13T12:08:37Z",
+      "updatedAt": "2025-06-13T12:09:51Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 92,
+      "id": "I_kwDOFigxk867XSYZ",
+      "title": "spurious line",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/92",
+      "state": "OPEN",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Section 6.4 states \u201cThe initiator MUST NOT enforce this behaviour\u201d, but I didn\u2019t understand how the initiator could enforce the behaviour, since it seems that the responder that makes the decision. Suggest to either remove or clarify the intent.",
+      "createdAt": "2025-06-13T12:37:42Z",
+      "updatedAt": "2025-06-13T12:38:46Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Good catch!  What happened is that very early in the history of the document, we had that statement to mean that the initiator should \"keep quiet\u201d if the responder was misbehaving (i.e., sending on another path than the one from where it received the challenge.). To clarify it, we added the line below: \u201cThe initiator MUST silently discard [\u2026]\u201d but then forgot to remove that one :-(\n",
+          "createdAt": "2025-06-13T12:38:46Z",
+          "updatedAt": "2025-06-13T12:38:46Z"
+        }
+      ]
+    },
+    {
+      "number": 93,
+      "id": "I_kwDOFigxk867XZEy",
+      "title": "clarify \u201cactive path\"",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/93",
+      "state": "OPEN",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "In Section 6.5, clarify whether the \u201cactive path\u201d refers to the old path or the new path.",
+      "createdAt": "2025-06-13T12:47:49Z",
+      "updatedAt": "2025-06-13T12:48:30Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -4637,6 +4709,40 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 94,
+      "id": "PR_kwDOFigxk86aZCxP",
+      "title": "Address TSVART review",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/94",
+      "state": "OPEN",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix #91 \r\nFix #92\r\nFix #93 \r\n",
+      "createdAt": "2025-06-13T13:17:56Z",
+      "updatedAt": "2025-06-13T14:33:32Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "2f675f18ab6b124b7a7eb2d8bf2cad1802b32f01",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "tsvart",
+      "headRefOid": "e58f29017761d7787d8fc79937bb63a3a298b311",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "lgtm",
+          "createdAt": "2025-06-13T14:33:32Z",
+          "updatedAt": "2025-06-13T14:33:32Z"
+        }
+      ],
+      "reviews": []
     }
   ]
 }
