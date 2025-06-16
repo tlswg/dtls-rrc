@@ -435,6 +435,10 @@ resumed to the bound peer address.
 {{path-challenge-reqs}} and {{path-response-reqs}} list the requirements for
 the initiator and responder roles, broken down per protocol phase.
 
+Please note that the presented algorithms are not designed to handle nested rebindings.
+If this happens (which should rarely occur), the `path_response` message is dropped, the address validation times out, and the address will not be updated.
+A new path validation will start when new data is received.
+
 ## Basic {#regular}
 
 The basic return routability check comprises the following steps:
