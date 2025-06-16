@@ -5,10 +5,10 @@
 TLS                                                   H. Tschofenig, Ed.
 Internet-Draft                                                     H-BRS
 Intended status: Standards Track                                A. Kraus
-Expires: 15 December 2025                                               
+Expires: 18 December 2025                                               
                                                               T. Fossati
                                                                   Linaro
-                                                            13 June 2025
+                                                            16 June 2025
 
 
            Return Routability Check for DTLS 1.2 and DTLS 1.3
@@ -46,7 +46,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 15 December 2025.
+   This Internet-Draft will expire on 18 December 2025.
 
 Copyright Notice
 
@@ -498,6 +498,12 @@ Table of Contents
 
    Section 6.3 and Section 6.4 list the requirements for the initiator
    and responder roles, broken down per protocol phase.
+
+   Please note that the presented algorithms are not designed to handle
+   nested rebindings.  If this happens (which should rarely occur), the
+   path_response message is dropped, the address validation times out,
+   and the address will not be updated.  A new path validation will
+   start when new data is received.
 
 6.1.  Basic
 
