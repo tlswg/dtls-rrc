@@ -435,6 +435,10 @@ resumed to the bound peer address.
 {{path-challenge-reqs}} and {{path-response-reqs}} list the requirements for
 the initiator and responder roles, broken down per protocol phase.
 
+Please note that the presented algorithms are not designed to handle nested rebindings.
+If this happens (which should rarely occur), the `path_response` message is dropped, the address validation times out, and the address will not be updated.
+A new path validation will start when new data is received.
+
 ## Basic {#regular}
 
 The basic return routability check comprises the following steps:
@@ -493,6 +497,8 @@ The enhanced return routability check comprises the following steps:
   * The transmission of subsequent `path_challenge` messages SHOULD be paced to
     decrease the chance of loss.
   * Each `path_challenge` message MUST contain random data.
+  * In general, the number of "backup" `path_challenge` messages depends on the application, since some are more sensitive to latency caused by changes in the path than others.
+In the absence of application-specific requirements, the initiator can send a `path_challenge` message once per round-trip time (RTT), up to the anti-amplification limit.
 * The initiator MAY use padding using the record padding mechanism available in
   DTLS 1.3 (and in DTLS 1.2, when CID is enabled on the sending direction) up
   to the anti-amplification limit to probe if the path MTU (PMTU) for the new
@@ -506,8 +512,7 @@ The enhanced return routability check comprises the following steps:
   for each received `path_challenge`.
 * The responder MUST send the `path_response` or the `path_drop` on the path
   where the corresponding `path_challenge` has been received, so that validation
-  succeeds only if the path is functional in both directions. The initiator
-  MUST NOT enforce this behaviour.
+  succeeds only if the path is functional in both directions.
 * The initiator MUST silently discard any invalid `path_response` or
   `path_drop` it receives.
 
@@ -518,10 +523,10 @@ validation procedure.
 ## Timer Choice {#timer-choice}
 
 When setting T, implementations are cautioned that the new path could have a
-longer round-trip time (RTT) than the original.
+longer RTT than the original.
 
 In settings where there is external information about the RTT of the active
-path, implementations SHOULD use T = 3xRTT.
+path (i.e., the old path), implementations SHOULD use T = 3xRTT.
 
 If an implementation has no way to obtain information regarding the RTT of the
 active path, T SHOULD be set to 1s.
@@ -759,6 +764,7 @@ In cases where a registration decision could be perceived as creating a conflict
 # Acknowledgments
 
 We would like to thank
+Colin Perkins,
 Eric Rescorla,
 Hanno Becker,
 {{{Hanno Böck}}},
