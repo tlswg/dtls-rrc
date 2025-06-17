@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-15T02:21:34.355939+00:00",
+  "timestamp": "2025-06-17T02:06:39.156143+00:00",
   "repo": "tlswg/dtls-rrc",
   "labels": [
     {
@@ -1152,15 +1152,15 @@
       "id": "I_kwDOFigxk867XAe8",
       "title": "no guidance about sending duplicate path challenges",
       "url": "https://github.com/tlswg/dtls-rrc/issues/91",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thomas-fossati",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Section 6.3 states that the return_routability_check messages MAY be sent multiple times to account for packet loss. This is appropriate, but I would expect to see some guidance on how often and how frequently these packets should be resent. For example, should the initiator send the message when the timer expires, or after one RTT, or more often? Appropriate timing is likely to be application dependent, since some applications are more sensitive to path change latency than others, but some guidance (perhaps once per RTT, up to the anti-amplification limit?) might be appropriate.",
       "createdAt": "2025-06-13T12:08:37Z",
-      "updatedAt": "2025-06-13T12:09:51Z",
-      "closedAt": null,
+      "updatedAt": "2025-06-16T14:36:32Z",
+      "closedAt": "2025-06-16T14:36:32Z",
       "comments": []
     },
     {
@@ -1168,15 +1168,15 @@
       "id": "I_kwDOFigxk867XSYZ",
       "title": "spurious line",
       "url": "https://github.com/tlswg/dtls-rrc/issues/92",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thomas-fossati",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Section 6.4 states \u201cThe initiator MUST NOT enforce this behaviour\u201d, but I didn\u2019t understand how the initiator could enforce the behaviour, since it seems that the responder that makes the decision. Suggest to either remove or clarify the intent.",
       "createdAt": "2025-06-13T12:37:42Z",
-      "updatedAt": "2025-06-13T12:38:46Z",
-      "closedAt": null,
+      "updatedAt": "2025-06-16T14:36:32Z",
+      "closedAt": "2025-06-16T14:36:32Z",
       "comments": [
         {
           "author": "thomas-fossati",
@@ -1192,15 +1192,15 @@
       "id": "I_kwDOFigxk867XZEy",
       "title": "clarify \u201cactive path\"",
       "url": "https://github.com/tlswg/dtls-rrc/issues/93",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thomas-fossati",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "In Section 6.5, clarify whether the \u201cactive path\u201d refers to the old path or the new path.",
       "createdAt": "2025-06-13T12:47:49Z",
-      "updatedAt": "2025-06-13T12:48:30Z",
-      "closedAt": null,
+      "updatedAt": "2025-06-16T14:36:32Z",
+      "closedAt": "2025-06-16T14:36:32Z",
       "comments": []
     }
   ],
@@ -4715,24 +4715,26 @@
       "id": "PR_kwDOFigxk86aZCxP",
       "title": "Address TSVART review",
       "url": "https://github.com/tlswg/dtls-rrc/pull/94",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "thomas-fossati",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Fix #91 \r\nFix #92\r\nFix #93 \r\n",
       "createdAt": "2025-06-13T13:17:56Z",
-      "updatedAt": "2025-06-13T14:33:32Z",
+      "updatedAt": "2025-06-16T14:36:41Z",
       "baseRepository": "tlswg/dtls-rrc",
       "baseRefName": "master",
       "baseRefOid": "2f675f18ab6b124b7a7eb2d8bf2cad1802b32f01",
       "headRepository": "tlswg/dtls-rrc",
       "headRefName": "tsvart",
-      "headRefOid": "e58f29017761d7787d8fc79937bb63a3a298b311",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "bc4de703631a222ed2814028821a70c58ef3c58d",
+      "closedAt": "2025-06-16T14:36:31Z",
+      "mergedAt": "2025-06-16T14:36:31Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "562c7ab2d77bc7beea65526f2ea002da9849fffa"
+      },
       "comments": [
         {
           "author": "boaks",
@@ -4742,7 +4744,21 @@
           "updatedAt": "2025-06-13T14:33:32Z"
         }
       ],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk86uxsdo",
+          "commit": {
+            "abbreviatedOid": "bc4de70"
+          },
+          "author": "seanturner",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-06-16T13:59:01Z",
+          "updatedAt": "2025-06-16T13:59:01Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
