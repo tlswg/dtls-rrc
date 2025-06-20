@@ -649,6 +649,10 @@ return routability checks to the real peer (even if those datagrams are
 cryptographically authenticated).  On-path adversaries can, in general, pose a
 harm to connectivity.
 
+If the RRC challenger uses a cookie that has already been used in this connection and does not implement anti-replay protection (see {{Section 4.5.1 of RFC9147}} and {{Section 4.1.2.6 of !RFC6347}}), an attacker could replay an old `path_response` message with the reused cookie to trick the challenger into switching to the attacker's chosen path.
+Therefore, RRC cookies must be obtained afresh using a reliable source of entropy {{?RFC4086}}.
+The CSPRNG used by the TLS implementation (see {{Appendix C.1 of RFC8446}}) is a natural choice for this.
+
 # Privacy Considerations
 
 When using DTLS 1.3, peers SHOULD avoid using the same CID on multiple network
