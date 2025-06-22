@@ -2198,8 +2198,8 @@ return routability checks to the real peer (even if those datagrams are
 cryptographically authenticated).  On-path adversaries can, in general, pose a
 harm to connectivity.<a href="#section-8-1" class="pilcrow">¶</a></p>
 <p id="section-8-2">If the RRC challenger reuses a cookie that was previously used in the same connection and does not implement anti-replay protection (see <span><a href="https://rfc-editor.org/rfc/rfc9147#section-4.5.1" class="relref">Section 4.5.1</a> of [<a href="#RFC9147" class="cite xref">RFC9147</a>]</span> and <span><a href="https://rfc-editor.org/rfc/rfc6347#section-4.1.2.6" class="relref">Section 4.1.2.6</a> of [<a href="#RFC6347" class="cite xref">RFC6347</a>]</span>), an attacker could replay a previously sent <code>path_response</code> message containing the reused cookie to mislead the challenger into switching to a path of the attacker's choosing.
-Therefore, RRC cookies must be obtained afresh using a reliable source of entropy <span>[<a href="#RFC4086" class="cite xref">RFC4086</a>]</span>.
-The CSPRNG used by the TLS implementation (see <span><a href="https://rfc-editor.org/rfc/rfc8446#appendix-C.1" class="relref">Appendix C.1</a> of [<a href="#RFC8446" class="cite xref">RFC8446</a>]</span>) is a natural choice for this.<a href="#section-8-2" class="pilcrow">¶</a></p>
+To prevent this, RRC cookies must be freshly generated using a reliable source of entropy (see <span>[<a href="#RFC4086" class="cite xref">RFC4086</a>]</span>).
+A suitable source is the cryptographically secure pseudorandom number generator (CSPRNG) provided by the TLS implementation (see <span><a href="https://rfc-editor.org/rfc/rfc8446#appendix-C.1" class="relref">Appendix C.1</a> of [<a href="#RFC8446" class="cite xref">RFC8446</a>]</span>).<a href="#section-8-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="privacy-considerations">
