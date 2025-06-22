@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-17T02:06:39.156143+00:00",
+  "timestamp": "2025-06-22T02:21:17.838075+00:00",
   "repo": "tlswg/dtls-rrc",
   "labels": [
     {
@@ -1136,15 +1136,15 @@
       "id": "I_kwDOFigxk867LsX8",
       "title": "Tsvart review",
       "url": "https://github.com/tlswg/dtls-rrc/issues/90",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "thomas-fossati",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "[Colin\u2019s review](https://mailarchive.ietf.org/arch/msg/tls/Si3kVBjH8CwgHCnqA4LZdNCqseA/)\n\n* [x] Section 6 describes the basic and enhanced path validation procedures, and states that \u201cThe decision on what strategy to choose depends mainly on the threat model, but may also be influenced by other considerations. Examples of impacting factors include: the need to minimise implementation complexity, privacy concerns, and the need to reduce the time it takes to switch path. The choice may be offered as a configuration option to the user of the TLS implementation\u201d. I agree that those factors influence the decision on what to implement, but I was surprised that the draft did not give clearer guidance on whether the basic or enhanced check was recommended.\n\n> At present, we do not have sufficient operational experience to make a recommendation.\n\n* [x] Section 6.3 states that \u201cEach path_challenge message MUST contain random data\u201d. I presume the intent is that each path_challenge message contains a new cookie with random contents, rather than a single random cookie being generated once and resent in each retransmission, but it would be helpful to clarify.\n\n> Both should work.\n\n* [x] Section 6.4 states that \u201cThe initiator MUST silently discard any invalid path_response or path_drop it receives\u201d \u2013 this is appropriate, but I wonder what would happen if another NAT rebinding occurred while the check was ongoing, such that the path_response arrived from neither the original address nor the new address but rather from a third address? Would this be counted as invalid, would it move the path to the third address, or would it trigger another check?\n\n> The current algorithm is not designed to handle \u201cnested\u201d rebindings. If this occurs (hopefully rarely), the path response is dropped, and path validation eventually times out. The address is not updated, and a new path validation will be triggered when new data is received.\n\n",
       "createdAt": "2025-06-12T13:54:59Z",
-      "updatedAt": "2025-06-13T13:15:41Z",
-      "closedAt": null,
+      "updatedAt": "2025-06-19T17:30:31Z",
+      "closedAt": "2025-06-19T17:30:31Z",
       "comments": []
     },
     {
@@ -4759,6 +4759,40 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 95,
+      "id": "PR_kwDOFigxk86bXbCu",
+      "title": "add security considerations around cookie replay",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/95",
+      "state": "OPEN",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Address Russ\u2019s last bit or ARTART review: https://mailarchive.ietf.org/arch/msg/tls/anliUzTSOjUFFbp4wO2hMBfvnrM/",
+      "createdAt": "2025-06-20T08:26:18Z",
+      "updatedAt": "2025-06-20T13:47:30Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "562c7ab2d77bc7beea65526f2ea002da9849fffa",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "replay",
+      "headRefOid": "0fcd7f0ff50e9d76cf661d9c4b36d2cdeb2a621b",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "cc @boaks (in case you are not copied in the \"dtls-rrc editors\u201d alias).",
+          "createdAt": "2025-06-20T13:47:30Z",
+          "updatedAt": "2025-06-20T13:47:30Z"
+        }
+      ],
+      "reviews": []
     }
   ]
 }
