@@ -5,10 +5,10 @@
 TLS                                                   H. Tschofenig, Ed.
 Internet-Draft                                                     H-BRS
 Intended status: Standards Track                                A. Kraus
-Expires: 18 December 2025                                               
+Expires: 24 December 2025                                               
                                                               T. Fossati
                                                                   Linaro
-                                                            16 June 2025
+                                                            22 June 2025
 
 
            Return Routability Check for DTLS 1.2 and DTLS 1.3
@@ -46,7 +46,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 December 2025.
+   This Internet-Draft will expire on 24 December 2025.
 
 Copyright Notice
 
@@ -749,6 +749,17 @@ Auth | {CertificateVerify}
    those datagrams are cryptographically authenticated).  On-path
    adversaries can, in general, pose a harm to connectivity.
 
+   If the RRC challenger reuses a cookie that was previously used in the
+   same connection and does not implement anti-replay protection (see
+   Section 4.5.1 of [RFC9147] and Section 4.1.2.6 of [RFC6347]), an
+   attacker could replay a previously sent path_response message
+   containing the reused cookie to mislead the challenger into switching
+   to a path of the attacker's choosing.  To prevent this, RRC cookies
+   must be freshly generated using a reliable source of entropy (see
+   [RFC4086]).  A suitable source is the cryptographically secure
+   pseudorandom number generator (CSPRNG) provided by the TLS
+   implementation (see Appendix C.1 of [RFC8446]).
+
 9.  Privacy Considerations
 
    When using DTLS 1.3, peers SHOULD avoid using the same CID on
@@ -929,6 +940,10 @@ Auth | {CertificateVerify}
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
 
+   [RFC6347]  Rescorla, E. and N. Modadugu, "Datagram Transport Layer
+              Security Version 1.2", RFC 6347, DOI 10.17487/RFC6347,
+              January 2012, <https://www.rfc-editor.org/rfc/rfc6347>.
+
    [RFC8126]  Cotton, M., Leiba, B., and T. Narten, "Guidelines for
               Writing an IANA Considerations Section in RFCs", BCP 26,
               RFC 8126, DOI 10.17487/RFC8126, June 2017,
@@ -970,9 +985,14 @@ Auth | {CertificateVerify}
               Mattsson, J. P., Selander, G., and C. Amsüss,
               "Amplification Attacks Using the Constrained Application
               Protocol (CoAP)", Work in Progress, Internet-Draft, draft-
-              irtf-t2trg-amplification-attacks-04, 8 December 2024,
+              irtf-t2trg-amplification-attacks-05, 18 June 2025,
               <https://datatracker.ietf.org/doc/html/draft-irtf-t2trg-
-              amplification-attacks-04>.
+              amplification-attacks-05>.
+
+   [RFC4086]  Eastlake 3rd, D., Schiller, J., and S. Crocker,
+              "Randomness Requirements for Security", BCP 106, RFC 4086,
+              DOI 10.17487/RFC4086, June 2005,
+              <https://www.rfc-editor.org/rfc/rfc4086>.
 
    [RFC9000]  Iyengar, J., Ed. and M. Thomson, Ed., "QUIC: A UDP-Based
               Multiplexed and Secure Transport", RFC 9000,
