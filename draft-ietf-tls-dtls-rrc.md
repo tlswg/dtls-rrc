@@ -467,8 +467,7 @@ The enhanced return routability check comprises the following steps:
 1. If the path is still functional, the peer (i.e., the responder) cryptographically verifies the received
    `return_routability_check` message of
    type `path_challenge`.
-   The action to be taken depends on whether the path through which
-   the message was received is the preferred one or not anymore:
+   The action to be taken depends on whether or not the path through which the message was received is still the preferred one:
    - If the path through which the message was received is preferred,
    a `return_routability_check` message of type `path_response` MUST be returned.
    - If the path through which the message was received is not preferred,
@@ -677,6 +676,7 @@ and switch to DTLS 1.3 if the correlation privacy threat is a concern.
 
 Logging of RRC operations at both ends of the protocol can be generally useful for the users of an implementation.
 In particular, for security information and event management (SIEM) and troubleshooting purposes, it is strongly advised that implementations collect statistics about any unsuccessful RRC operations, as they could represent security-relevant events when they coincide with attempts by an attacker to interfere with the end-to-end path.
+It is also advisable to log instances where multiple responses to a single `path_challenge` are received, as this could suggest an off-path attack attempt.
 
 ## Middlebox Interference
 
