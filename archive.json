@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-22T02:21:17.838075+00:00",
+  "timestamp": "2025-06-24T02:07:17.210196+00:00",
   "repo": "tlswg/dtls-rrc",
   "labels": [
     {
@@ -4765,24 +4765,26 @@
       "id": "PR_kwDOFigxk86bXbCu",
       "title": "add security considerations around cookie replay",
       "url": "https://github.com/tlswg/dtls-rrc/pull/95",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "thomas-fossati",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Address Russ\u2019s last bit or ARTART review: https://mailarchive.ietf.org/arch/msg/tls/anliUzTSOjUFFbp4wO2hMBfvnrM/",
       "createdAt": "2025-06-20T08:26:18Z",
-      "updatedAt": "2025-06-20T13:47:30Z",
+      "updatedAt": "2025-06-22T15:52:16Z",
       "baseRepository": "tlswg/dtls-rrc",
       "baseRefName": "master",
       "baseRefOid": "562c7ab2d77bc7beea65526f2ea002da9849fffa",
       "headRepository": "tlswg/dtls-rrc",
       "headRefName": "replay",
-      "headRefOid": "0fcd7f0ff50e9d76cf661d9c4b36d2cdeb2a621b",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "4ee1e6a9cbacc4074acdf840d9baa9f1957350c7",
+      "closedAt": "2025-06-22T15:52:12Z",
+      "mergedAt": "2025-06-22T15:52:12Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "712b78c8d38972f405d4d291c0d6147ccca6e0b8"
+      },
       "comments": [
         {
           "author": "thomas-fossati",
@@ -4790,9 +4792,57 @@
           "body": "cc @boaks (in case you are not copied in the \"dtls-rrc editors\u201d alias).",
           "createdAt": "2025-06-20T13:47:30Z",
           "updatedAt": "2025-06-20T13:47:30Z"
+        },
+        {
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Looks good to me. I only made a few minor wording changes. Feel free to accept / reject what you like.",
+          "createdAt": "2025-06-22T15:49:58Z",
+          "updatedAt": "2025-06-22T15:49:58Z"
         }
       ],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk86vuneE",
+          "commit": {
+            "abbreviatedOid": "0fcd7f0"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-06-22T15:48:48Z",
+          "updatedAt": "2025-06-22T15:48:49Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "```suggestion\r\nIf the RRC challenger reuses a cookie that was previously used in the same connection and does not implement anti-replay protection (see {{Section 4.5.1 of RFC9147}} and {{Section 4.1.2.6 of !RFC6347}}), an attacker could replay a previously sent `path_response` message containing the reused cookie to mislead the challenger into switching to a path of the attacker's choosing.\r\n```",
+              "createdAt": "2025-06-22T15:48:48Z",
+              "updatedAt": "2025-06-22T15:48:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk86vunn0",
+          "commit": {
+            "abbreviatedOid": "0fcd7f0"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-06-22T15:49:26Z",
+          "updatedAt": "2025-06-22T15:49:26Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "```suggestion\r\nTo prevent this, RRC cookies must be freshly generated using a reliable source of entropy (see {{?RFC4086}}).\r\nA suitable source is the cryptographically secure pseudorandom number generator (CSPRNG) provided by the TLS implementation (see {{Appendix C.1 of RFC8446}}).\r\n```",
+              "createdAt": "2025-06-22T15:49:26Z",
+              "updatedAt": "2025-06-22T15:49:26Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
