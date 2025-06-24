@@ -118,8 +118,8 @@ RFC9146}}.  Specifically, when both CID {{RFC9146}} and RRC have been
 successfully negotiated for the session, if a record with CID is received that
 has the source address and/or source port number of the enclosing UDP datagram different from what is
 currently associated with that CID value, the receiver SHOULD perform a return
-routability check as described in {{path-validation}}, unless an application
-layer specific address validation mechanism can be triggered instead (e.g., CoAP Echo {{?RFC9175}}).
+routability check as described in {{path-validation}}, unless an application-specific
+address validation mechanism can be triggered instead (e.g., CoAP Echo {{?RFC9175}}).
 
 # Return Routability Check Message Types
 
@@ -567,9 +567,6 @@ Auth | {CertificateVerify}
               +  Indicates noteworthy extensions sent in the
                  previously noted message.
 
-              *  Indicates optional or situation-dependent
-                 messages/extensions that are not always sent.
-
               {} Indicates messages protected using keys
                  derived from a [sender]_handshake_traffic_secret.
 
@@ -580,7 +577,7 @@ Auth | {CertificateVerify}
 
 Once a connection has been established, the client and the server
 exchange application payloads protected by DTLS with a unilaterally used
-CID. In our case, the client is requested to use CID 100 for records
+CID. In this case, the client is requested to use CID 100 for records
 sent to the server.
 
 At some point in the communication interaction, the IP address used by
@@ -690,8 +687,8 @@ Therefore, when using RRC in DTLS 1.2, it is recommended to enable CID in both d
 
 ## New TLS ContentType
 
-IANA is requested to allocate an entry to the TLS `ContentType`
-registry, for the `return_routability_check(TBD2)` message defined in
+IANA is requested to allocate an entry in the TLS `ContentType`
+registry for the `return_routability_check(TBD2)` message defined in
 this document.  IANA is requested to set the `DTLS_OK` column to `Y` and
 to add the following note prior to the table:
 
