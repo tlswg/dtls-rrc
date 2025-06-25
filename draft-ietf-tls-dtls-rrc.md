@@ -90,10 +90,9 @@ This document assumes familiarity with the CID format and protocol defined for
 DTLS 1.2 {{!RFC9146}} and for DTLS 1.3 {{!RFC9147}}.  The presentation language
 used in this document is described in Section 4 of {{!RFC8446}}.
 
-This document reuses the definition of "anti-amplification limit" from
-{{?RFC9000}} to mean three times the amount of data received from an
-unvalidated address.  This includes all DTLS records originating from that
-source address, excluding discarded ones.
+In this document, the term "anti-amplification limit" means three times the amount of data received from an unvalidated address.
+This includes all DTLS records originating from that source address, excluding those that have been discarded.
+This follows the pattern of {{?RFC9000}}, applying a similar concept to DTLS.
 
 The terms "peer" and "endpoint" are defined in {{Section 1.1 of RFC8446}}.
 
@@ -470,7 +469,7 @@ The enhanced return routability check comprises the following steps:
    The action to be taken depends on whether or not the path through which the message was received is still the preferred one:
    - If the path through which the message was received is preferred,
    a `return_routability_check` message of type `path_response` MUST be returned.
-   - If the path through which the message was received is not preferred,
+   - If the path through which the message was received is no longer preferred,
    a `return_routability_check` message of type `path_drop` MUST be returned.
    In either case, the peer echoes the cookie value in the response.
 1. The initiator receives and verifies that the `return_routability_check`
@@ -601,7 +600,6 @@ IP address.
                                                        Src-IP=Z
                                                        Dst-IP=A
 
-
                               <<------------->>
                               <<   Some      >>
                               <<   Time      >>
@@ -695,7 +693,7 @@ to add the following note prior to the table:
 > NOTE: The return_routability_check content type is only
 > applicable to DTLS 1.2 and 1.3.
 
-## New TLS ExtensionType
+## New TLS ExtensionType
 
 IANA is requested to allocate the extension code point (TBD1) for the `rrc`
 extension to the `TLS ExtensionType Values` registry as described in
@@ -725,7 +723,8 @@ Description:
 
 DTLS-Only:
 : Whether the message applies only to DTLS.
-Since RRC is only available in DTLS, this column will be set to `Y` for all the entries in this registry
+Since RRC is only available in DTLS, this column will be set to `Y` for all the current entries in this registry.
+Future work may define new RRC Message Types that also apply to TLS.
 
 Recommended:
 : Whether the message is recommended for implementations to support.
