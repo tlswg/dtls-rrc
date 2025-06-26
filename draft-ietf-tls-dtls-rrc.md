@@ -705,9 +705,9 @@ extension to the `TLS ExtensionType Values` registry as described in
 {: #tbl-ext align="left"
    title="rrc entry in the TLS ExtensionType Values registry" }
 
-## New RRC Message Type Sub-registry
+## New "RRC Message Type" Registry
 
-IANA is requested to create a new registry for RRC Message Types within the TLS Parameters registry group {{!IANA.tls-parameters}}.
+IANA is requested to create a new registry "RRC Message Types" within the TLS Parameters registry group {{!IANA.tls-parameters}}.
 This registry will be administered under the "Expert Review" policy ({{Section 4.5 of !RFC8126}}).
 
 Follow the procedures in {{Section 16 of !I-D.ietf-tls-rfc8447bis}} to submit registration requests.
