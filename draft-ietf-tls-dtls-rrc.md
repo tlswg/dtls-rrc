@@ -90,10 +90,9 @@ This document assumes familiarity with the CID format and protocol defined for
 DTLS 1.2 {{!RFC9146}} and for DTLS 1.3 {{!RFC9147}}.  The presentation language
 used in this document is described in Section 4 of {{!RFC8446}}.
 
-This document reuses the definition of "anti-amplification limit" from
-{{?RFC9000}} to mean three times the amount of data received from an
-unvalidated address.  This includes all DTLS records originating from that
-source address, excluding discarded ones.
+In this document, the term "anti-amplification limit" means three times the amount of data received from an unvalidated address.
+This includes all DTLS records originating from that source address, excluding those that have been discarded.
+This follows the pattern of {{?RFC9000}}, applying a similar concept to DTLS.
 
 The terms "peer" and "endpoint" are defined in {{Section 1.1 of RFC8446}}.
 
@@ -118,8 +117,8 @@ RFC9146}}.  Specifically, when both CID {{RFC9146}} and RRC have been
 successfully negotiated for the session, if a record with CID is received that
 has the source address and/or source port number of the enclosing UDP datagram different from what is
 currently associated with that CID value, the receiver SHOULD perform a return
-routability check as described in {{path-validation}}, unless an application
-layer specific address validation mechanism can be triggered instead (e.g., CoAP Echo {{?RFC9175}}).
+routability check as described in {{path-validation}}, unless an application-specific
+address validation mechanism can be triggered instead (e.g., CoAP Echo {{?RFC9175}}).
 
 # Return Routability Check Message Types
 
@@ -467,11 +466,10 @@ The enhanced return routability check comprises the following steps:
 1. If the path is still functional, the peer (i.e., the responder) cryptographically verifies the received
    `return_routability_check` message of
    type `path_challenge`.
-   The action to be taken depends on whether the path through which
-   the message was received is the preferred one or not anymore:
+   The action to be taken depends on whether or not the path through which the message was received is still the preferred one:
    - If the path through which the message was received is preferred,
    a `return_routability_check` message of type `path_response` MUST be returned.
-   - If the path through which the message was received is not preferred,
+   - If the path through which the message was received is no longer preferred,
    a `return_routability_check` message of type `path_drop` MUST be returned.
    In either case, the peer echoes the cookie value in the response.
 1. The initiator receives and verifies that the `return_routability_check`
@@ -568,9 +566,6 @@ Auth | {CertificateVerify}
               +  Indicates noteworthy extensions sent in the
                  previously noted message.
 
-              *  Indicates optional or situation-dependent
-                 messages/extensions that are not always sent.
-
               {} Indicates messages protected using keys
                  derived from a [sender]_handshake_traffic_secret.
 
@@ -581,7 +576,7 @@ Auth | {CertificateVerify}
 
 Once a connection has been established, the client and the server
 exchange application payloads protected by DTLS with a unilaterally used
-CID. In our case, the client is requested to use CID 100 for records
+CID. In this case, the client is requested to use CID 100 for records
 sent to the server.
 
 At some point in the communication interaction, the IP address used by
@@ -604,7 +599,6 @@ IP address.
                                   <========        Application Data
                                                        Src-IP=Z
                                                        Dst-IP=A
-
 
                               <<------------->>
                               <<   Some      >>
@@ -677,6 +671,7 @@ and switch to DTLS 1.3 if the correlation privacy threat is a concern.
 
 Logging of RRC operations at both ends of the protocol can be generally useful for the users of an implementation.
 In particular, for security information and event management (SIEM) and troubleshooting purposes, it is strongly advised that implementations collect statistics about any unsuccessful RRC operations, as they could represent security-relevant events when they coincide with attempts by an attacker to interfere with the end-to-end path.
+It is also advisable to log instances where multiple responses to a single `path_challenge` are received, as this could suggest an off-path attack attempt.
 
 ## Middlebox Interference
 
@@ -690,15 +685,15 @@ Therefore, when using RRC in DTLS 1.2, it is recommended to enable CID in both d
 
 ## New TLS ContentType
 
-IANA is requested to allocate an entry to the TLS `ContentType`
-registry, for the `return_routability_check(TBD2)` message defined in
+IANA is requested to allocate an entry in the TLS `ContentType`
+registry for the `return_routability_check(TBD2)` message defined in
 this document.  IANA is requested to set the `DTLS_OK` column to `Y` and
 to add the following note prior to the table:
 
 > NOTE: The return_routability_check content type is only
 > applicable to DTLS 1.2 and 1.3.
 
-## New TLS ExtensionType
+## New TLS ExtensionType
 
 IANA is requested to allocate the extension code point (TBD1) for the `rrc`
 extension to the `TLS ExtensionType Values` registry as described in
@@ -710,9 +705,9 @@ extension to the `TLS ExtensionType Values` registry as described in
 {: #tbl-ext align="left"
    title="rrc entry in the TLS ExtensionType Values registry" }
 
-## New RRC Message Type Sub-registry
+## New "RRC Message Type" Registry
 
-IANA is requested to create a new registry for RRC Message Types within the TLS Parameters registry group {{!IANA.tls-parameters}}.
+IANA is requested to create a new registry "RRC Message Types" within the TLS Parameters registry group {{!IANA.tls-parameters}}.
 This registry will be administered under the "Expert Review" policy ({{Section 4.5 of !RFC8126}}).
 
 Follow the procedures in {{Section 16 of !I-D.ietf-tls-rfc8447bis}} to submit registration requests.
@@ -728,7 +723,8 @@ Description:
 
 DTLS-Only:
 : Whether the message applies only to DTLS.
-Since RRC is only available in DTLS, this column will be set to `Y` for all the entries in this registry
+Since RRC is only available in DTLS, this column will be set to `Y` for all the current entries in this registry.
+Future work may define new RRC Message Types that also apply to TLS.
 
 Recommended:
 : Whether the message is recommended for implementations to support.
@@ -776,6 +772,7 @@ Joe Clarke,
 {{{Manuel Pégourié-Gonnard}}},
 Marco Tiloca,
 Martin Thomson,
+Mike Bishop,
 Mike Ounsworth,
 Mohit Sahni,
 Rich Salz,
