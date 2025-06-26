@@ -5,10 +5,10 @@
 TLS                                                   H. Tschofenig, Ed.
 Internet-Draft                                                     H-BRS
 Intended status: Standards Track                                A. Kraus
-Expires: 27 December 2025                                               
+Expires: 28 December 2025                                               
                                                               T. Fossati
                                                                   Linaro
-                                                            25 June 2025
+                                                            26 June 2025
 
 
            Return Routability Check for DTLS 1.2 and DTLS 1.3
@@ -46,7 +46,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 December 2025.
+   This Internet-Draft will expire on 28 December 2025.
 
 Copyright Notice
 
@@ -89,7 +89,7 @@ Table of Contents
    11. IANA Considerations
      11.1.  New TLS ContentType
      11.2.  New TLS ExtensionType
-     11.3.  New RRC Message Type Sub-registry
+     11.3.  New "RRC Message Type" Registry
        11.3.1.  Designated Expert Instructions
    12. Acknowledgments
    13. References
@@ -838,10 +838,10 @@ Auth | {CertificateVerify}
 
        Table 1: rrc entry in the TLS ExtensionType Values registry
 
-11.3.  New RRC Message Type Sub-registry
+11.3.  New "RRC Message Type" Registry
 
-   IANA is requested to create a new registry for RRC Message Types
-   within the TLS Parameters registry group [IANA.tls-parameters].  This
+   IANA is requested to create a new registry "RRC Message Types" within
+   the TLS Parameters registry group [IANA.tls-parameters].  This
    registry will be administered under the "Expert Review" policy
    (Section 4.5 of [RFC8126]).
 
