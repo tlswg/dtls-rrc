@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-24T02:07:17.210196+00:00",
+  "timestamp": "2025-06-26T02:06:34.498017+00:00",
   "repo": "tlswg/dtls-rrc",
   "labels": [
     {
@@ -4839,6 +4839,73 @@
               "body": "```suggestion\r\nTo prevent this, RRC cookies must be freshly generated using a reliable source of entropy (see {{?RFC4086}}).\r\nA suitable source is the cryptographically secure pseudorandom number generator (CSPRNG) provided by the TLS implementation (see {{Appendix C.1 of RFC8446}}).\r\n```",
               "createdAt": "2025-06-22T15:49:26Z",
               "updatedAt": "2025-06-22T15:49:26Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 96,
+      "id": "PR_kwDOFigxk86cAN2T",
+      "title": "Mike\u2019s IESG review",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/96",
+      "state": "OPEN",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-06-25T07:48:58Z",
+      "updatedAt": "2025-06-25T08:45:53Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "712b78c8d38972f405d4d291c0d6147ccca6e0b8",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "mike",
+      "headRefOid": "052d867fcde26e08ae55945262c7753945c81853",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk86wQ1-_",
+          "commit": {
+            "abbreviatedOid": "15dffbb"
+          },
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-06-25T08:34:34Z",
+          "updatedAt": "2025-06-25T08:34:34Z",
+          "comments": [
+            {
+              "originalPosition": 26,
+              "body": "Not sure, what the `100` stands for?",
+              "createdAt": "2025-06-25T08:34:34Z",
+              "updatedAt": "2025-06-25T08:34:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk86wRB9Y",
+          "commit": {
+            "abbreviatedOid": "15dffbb"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-06-25T08:45:19Z",
+          "updatedAt": "2025-06-25T08:45:19Z",
+          "comments": [
+            {
+              "originalPosition": 26,
+              "body": "It\u2019s the exmaple connection_id used in [Figure 7](https://tlswg.org/dtls-rrc/draft-ietf-tls-dtls-rrc.html#figure-7).\r\n",
+              "createdAt": "2025-06-25T08:45:19Z",
+              "updatedAt": "2025-06-25T08:45:20Z"
             }
           ]
         }
