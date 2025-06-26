@@ -1052,7 +1052,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Tschofenig, et al.</td>
-<td class="center">Expires 24 December 2025</td>
+<td class="center">Expires 28 December 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1065,12 +1065,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-tls-dtls-rrc-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-06-22" class="published">22 June 2025</time>
+<time datetime="2025-06-26" class="published">26 June 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-12-24">24 December 2025</time></dd>
+<dd class="expires"><time datetime="2025-12-28">28 December 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1125,7 +1125,7 @@ protocol versions 1.2 and 1.3.<a href="#section-abstract-1" class="pilcrow">¶</
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 24 December 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 28 December 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1242,7 +1242,7 @@ protocol versions 1.2 and 1.3.<a href="#section-abstract-1" class="pilcrow">¶</
                 <p id="section-toc.1-1.11.2.2.1"><a href="#section-11.2" class="auto internal xref">11.2</a>.  <a href="#name-new-tls-extensiontype" class="internal xref">New TLS ExtensionType</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.3">
-                <p id="section-toc.1-1.11.2.3.1"><a href="#section-11.3" class="auto internal xref">11.3</a>.  <a href="#name-new-rrc-message-type-sub-re" class="internal xref">New RRC Message Type Sub-registry</a></p>
+                <p id="section-toc.1-1.11.2.3.1"><a href="#section-11.3" class="auto internal xref">11.3</a>.  <a href="#name-new-rrc-message-type-regist" class="internal xref">New "RRC Message Type" Registry</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.3.2.1">
                     <p id="section-toc.1-1.11.2.3.2.1.1"><a href="#section-11.3.1" class="auto internal xref">11.3.1</a>.  <a href="#name-designated-expert-instructi" class="internal xref">Designated Expert Instructions</a></p>
@@ -1315,10 +1315,9 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <p id="section-2-2">This document assumes familiarity with the CID format and protocol defined for
 DTLS 1.2 <span>[<a href="#RFC9146" class="cite xref">RFC9146</a>]</span> and for DTLS 1.3 <span>[<a href="#RFC9147" class="cite xref">RFC9147</a>]</span>.  The presentation language
 used in this document is described in Section 4 of <span>[<a href="#RFC8446" class="cite xref">RFC8446</a>]</span>.<a href="#section-2-2" class="pilcrow">¶</a></p>
-<p id="section-2-3">This document reuses the definition of "anti-amplification limit" from
-<span>[<a href="#RFC9000" class="cite xref">RFC9000</a>]</span> to mean three times the amount of data received from an
-unvalidated address.  This includes all DTLS records originating from that
-source address, excluding discarded ones.<a href="#section-2-3" class="pilcrow">¶</a></p>
+<p id="section-2-3">In this document, the term "anti-amplification limit" means three times the amount of data received from an unvalidated address.
+This includes all DTLS records originating from that source address, excluding those that have been discarded.
+This follows the pattern of <span>[<a href="#RFC9000" class="cite xref">RFC9000</a>]</span>, applying a similar concept to DTLS.<a href="#section-2-3" class="pilcrow">¶</a></p>
 <p id="section-2-4">The terms "peer" and "endpoint" are defined in <span><a href="https://rfc-editor.org/rfc/rfc8446#section-1.1" class="relref">Section 1.1</a> of [<a href="#RFC8446" class="cite xref">RFC8446</a>]</span>.<a href="#section-2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1347,8 +1346,8 @@ complements the "peer address update" procedure described in <span><a href="http
 successfully negotiated for the session, if a record with CID is received that
 has the source address and/or source port number of the enclosing UDP datagram different from what is
 currently associated with that CID value, the receiver <span class="bcp14">SHOULD</span> perform a return
-routability check as described in <a href="#path-validation" class="auto internal xref">Section 6</a>, unless an application
-layer specific address validation mechanism can be triggered instead (e.g., CoAP Echo <span>[<a href="#RFC9175" class="cite xref">RFC9175</a>]</span>).<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+routability check as described in <a href="#path-validation" class="auto internal xref">Section 6</a>, unless an application-specific
+address validation mechanism can be triggered instead (e.g., CoAP Echo <span>[<a href="#RFC9175" class="cite xref">RFC9175</a>]</span>).<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1945,15 +1944,14 @@ old path. Additionally, a timer T is started, see <a href="#timer-choice" class=
             <p id="section-6.2-2.3.1">If the path is still functional, the peer (i.e., the responder) cryptographically verifies the received
 <code>return_routability_check</code> message of
 type <code>path_challenge</code>.
-The action to be taken depends on whether the path through which
-the message was received is the preferred one or not anymore:<a href="#section-6.2-2.3.1" class="pilcrow">¶</a></p>
+The action to be taken depends on whether or not the path through which the message was received is still the preferred one:<a href="#section-6.2-2.3.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.2-2.3.2.1">
                 <p id="section-6.2-2.3.2.1.1">If the path through which the message was received is preferred,
 a <code>return_routability_check</code> message of type <code>path_response</code> <span class="bcp14">MUST</span> be returned.<a href="#section-6.2-2.3.2.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-6.2-2.3.2.2">
-                <p id="section-6.2-2.3.2.2.1">If the path through which the message was received is not preferred,
+                <p id="section-6.2-2.3.2.2.1">If the path through which the message was received is no longer preferred,
 a <code>return_routability_check</code> message of type <code>path_drop</code> <span class="bcp14">MUST</span> be returned.
 In either case, the peer echoes the cookie value in the response.<a href="#section-6.2-2.3.2.2.1" class="pilcrow">¶</a></p>
 </li>
@@ -2106,9 +2104,6 @@ Auth | {CertificateVerify}
               +  Indicates noteworthy extensions sent in the
                  previously noted message.
 
-              *  Indicates optional or situation-dependent
-                 messages/extensions that are not always sent.
-
               {} Indicates messages protected using keys
                  derived from a [sender]_handshake_traffic_secret.
 
@@ -2122,7 +2117,7 @@ Auth | {CertificateVerify}
 </div>
 <p id="section-7-3">Once a connection has been established, the client and the server
 exchange application payloads protected by DTLS with a unilaterally used
-CID. In our case, the client is requested to use CID 100 for records
+CID. In this case, the client is requested to use CID 100 for records
 sent to the server.<a href="#section-7-3" class="pilcrow">¶</a></p>
 <p id="section-7-4">At some point in the communication interaction, the IP address used by
 the client changes and, thanks to the CID usage, the security context to
@@ -2145,7 +2140,6 @@ IP address.<a href="#section-7-5" class="pilcrow">¶</a></p>
                                   &lt;========        Application Data
                                                        Src-IP=Z
                                                        Dst-IP=A
-
 
                               &lt;&lt;-------------&gt;&gt;
                               &lt;&lt;   Some      &gt;&gt;
@@ -2234,7 +2228,8 @@ and switch to DTLS 1.3 if the correlation privacy threat is a concern.<a href="#
 <a href="#section-10.1" class="section-number selfRef">10.1. </a><a href="#name-logging-anomalous-events" class="section-name selfRef">Logging Anomalous Events</a>
         </h3>
 <p id="section-10.1-1">Logging of RRC operations at both ends of the protocol can be generally useful for the users of an implementation.
-In particular, for security information and event management (SIEM) and troubleshooting purposes, it is strongly advised that implementations collect statistics about any unsuccessful RRC operations, as they could represent security-relevant events when they coincide with attempts by an attacker to interfere with the end-to-end path.<a href="#section-10.1-1" class="pilcrow">¶</a></p>
+In particular, for security information and event management (SIEM) and troubleshooting purposes, it is strongly advised that implementations collect statistics about any unsuccessful RRC operations, as they could represent security-relevant events when they coincide with attempts by an attacker to interfere with the end-to-end path.
+It is also advisable to log instances where multiple responses to a single <code>path_challenge</code> are received, as this could suggest an off-path attack attempt.<a href="#section-10.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="middlebox-interference">
@@ -2260,8 +2255,8 @@ Therefore, when using RRC in DTLS 1.2, it is recommended to enable CID in both d
         <h3 id="name-new-tls-contenttype">
 <a href="#section-11.1" class="section-number selfRef">11.1. </a><a href="#name-new-tls-contenttype" class="section-name selfRef">New TLS ContentType</a>
         </h3>
-<p id="section-11.1-1">IANA is requested to allocate an entry to the TLS <code>ContentType</code>
-registry, for the <code>return_routability_check(TBD2)</code> message defined in
+<p id="section-11.1-1">IANA is requested to allocate an entry in the TLS <code>ContentType</code>
+registry for the <code>return_routability_check(TBD2)</code> message defined in
 this document.  IANA is requested to set the <code>DTLS_OK</code> column to <code>Y</code> and
 to add the following note prior to the table:<a href="#section-11.1-1" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
@@ -2312,12 +2307,12 @@ extension to the <code>TLS ExtensionType Values</code> registry as described in
 </div>
 </section>
 </div>
-<div id="new-rrc-message-type-sub-registry">
+<div id="new-rrc-message-type-registry">
 <section id="section-11.3">
-        <h3 id="name-new-rrc-message-type-sub-re">
-<a href="#section-11.3" class="section-number selfRef">11.3. </a><a href="#name-new-rrc-message-type-sub-re" class="section-name selfRef">New RRC Message Type Sub-registry</a>
+        <h3 id="name-new-rrc-message-type-regist">
+<a href="#section-11.3" class="section-number selfRef">11.3. </a><a href="#name-new-rrc-message-type-regist" class="section-name selfRef">New "RRC Message Type" Registry</a>
         </h3>
-<p id="section-11.3-1">IANA is requested to create a new registry for RRC Message Types within the TLS Parameters registry group <span>[<a href="#IANA.tls-parameters" class="cite xref">IANA.tls-parameters</a>]</span>.
+<p id="section-11.3-1">IANA is requested to create a new registry "RRC Message Types" within the TLS Parameters registry group <span>[<a href="#IANA.tls-parameters" class="cite xref">IANA.tls-parameters</a>]</span>.
 This registry will be administered under the "Expert Review" policy (<span><a href="https://rfc-editor.org/rfc/rfc8126#section-4.5" class="relref">Section 4.5</a> of [<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>).<a href="#section-11.3-1" class="pilcrow">¶</a></p>
 <p id="section-11.3-2">Follow the procedures in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-tls-rfc8447bis-14#section-16" class="relref">Section 16</a> of [<a href="#I-D.ietf-tls-rfc8447bis" class="cite xref">I-D.ietf-tls-rfc8447bis</a>]</span> to submit registration requests.<a href="#section-11.3-2" class="pilcrow">¶</a></p>
 <p id="section-11.3-3">Each entry in the registry must include the following fields:<a href="#section-11.3-3" class="pilcrow">¶</a></p>
@@ -2335,7 +2330,8 @@ This registry will be administered under the "Expert Review" policy (<span><a hr
 <dt id="section-11.3-4.5">DTLS-Only:</dt>
           <dd style="margin-left: 1.5em" id="section-11.3-4.6">
             <p id="section-11.3-4.6.1">Whether the message applies only to DTLS.
-Since RRC is only available in DTLS, this column will be set to <code>Y</code> for all the entries in this registry<a href="#section-11.3-4.6.1" class="pilcrow">¶</a></p>
+Since RRC is only available in DTLS, this column will be set to <code>Y</code> for all the current entries in this registry.
+Future work may define new RRC Message Types that also apply to TLS.<a href="#section-11.3-4.6.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 <dt id="section-11.3-4.7">Recommended:</dt>
@@ -2453,6 +2449,7 @@ Joe Clarke,
 <span class="contact-name">Manuel Pégourié-Gonnard</span>,
 Marco Tiloca,
 Martin Thomson,
+Mike Bishop,
 Mike Ounsworth,
 Mohit Sahni,
 Rich Salz,
