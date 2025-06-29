@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-26T02:06:34.498017+00:00",
+  "timestamp": "2025-06-29T02:23:53.823745+00:00",
   "repo": "tlswg/dtls-rrc",
   "labels": [
     {
@@ -4849,24 +4849,26 @@
       "id": "PR_kwDOFigxk86cAN2T",
       "title": "Mike\u2019s IESG review",
       "url": "https://github.com/tlswg/dtls-rrc/pull/96",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "thomas-fossati",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-06-25T07:48:58Z",
-      "updatedAt": "2025-06-25T08:45:53Z",
+      "updatedAt": "2025-06-26T13:19:43Z",
       "baseRepository": "tlswg/dtls-rrc",
       "baseRefName": "master",
       "baseRefOid": "712b78c8d38972f405d4d291c0d6147ccca6e0b8",
       "headRepository": "tlswg/dtls-rrc",
       "headRefName": "mike",
-      "headRefOid": "052d867fcde26e08ae55945262c7753945c81853",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "9b0a5a728552816464c46fd252e69d361b8e0c74",
+      "closedAt": "2025-06-26T13:19:39Z",
+      "mergedAt": "2025-06-26T13:19:39Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "2b67a4f5a71abedf9dccbbba7eb22190b1cce17b"
+      },
       "comments": [],
       "reviews": [
         {
