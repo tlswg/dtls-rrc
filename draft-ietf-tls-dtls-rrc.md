@@ -61,16 +61,16 @@ DTLS 1.2 and in {{!RFC9147}} for DTLS 1.3.
 Section 6 of {{!RFC9146}} describes how the use of CID increases the attack
 surface of DTLS 1.2 and 1.3 by providing both on-path and off-path attackers an opportunity for
 (D)DoS.  It also describes the steps a DTLS principal must take when a
-record with a CID is received that has a source address (and/or port) different
+record with a CID is received that has a source address (and/or port number) different
 from the one currently associated with the DTLS connection.  However, the
 actual mechanism for ensuring that the new peer address is willing to receive
-and process DTLS records is left open.  To address the gap, this document defines a return
-routability check (RRC) sub-protocol for DTLS 1.2 and 1.3.
+and process DTLS records is left open.  To address the gap, this document defines a Return
+Routability Check (RRC) sub-protocol for DTLS 1.2 and 1.3 inspired by the path validation procedure defined in {{Section 8.2 of RFC9000}}.
 
 The return routability check is performed by the receiving endpoint before the
 CID-address binding is updated in that endpoint's session state.
 This is done in order to give the receiving endpoint confidence
-that the sending peer is in fact reachable at the source address (and port) indicated in the received datagram.
+that the sending peer is in fact reachable at the source address (and port number) indicated in the received datagram.
 
 {{regular}} of this document explains the fundamental mechanism that aims to reduce the DDoS attack surface.
 Additionally, in {{enhanced}}, a more advanced address validation mechanism is discussed.
@@ -94,7 +94,7 @@ In this document, the term "anti-amplification limit" means three times the amou
 This includes all DTLS records originating from that source address, excluding those that have been discarded.
 This follows the pattern of {{?RFC9000}}, applying a similar concept to DTLS.
 
-The terms "peer" and "endpoint" are defined in {{Section 1.1 of RFC8446}}.
+The terms "client", "server", "peer" and "endpoint" are defined in {{Section 1.1 of RFC8446}}.
 
 # RRC Extension
 
@@ -104,8 +104,7 @@ On connecting, a client wishing to use RRC includes the `rrc` extension in its C
 If the server is capable of meeting this requirement, it responds with a
 `rrc` extension in its ServerHello.  The `extension_type` value for this
 extension is TBD1 and the `extension_data` field of this extension is empty.
-The client and server MUST NOT use RRC unless both sides have successfully
-exchanged `rrc` extensions.
+The client and server MUST NOT use RRC unless both sides have successfully exchanged `rrc` extensions.
 A client offering the `rrc` extension MUST also offer the `connection_id` extension {{!RFC9146}}.
 A client offering the `connection_id` extension SHOULD also offer the `rrc` extension, unless the application using DTLS has its own address validation mechanism.
 
@@ -168,14 +167,14 @@ struct {
 {: #fig-rrc-msg align="left"
    title="Return Routability Check Message"}
 
-Future extensions to the Return Routability Check sub-protocol may
+Future extensions to the RRC sub-protocol may
 define new message types.
 Implementations MUST be able to parse and understand the three RRC message types defined in this document.
 In addition, implementations MUST be able to parse and gracefully ignore messages with an unknown `msg_type`.
 
 # Attacker Model {#attacker}
 
-We define two classes of attackers, off-path and on-path, with increasing
+Two classes of attackers are considered, off-path and on-path, with increasing
 capabilities (see {{fig-attacker-capabilities}}) partly following terminology
 introduced in QUIC ({{Section 21.1 of RFC9000}}):
 
@@ -268,7 +267,7 @@ mechanisms.
 {{fig-off-path}} illustrates the case where a receiver receives a
 packet with a new source IP address and/or new port number. In order
 to determine that this path change was not triggered
-by an off-path attacker, the receiver will send a RRC message of type
+by an off-path attacker, the receiver will send an RRC message of type
 `path_challenge` (1) on the old path.
 
 ~~~ aasvg
@@ -415,7 +414,7 @@ DTLS 1.2.
 
 # Path Validation Procedure {#path-validation}
 
-The receiver that observes the peer's address or port change MUST stop sending
+A receiver that observes the peer's address or port change MUST stop sending
 any buffered application data, or limit the data sent to the unvalidated
 address to the anti-amplification limit.
 It then initiates the return routability check.
@@ -507,10 +506,10 @@ In the absence of application-specific requirements, the initiator can send a `p
 * The responder MUST NOT delay sending an elicited `path_response` or
   `path_drop` messages.
 * The responder MUST send exactly one `path_response` or `path_drop` message
-  for each received `path_challenge`.
-* The responder MUST send the `path_response` or the `path_drop` on the path
-  where the corresponding `path_challenge` has been received, so that validation
-  succeeds only if the path is functional in both directions.
+  for each valid `path_challenge` it received.
+* The responder MUST send the `path_response` or the `path_drop` to the address from
+  which the corresponding `path_challenge` was received.  This ensures that the
+  path is functional in both directions.
 * The initiator MUST silently discard any invalid `path_response` or
   `path_drop` it receives.
 
@@ -535,9 +534,7 @@ suitable value for T.
 
 # Example
 
-In the example DTLS 1.3 handshake shown in {{fig-handshake}}, a client
-and a server successfully negotiate support for both CID and the RRC
-extension.
+{{fig-handshake}} shows an example of a DTLS 1.3 handshake in which a client and a server successfully negotiate support for both the CID and RRC extensions.
 
 ~~~
        Client                                           Server
@@ -635,6 +632,23 @@ IP address.
 ~~~
 {: #fig-rrc-example title='"Basic" Return Routability Example'}
 
+# Operational Considerations
+
+## Logging Anomalous Events
+
+Logging of RRC operations at both ends of the protocol can be generally useful for the users of an implementation.
+In particular, for security information and event management (SIEM) and troubleshooting purposes, it is strongly advised that implementations collect statistics about any unsuccessful RRC operations, as they could represent security-relevant events when they coincide with attempts by an attacker to interfere with the end-to-end path.
+It is also advisable to log instances where multiple responses to a single `path_challenge` are received, as this could suggest an off-path attack attempt.
+
+In some cases, the presence of frequent path probes could indicate a problem with the stability of the path.
+This information can be used to identify any issues with the underlying connectivity service.
+
+## Middlebox Interference
+
+Since the DTLS 1.3 encrypted packet's record type is opaque to on-path observers, RRC messages are immune to middlebox interference when using DTLS 1.3.
+In contrast, DTLS 1.2 RRC messages that are not wrapped in the `tls12_cid` record (e.g., in the server-to-client direction if the server didn't negotiate a CID or it negotiated a zero-length CID) have the `return_routability_check` content type in plain text, making them susceptible to interference (e.g., dropping of `path_challenge` messages), which would hinder the RRC functionality altogether.
+Therefore, when using RRC in DTLS 1.2, it is recommended to enable CID in both directions.
+
 # Security Considerations
 
 Note that the return routability checks do not protect against flooding of
@@ -665,30 +679,14 @@ of the connection.  Therefore, deployments that use DTLS in multihoming
 environments SHOULD refuse to use CIDs with DTLS 1.2
 and switch to DTLS 1.3 if the correlation privacy threat is a concern.
 
-# Operational Considerations
-
-## Logging Anomalous Events
-
-Logging of RRC operations at both ends of the protocol can be generally useful for the users of an implementation.
-In particular, for security information and event management (SIEM) and troubleshooting purposes, it is strongly advised that implementations collect statistics about any unsuccessful RRC operations, as they could represent security-relevant events when they coincide with attempts by an attacker to interfere with the end-to-end path.
-It is also advisable to log instances where multiple responses to a single `path_challenge` are received, as this could suggest an off-path attack attempt.
-
-## Middlebox Interference
-
-Since the DTLS 1.3 encrypted packet's record type is opaque to on-path observers, RRC messages are immune to middlebox interference when using DTLS 1.3.
-In contrast, DTLS 1.2 RRC messages that are not wrapped in the `tls12_cid` record (e.g., in the server-to-client direction if the server didn't negotiate a CID or it negotiated a zero-length CID) have the `return_routability_check` content type in plain text, making them susceptible to interference (e.g., dropping of `path_challenge` messages), which would hinder the RRC functionality altogether.
-Therefore, when using RRC in DTLS 1.2, it is recommended to enable CID in both directions.
-
 # IANA Considerations
 
 [^to-be-removed]
 
 ## New TLS ContentType
 
-IANA is requested to allocate an entry in the TLS `ContentType`
-registry for the `return_routability_check(TBD2)` message defined in
-this document.  IANA is requested to set the `DTLS_OK` column to `Y` and
-to add the following note prior to the table:
+IANA is requested to allocate an entry in the TLS `ContentType` registry within the "Transport Layer Security (TLS) Parameters" registry group {{!IANA.tls-parameters}} for the `return_routability_check(TBD2)` message defined in this document.
+IANA is requested to set the `DTLS_OK` column to `Y` and to add the following note prior to the table:
 
 > NOTE: The return_routability_check content type is only
 > applicable to DTLS 1.2 and 1.3.
@@ -707,7 +705,7 @@ extension to the `TLS ExtensionType Values` registry as described in
 
 ## New "RRC Message Type" Registry
 
-IANA is requested to create a new registry "RRC Message Types" within the TLS Parameters registry group {{!IANA.tls-parameters}}.
+IANA is requested to create a new registry "RRC Message Types" within the Transport Layer Security (TLS) Parameters registry group {{!IANA.tls-parameters}}.
 This registry will be administered under the "Expert Review" policy ({{Section 4.5 of !RFC8126}}).
 
 Follow the procedures in {{Section 16 of !I-D.ietf-tls-rfc8447bis}} to submit registration requests.
