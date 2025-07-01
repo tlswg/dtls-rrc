@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-29T02:23:53.823745+00:00",
+  "timestamp": "2025-07-01T02:24:48.295928+00:00",
   "repo": "tlswg/dtls-rrc",
   "labels": [
     {
@@ -4912,6 +4912,32 @@
           ]
         }
       ]
+    },
+    {
+      "number": 97,
+      "id": "PR_kwDOFigxk86cwkvB",
+      "title": "Med's review",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/97",
+      "state": "OPEN",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Incorporate some of the editorial suggestions Med made in [his review](https://mailarchive.ietf.org/arch/msg/tls/f_JWgsCbxKIaDX1AcD8e47MIWUU/).",
+      "createdAt": "2025-06-30T19:56:49Z",
+      "updatedAt": "2025-06-30T19:56:57Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "2b67a4f5a71abedf9dccbbba7eb22190b1cce17b",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "med",
+      "headRefOid": "657032d82a0ce941386d80e72c9e80e06797a836",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
