@@ -194,7 +194,7 @@ resumed to the bound peer address.
 {{path-challenge-reqs}} and {{path-response-reqs}} list the requirements for
 the initiator and responder roles, broken down per protocol phase.
 
-Please note that the presented algorithms are not designed to handle nested rebindings.
+Please note that the presented algorithms are not designed to handle nested rebindings, i.e. rebindings that may occur while a path is being validated following a previous rebinding.
 If this happens (which should rarely occur), the `path_response` message is dropped, the address validation times out, and the address will not be updated.
 A new path validation will start when new data is received.
 
@@ -430,7 +430,7 @@ capabilities (see {{fig-attacker-capabilities}}) partly following terminology
 introduced in QUIC ({{Section 21.1 of RFC9000}}):
 
 * An off-path attacker is not on the original path between the DTLS peers, but
-  is able to observe packets on the original path and has a faster path
+  is able to observe packets on the original path and has a faster forwarding path
   compared to the DTLS peers, which allows it to make copies of the observed
   packets, race its copies to either peer and consistently win the race.
 
