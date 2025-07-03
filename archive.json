@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-01T02:24:48.295928+00:00",
+  "timestamp": "2025-07-03T02:07:28.586929+00:00",
   "repo": "tlswg/dtls-rrc",
   "labels": [
     {
@@ -4925,19 +4925,148 @@
       "labels": [],
       "body": "Incorporate some of the editorial suggestions Med made in [his review](https://mailarchive.ietf.org/arch/msg/tls/f_JWgsCbxKIaDX1AcD8e47MIWUU/).",
       "createdAt": "2025-06-30T19:56:49Z",
-      "updatedAt": "2025-06-30T19:56:57Z",
+      "updatedAt": "2025-07-02T09:22:31Z",
       "baseRepository": "tlswg/dtls-rrc",
       "baseRefName": "master",
       "baseRefOid": "2b67a4f5a71abedf9dccbbba7eb22190b1cce17b",
       "headRepository": "tlswg/dtls-rrc",
       "headRefName": "med",
-      "headRefOid": "657032d82a0ce941386d80e72c9e80e06797a836",
+      "headRefOid": "7af05c424005792e2ea3a6b23c187ed946b50804",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
-      "reviews": []
+      "comments": [
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Beside removing \"didn't negotiate a CID or it\" => LGTM",
+          "createdAt": "2025-07-01T12:52:30Z",
+          "updatedAt": "2025-07-01T12:52:30Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk86xV7V2",
+          "commit": {
+            "abbreviatedOid": "657032d"
+          },
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-01T12:51:10Z",
+          "updatedAt": "2025-07-01T12:51:11Z",
+          "comments": [
+            {
+              "originalPosition": 119,
+              "body": "> didn't negotiate a CID\r\n\r\nThen no RRC will be in use. So remove \"didn't negotiate a CID or it\"\r\n\r\nWhile that may seems to be an issue on a first look, I consider:\r\n- the RRC message is only send, if other messages are intended to be send.\r\n- dropping a RRC message has then the same effect as dropping these other messages, if no RRC is used. So for me it doesn't add more attack surface.\r\n\r\n\r\n\r\n",
+              "createdAt": "2025-07-01T12:51:10Z",
+              "updatedAt": "2025-07-01T12:51:11Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk86xWH3v",
+          "commit": {
+            "abbreviatedOid": "657032d"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-01T13:06:32Z",
+          "updatedAt": "2025-07-01T13:06:33Z",
+          "comments": [
+            {
+              "originalPosition": 119,
+              "body": "> dropping a RRC message has then the same effect as dropping these other messages, if no RRC is used. So for me it doesn't add more attack surface.\r\n\r\nNote that this is not the security considerations section, it\u2019s the operational considerations.  It\u2019s not the attack surface that matters here, it\u2019s the potential path impairment due to security middleboxes.",
+              "createdAt": "2025-07-01T13:06:32Z",
+              "updatedAt": "2025-07-01T13:06:33Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk86xWY81",
+          "commit": {
+            "abbreviatedOid": "657032d"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-01T13:24:52Z",
+          "updatedAt": "2025-07-01T13:24:52Z",
+          "comments": [
+            {
+              "originalPosition": 119,
+              "body": "> > didn't negotiate a CID\r\n> \r\n> Then no RRC will be in use.\r\n\r\nThis bit aims at capturing the case where the server has stated their CID but the client hasn\u2019t, and RRC has been successfully negotiated.  Now you have tls12_cid-wrapped records in C-to-S direction, while S-to-C uses the \u201cvanilla\u201d encoding which makes RRC messages visible to the path.\r\n\r\n\r\nEDIT: fix typo (swap server with client)",
+              "createdAt": "2025-07-01T13:24:52Z",
+              "updatedAt": "2025-07-01T14:57:30Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk86xW93p",
+          "commit": {
+            "abbreviatedOid": "657032d"
+          },
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-01T14:01:19Z",
+          "updatedAt": "2025-07-01T14:01:19Z",
+          "comments": [
+            {
+              "originalPosition": 119,
+              "body": "This is the case only for \"(e.g., in the server-to-client direction if the server negotiated a zero-length CID)\"\r\n\r\nFor \"(e.g., in the server-to-client direction if the server didn't negotiate a CID)\", this means, the server denies CID and accepts RRC, which must not happen. \r\n",
+              "createdAt": "2025-07-01T14:01:19Z",
+              "updatedAt": "2025-07-01T14:01:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk86xhvKd",
+          "commit": {
+            "abbreviatedOid": "657032d"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-02T09:21:49Z",
+          "updatedAt": "2025-07-02T09:21:49Z",
+          "comments": [
+            {
+              "originalPosition": 119,
+              "body": "OK, sorry Achim, I misunderstood your observation :-(",
+              "createdAt": "2025-07-02T09:21:49Z",
+              "updatedAt": "2025-07-02T09:21:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk86xhvkT",
+          "commit": {
+            "abbreviatedOid": "657032d"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-02T09:22:17Z",
+          "updatedAt": "2025-07-02T09:22:18Z",
+          "comments": [
+            {
+              "originalPosition": 119,
+              "body": "```suggestion\r\nIn contrast, DTLS 1.2 RRC messages that are not wrapped in the `tls12_cid` record (e.g., in the server-to-client direction if the server negotiated a zero-length CID) have the `return_routability_check` content type in plain text, making them susceptible to interference (e.g., dropping of `path_challenge` messages), which would hinder the RRC functionality altogether.\r\n```",
+              "createdAt": "2025-07-02T09:22:17Z",
+              "updatedAt": "2025-07-02T09:22:18Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
