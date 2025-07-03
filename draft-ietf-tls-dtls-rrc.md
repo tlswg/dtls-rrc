@@ -655,8 +655,8 @@ in routing.
 
 An endpoint could also use heuristics to improve detection of this
 style of attack. For instance, NAT rebinding is improbable if
-packets were recently received on the old path; similarly, rebinding
-is rare on IPv6 paths. Endpoints can also look for duplicated
+packets were recently received on the old path.
+Endpoints can also look for duplicated
 packets. Conversely, a change in connection ID is more likely to
 indicate an intentional migration rather than an attack. Note that
 changes in connection IDs are supported in DTLS 1.3 but not in
