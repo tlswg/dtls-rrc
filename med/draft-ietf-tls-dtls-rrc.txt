@@ -4,9 +4,9 @@
 
 TLS                                                   H. Tschofenig, Ed.
 Internet-Draft                                                     H-BRS
-Intended status: Standards Track                                A. Kraus
-Expires: 4 January 2026                                                 
-                                                              T. Fossati
+Updates: 9146 (if approved)                                     A. Kraus
+Intended status: Standards Track                                        
+Expires: 4 January 2026                                       T. Fossati
                                                                   Linaro
                                                              3 July 2025
 
