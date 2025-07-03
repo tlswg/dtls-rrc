@@ -226,11 +226,12 @@ The enhanced return routability check comprises the following steps:
 1. If the path is still functional, the peer (i.e., the responder) cryptographically verifies the received
    `return_routability_check` message of
    type `path_challenge`.
-   The action to be taken depends on whether or not the path through which the message was received is still the preferred one:
+   The action to be taken depends on whether the path through which the message was received remains the preferred one.
    - If the path through which the message was received is preferred,
    a `return_routability_check` message of type `path_response` MUST be returned.
    - If the path through which the message was received is no longer preferred,
-   a `return_routability_check` message of type `path_drop` MUST be returned.
+   a `return_routability_check` message of type `path_drop` MUST be returned.  (Note that the responder must have initiated a voluntary path migration in order to know that this path is no longer the preferred one.)
+
    In either case, the peer echoes the cookie value in the response.
 1. The initiator receives and verifies that the `return_routability_check`
    message contains the previously sent cookie. The actions taken by the
