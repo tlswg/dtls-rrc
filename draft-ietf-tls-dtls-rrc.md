@@ -72,6 +72,7 @@ The return routability check is performed by the receiving endpoint before the
 CID-address binding is updated in that endpoint's session state.
 This is done in order to give the receiving endpoint confidence
 that the sending peer is in fact reachable at the source address indicated in the received datagram.
+For an illustration of the handshake and address validation phases, see the {{overview}}.
 
 {{regular}} of this document explains the fundamental mechanism that aims to reduce the DDoS attack surface.
 Additionally, in {{enhanced}}, a more advanced address validation mechanism is discussed.
@@ -108,6 +109,7 @@ If the server is capable of meeting this requirement, it responds with a
 `rrc` extension in its ServerHello.  The `extension_type` value for this
 extension is TBD1 and the `extension_data` field of this extension is empty.
 A client offering the `rrc` extension MUST also offer the `connection_id` extension {{!RFC9146}}.
+If the client offers the `rrc` extension but not the `connection_id` extension, the server MUST NOT send `rrc` in its ServerHello.
 A client offering the `connection_id` extension SHOULD also offer the `rrc` extension, unless the application using DTLS has its own address validation mechanism.
 The client and server MUST NOT use RRC unless both sides have successfully exchanged `rrc` extensions.
 
@@ -168,7 +170,7 @@ struct {
 } return_routability_check;
 ~~~
 {: #fig-rrc-msg align="left"
-   title="Return Routability Check Message"}
+   title="Return Routability Check Message and Content Type"}
 
 Future extensions to the RRC sub-protocol may
 define new message types.
@@ -296,7 +298,7 @@ Profiles for specific deployment environments -- for example, constrained
 networks {{?I-D.ietf-uta-tls13-iot-profile}} -- MAY specify a different, more
 suitable value for T.
 
-# Example
+# Example {#overview}
 
 {{fig-handshake}} shows an example of a DTLS 1.3 handshake in which a client and a server successfully negotiate support for both the CID and RRC extensions.
 
@@ -411,7 +413,7 @@ This information can be used to identify any issues with the underlying connecti
 
 Since the DTLS 1.3 encrypted packet's record type is opaque to on-path observers, RRC messages are immune to middlebox interference when using DTLS 1.3.
 In contrast, DTLS 1.2 RRC messages that are not wrapped in the `tls12_cid` record (e.g., in the server-to-client direction if the server negotiated a zero-length CID) have the `return_routability_check` content type in plain text, making them susceptible to interference (e.g., dropping of `path_challenge` messages), which would hinder the RRC functionality altogether.
-Therefore, when using RRC in DTLS 1.2, it is recommended to enable CID in both directions.
+Therefore, when using RRC in DTLS 1.2 and middlebox interference is a concern, it is recommended to enable CID in both directions.
 
 # Security Considerations
 
