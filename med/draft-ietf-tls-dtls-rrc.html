@@ -1279,7 +1279,7 @@ DTLS 1.2 and in <span>[<a href="#RFC9147" class="cite xref">RFC9147</a>]</span> 
 <p id="section-1-2">Section 6 of <span>[<a href="#RFC9146" class="cite xref">RFC9146</a>]</span> describes how the use of CID increases the attack
 surface of DTLS 1.2 and 1.3 by providing both on-path and off-path attackers an opportunity for
 (D)DoS.  It also describes the steps a DTLS principal must take when a
-record with a CID is received that has a source address (and/or port number) different
+record with a CID is received that has a source address different
 from the one currently associated with the DTLS connection.  However, the
 actual mechanism for ensuring that the new peer address is willing to receive
 and process DTLS records is left open.  To address the gap, this document defines a Return
@@ -1287,7 +1287,7 @@ Routability Check (RRC) sub-protocol for DTLS 1.2 and 1.3 inspired by the path v
 <p id="section-1-3">The return routability check is performed by the receiving endpoint before the
 CID-address binding is updated in that endpoint's session state.
 This is done in order to give the receiving endpoint confidence
-that the sending peer is in fact reachable at the source address (and port number) indicated in the received datagram.<a href="#section-1-3" class="pilcrow">¶</a></p>
+that the sending peer is in fact reachable at the source address indicated in the received datagram.<a href="#section-1-3" class="pilcrow">¶</a></p>
 <p id="section-1-4"><a href="#regular" class="auto internal xref">Section 5.1</a> of this document explains the fundamental mechanism that aims to reduce the DDoS attack surface.
 Additionally, in <a href="#enhanced" class="auto internal xref">Section 5.2</a>, a more advanced address validation mechanism is discussed.
 This mechanism is designed to counteract off-path attackers trying to place themselves on-path by racing packets that trigger address rebinding at the receiver.
@@ -1313,7 +1313,8 @@ used in this document is described in Section 4 of <span>[<a href="#RFC8446" cla
 <p id="section-2-3">In this document, the term "anti-amplification limit" means three times the amount of data received from an unvalidated address.
 This includes all DTLS records originating from that source address, excluding those that have been discarded.
 This follows the pattern of <span>[<a href="#RFC9000" class="cite xref">RFC9000</a>]</span>, applying a similar concept to DTLS.<a href="#section-2-3" class="pilcrow">¶</a></p>
-<p id="section-2-4">The terms "client", "server", "peer" and "endpoint" are defined in <span><a href="https://rfc-editor.org/rfc/rfc8446#section-1.1" class="relref">Section 1.1</a> of [<a href="#RFC8446" class="cite xref">RFC8446</a>]</span>.<a href="#section-2-4" class="pilcrow">¶</a></p>
+<p id="section-2-4">The term "address" is defined in <span><a href="https://rfc-editor.org/rfc/rfc9000#section-1.2" class="relref">Section 1.2</a> of [<a href="#RFC9000" class="cite xref">RFC9000</a>]</span>.<a href="#section-2-4" class="pilcrow">¶</a></p>
+<p id="section-2-5">The terms "client", "server", "peer" and "endpoint" are defined in <span><a href="https://rfc-editor.org/rfc/rfc8446#section-1.1" class="relref">Section 1.1</a> of [<a href="#RFC8446" class="cite xref">RFC8446</a>]</span>.<a href="#section-2-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="rrc-extension">
@@ -1327,9 +1328,9 @@ On connecting, a client wishing to use RRC includes the <code>rrc</code> extensi
 If the server is capable of meeting this requirement, it responds with a
 <code>rrc</code> extension in its ServerHello.  The <code>extension_type</code> value for this
 extension is TBD1 and the <code>extension_data</code> field of this extension is empty.
-The client and server <span class="bcp14">MUST NOT</span> use RRC unless both sides have successfully exchanged <code>rrc</code> extensions.
 A client offering the <code>rrc</code> extension <span class="bcp14">MUST</span> also offer the <code>connection_id</code> extension <span>[<a href="#RFC9146" class="cite xref">RFC9146</a>]</span>.
-A client offering the <code>connection_id</code> extension <span class="bcp14">SHOULD</span> also offer the <code>rrc</code> extension, unless the application using DTLS has its own address validation mechanism.<a href="#section-3-1" class="pilcrow">¶</a></p>
+A client offering the <code>connection_id</code> extension <span class="bcp14">SHOULD</span> also offer the <code>rrc</code> extension, unless the application using DTLS has its own address validation mechanism.
+The client and server <span class="bcp14">MUST NOT</span> use RRC unless both sides have successfully exchanged <code>rrc</code> extensions.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <div id="rrc-and-cid-interplay">
 <section id="section-3.1">
         <h3 id="name-rrc-and-cid-interplay">
@@ -1338,7 +1339,7 @@ A client offering the <code>connection_id</code> extension <span class="bcp14">S
 <p id="section-3.1-1">RRC offers an in-protocol mechanism to perform peer address validation that
 complements the "peer address update" procedure described in <span><a href="https://rfc-editor.org/rfc/rfc9146#section-6" class="relref">Section 6</a> of [<a href="#RFC9146" class="cite xref">RFC9146</a>]</span>.  Specifically, when both CID <span>[<a href="#RFC9146" class="cite xref">RFC9146</a>]</span> and RRC have been
 successfully negotiated for the session, if a record with CID is received that
-has the source address and/or source port number of the enclosing UDP datagram different from what is
+has the source address of the enclosing UDP datagram different from what is
 currently associated with that CID value, the receiver <span class="bcp14">SHOULD</span> perform a return
 routability check as described in <a href="#path-validation" class="auto internal xref">Section 5</a>, unless an application-specific
 address validation mechanism can be triggered instead (e.g., CoAP Echo <span>[<a href="#RFC9175" class="cite xref">RFC9175</a>]</span>).<a href="#section-3.1-1" class="pilcrow">¶</a></p>
@@ -1409,7 +1410,7 @@ In addition, implementations <span class="bcp14">MUST</span> be able to parse an
       <h2 id="name-path-validation-procedure">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-path-validation-procedure" class="section-name selfRef">Path Validation Procedure</a>
       </h2>
-<p id="section-5-1">A receiver that observes the peer's address or port change <span class="bcp14">MUST</span> stop sending
+<p id="section-5-1">A receiver that observes the peer's address change <span class="bcp14">MUST</span> stop sending
 any buffered application data, or limit the data sent to the unvalidated
 address to the anti-amplification limit.
 It then initiates the return routability check.<a href="#section-5-1" class="pilcrow">¶</a></p>
@@ -1424,7 +1425,7 @@ a configuration option to the user of the TLS implementation.)<a href="#section-
 resumed to the bound peer address.<a href="#section-5-3" class="pilcrow">¶</a></p>
 <p id="section-5-4"><a href="#path-challenge-reqs" class="auto internal xref">Section 5.3</a> and <a href="#path-response-reqs" class="auto internal xref">Section 5.4</a> list the requirements for
 the initiator and responder roles, broken down per protocol phase.<a href="#section-5-4" class="pilcrow">¶</a></p>
-<p id="section-5-5">Please note that the presented algorithms are not designed to handle nested rebindings.
+<p id="section-5-5">Please note that the presented algorithms are not designed to handle nested rebindings, i.e. rebindings that may occur while a path is being validated following a previous rebinding.
 If this happens (which should rarely occur), the <code>path_response</code> message is dropped, the address validation times out, and the address will not be updated.
 A new path validation will start when new data is received.<a href="#section-5-5" class="pilcrow">¶</a></p>
 <div id="regular">
@@ -1478,7 +1479,7 @@ old path. Additionally, a timer T is started, see <a href="#timer-choice" class=
             <p id="section-5.2-2.3.1">If the path is still functional, the peer (i.e., the responder) cryptographically verifies the received
 <code>return_routability_check</code> message of
 type <code>path_challenge</code>.
-The action to be taken depends on whether or not the path through which the message was received is still the preferred one:<a href="#section-5.2-2.3.1" class="pilcrow">¶</a></p>
+The action to be taken depends on whether the path through which the message was received remains the preferred one.<a href="#section-5.2-2.3.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.2-2.3.2.1">
                 <p id="section-5.2-2.3.2.1.1">If the path through which the message was received is preferred,
@@ -1486,10 +1487,11 @@ a <code>return_routability_check</code> message of type <code>path_response</cod
 </li>
               <li class="normal" id="section-5.2-2.3.2.2">
                 <p id="section-5.2-2.3.2.2.1">If the path through which the message was received is no longer preferred,
-a <code>return_routability_check</code> message of type <code>path_drop</code> <span class="bcp14">MUST</span> be returned.
-In either case, the peer echoes the cookie value in the response.<a href="#section-5.2-2.3.2.2.1" class="pilcrow">¶</a></p>
+a <code>return_routability_check</code> message of type <code>path_drop</code> <span class="bcp14">MUST</span> be returned.  (Note that the responder must have initiated a voluntary path migration in order to know that this path is no longer the preferred one.)<a href="#section-5.2-2.3.2.2.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
+<p id="section-5.2-2.3.3">
+In either case, the peer echoes the cookie value in the response.<a href="#section-5.2-2.3.3" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.2-2.4">
             <p id="section-5.2-2.4.1">The initiator receives and verifies that the <code>return_routability_check</code>
@@ -1651,13 +1653,13 @@ Auth | {CertificateVerify}
 exchange application payloads protected by DTLS with a unilaterally used
 CID. In this case, the client is requested to use CID 100 for records
 sent to the server.<a href="#section-6-3" class="pilcrow">¶</a></p>
-<p id="section-6-4">At some point in the communication interaction, the IP address used by
+<p id="section-6-4">At some point in the communication interaction, the address used by
 the client changes and, thanks to the CID usage, the security context to
 interpret the record is successfully located by the server.  However, the
-server wants to test the reachability of the client at its new IP address.<a href="#section-6-4" class="pilcrow">¶</a></p>
+server wants to test the reachability of the client at its new address.<a href="#section-6-4" class="pilcrow">¶</a></p>
 <p id="section-6-5"><a href="#fig-rrc-example" class="auto internal xref">Figure 3</a> shows the server initiating a "basic" RRC exchange
 (see <a href="#regular" class="auto internal xref">Section 5.1</a>) that establishes reachability of the client at the new
-IP address.<a href="#section-6-5" class="pilcrow">¶</a></p>
+address.<a href="#section-6-5" class="pilcrow">¶</a></p>
 <span id="name-basic-return-routability-ex"></span><div id="fig-rrc-example">
 <figure id="figure-3">
         <div class="alignLeft art-text artwork" id="section-6-6.1">
@@ -1753,7 +1755,7 @@ return routability checks to the real peer (even if those datagrams are
 cryptographically authenticated).  On-path adversaries can, in general, pose a
 harm to connectivity.<a href="#section-8-1" class="pilcrow">¶</a></p>
 <p id="section-8-2">If the RRC challenger reuses a cookie that was previously used in the same connection and does not implement anti-replay protection (see <span><a href="https://rfc-editor.org/rfc/rfc9147#section-4.5.1" class="relref">Section 4.5.1</a> of [<a href="#RFC9147" class="cite xref">RFC9147</a>]</span> and <span><a href="https://rfc-editor.org/rfc/rfc6347#section-4.1.2.6" class="relref">Section 4.1.2.6</a> of [<a href="#RFC6347" class="cite xref">RFC6347</a>]</span>), an attacker could replay a previously sent <code>path_response</code> message containing the reused cookie to mislead the challenger into switching to a path of the attacker's choosing.
-To prevent this, RRC cookies must be freshly generated using a reliable source of entropy <span>[<a href="#RFC4086" class="cite xref">RFC4086</a>]</span>.
+To prevent this, RRC cookies must be <em>freshly</em> generated using a reliable source of entropy <span>[<a href="#RFC4086" class="cite xref">RFC4086</a>]</span>.
 See <span><a href="https://rfc-editor.org/rfc/rfc8446#appendix-C.1" class="relref">Appendix C.1</a> of [<a href="#RFC8446" class="cite xref">RFC8446</a>]</span> for guidance.<a href="#section-8-2" class="pilcrow">¶</a></p>
 <div id="attacker">
 <section id="section-8.1">
@@ -1766,7 +1768,7 @@ introduced in QUIC (<span><a href="https://rfc-editor.org/rfc/rfc9000#section-21
 <ul class="normal">
 <li class="normal" id="section-8.1-2.1">
             <p id="section-8.1-2.1.1">An off-path attacker is not on the original path between the DTLS peers, but
-is able to observe packets on the original path and has a faster path
+is able to observe packets on the original path and has a faster forwarding path
 compared to the DTLS peers, which allows it to make copies of the observed
 packets, race its copies to either peer and consistently win the race.<a href="#section-8.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
@@ -1898,7 +1900,7 @@ mechanisms.<a href="#section-8.1.2-3" class="pilcrow">¶</a></p>
 <a href="#section-8.1.2.1" class="section-number selfRef">8.1.2.1. </a><a href="#name-mitigation-strategy-2" class="section-name selfRef">Mitigation Strategy</a>
             </h5>
 <p id="section-8.1.2.1-1"><a href="#fig-off-path" class="auto internal xref">Figure 5</a> illustrates the case where a receiver receives a
-packet with a new source IP address and/or new port number. In order
+packet with a new source address. In order
 to determine that this path change was not triggered
 by an off-path attacker, the receiver will send an RRC message of type
 <code>path_challenge</code> (1) on the old path.<a href="#section-8.1.2.1-1" class="pilcrow">¶</a></p>
@@ -2203,8 +2205,8 @@ is not possible to distinguish between an attack and an improvement
 in routing.<a href="#section-8.1.2.1-13" class="pilcrow">¶</a></p>
 <p id="section-8.1.2.1-14">An endpoint could also use heuristics to improve detection of this
 style of attack. For instance, NAT rebinding is improbable if
-packets were recently received on the old path; similarly, rebinding
-is rare on IPv6 paths. Endpoints can also look for duplicated
+packets were recently received on the old path.
+Endpoints can also look for duplicated
 packets. Conversely, a change in connection ID is more likely to
 indicate an intentional migration rather than an attack. Note that
 changes in connection IDs are supported in DTLS 1.3 but not in
