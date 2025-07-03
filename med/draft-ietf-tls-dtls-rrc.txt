@@ -545,10 +545,8 @@ Auth | {CertificateVerify}
    attacker could replay a previously sent path_response message
    containing the reused cookie to mislead the challenger into switching
    to a path of the attacker's choosing.  To prevent this, RRC cookies
-   must be freshly generated using a reliable source of entropy (see
-   [RFC4086]).  A suitable source is the cryptographically secure
-   pseudorandom number generator (CSPRNG) provided by the TLS
-   implementation (see Appendix C.1 of [RFC8446]).
+   must be freshly generated using a reliable source of entropy
+   [RFC4086].  See Appendix C.1 of [RFC8446] for guidance.
 
 8.1.  Attacker Model
 
