@@ -422,7 +422,7 @@ cryptographically authenticated).  On-path adversaries can, in general, pose a
 harm to connectivity.
 
 If the RRC challenger reuses a cookie that was previously used in the same connection and does not implement anti-replay protection (see {{Section 4.5.1 of RFC9147}} and {{Section 4.1.2.6 of !RFC6347}}), an attacker could replay a previously sent `path_response` message containing the reused cookie to mislead the challenger into switching to a path of the attacker's choosing.
-To prevent this, RRC cookies must be freshly generated using a reliable source of entropy {{?RFC4086}}.
+To prevent this, RRC cookies must be _freshly_ generated using a reliable source of entropy {{?RFC4086}}.
 See {{Appendix C.1 of RFC8446}} for guidance.
 
 ## Attacker Model {#attacker}
