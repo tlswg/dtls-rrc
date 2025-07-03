@@ -62,7 +62,7 @@ DTLS 1.2 and in {{!RFC9147}} for DTLS 1.3.
 Section 6 of {{!RFC9146}} describes how the use of CID increases the attack
 surface of DTLS 1.2 and 1.3 by providing both on-path and off-path attackers an opportunity for
 (D)DoS.  It also describes the steps a DTLS principal must take when a
-record with a CID is received that has a source address (and/or port number) different
+record with a CID is received that has a source address different
 from the one currently associated with the DTLS connection.  However, the
 actual mechanism for ensuring that the new peer address is willing to receive
 and process DTLS records is left open.  To address the gap, this document defines a Return
@@ -71,7 +71,7 @@ Routability Check (RRC) sub-protocol for DTLS 1.2 and 1.3 inspired by the path v
 The return routability check is performed by the receiving endpoint before the
 CID-address binding is updated in that endpoint's session state.
 This is done in order to give the receiving endpoint confidence
-that the sending peer is in fact reachable at the source address (and port number) indicated in the received datagram.
+that the sending peer is in fact reachable at the source address indicated in the received datagram.
 
 {{regular}} of this document explains the fundamental mechanism that aims to reduce the DDoS attack surface.
 Additionally, in {{enhanced}}, a more advanced address validation mechanism is discussed.
@@ -95,6 +95,8 @@ In this document, the term "anti-amplification limit" means three times the amou
 This includes all DTLS records originating from that source address, excluding those that have been discarded.
 This follows the pattern of {{?RFC9000}}, applying a similar concept to DTLS.
 
+The term "address" is defined in {{Section 1.2 of ?RFC9000}}.
+
 The terms "client", "server", "peer" and "endpoint" are defined in {{Section 1.1 of RFC8446}}.
 
 # RRC Extension
@@ -115,7 +117,7 @@ RRC offers an in-protocol mechanism to perform peer address validation that
 complements the "peer address update" procedure described in {{Section 6 of
 RFC9146}}.  Specifically, when both CID {{RFC9146}} and RRC have been
 successfully negotiated for the session, if a record with CID is received that
-has the source address and/or source port number of the enclosing UDP datagram different from what is
+has the source address of the enclosing UDP datagram different from what is
 currently associated with that CID value, the receiver SHOULD perform a return
 routability check as described in {{path-validation}}, unless an application-specific
 address validation mechanism can be triggered instead (e.g., CoAP Echo {{?RFC9175}}).
@@ -175,7 +177,7 @@ In addition, implementations MUST be able to parse and gracefully ignore message
 
 # Path Validation Procedure {#path-validation}
 
-A receiver that observes the peer's address or port change MUST stop sending
+A receiver that observes the peer's address change MUST stop sending
 any buffered application data, or limit the data sent to the unvalidated
 address to the anti-amplification limit.
 It then initiates the return routability check.
@@ -338,14 +340,14 @@ exchange application payloads protected by DTLS with a unilaterally used
 CID. In this case, the client is requested to use CID 100 for records
 sent to the server.
 
-At some point in the communication interaction, the IP address used by
+At some point in the communication interaction, the address used by
 the client changes and, thanks to the CID usage, the security context to
 interpret the record is successfully located by the server.  However, the
-server wants to test the reachability of the client at its new IP address.
+server wants to test the reachability of the client at its new address.
 
 {{fig-rrc-example}} shows the server initiating a "basic" RRC exchange
 (see {{regular}}) that establishes reachability of the client at the new
-IP address.
+address.
 
 ~~~
       Client                                             Server
@@ -516,7 +518,7 @@ mechanisms.
 #### Mitigation Strategy
 
 {{fig-off-path}} illustrates the case where a receiver receives a
-packet with a new source IP address and/or new port number. In order
+packet with a new source address. In order
 to determine that this path change was not triggered
 by an off-path attacker, the receiver will send an RRC message of type
 `path_challenge` (1) on the old path.
