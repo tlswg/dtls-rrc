@@ -87,7 +87,7 @@ Table of Contents
    10. IANA Considerations
      10.1.  New TLS ContentType
      10.2.  New TLS ExtensionType
-     10.3.  New "RRC Message Type" Registry
+     10.3.  New "TLS RRC Message Type" Registry
        10.3.1.  Designated Expert Instructions
    11. Acknowledgments
    12. References
@@ -848,10 +848,10 @@ Auth | {CertificateVerify}
 
        Table 1: rrc entry in the TLS ExtensionType Values registry
 
-10.3.  New "RRC Message Type" Registry
+10.3.  New "TLS RRC Message Type" Registry
 
-   IANA is requested to create a new registry "RRC Message Types" within
-   the Transport Layer Security (TLS) Parameters registry group
+   IANA is requested to create a new registry "TLS RRC Message Types"
+   within the Transport Layer Security (TLS) Parameters registry group
    [IANA.tls-parameters].  This registry will be administered under the
    "Expert Review" policy (Section 4.5 of [RFC8126]).
 
@@ -900,7 +900,7 @@ Auth | {CertificateVerify}
    |       | Private Use    |         |             |         |       |
    +-------+----------------+---------+-------------+---------+-------+
 
-          Table 2: Initial Entries in RRC Message Type registry
+        Table 2: Initial Entries in TLS RRC Message Type registry
 
    IANA is requested to add the following note for additional
    information regarding the use of RRC message codepoints in
