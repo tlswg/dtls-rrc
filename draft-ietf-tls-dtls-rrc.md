@@ -604,7 +604,7 @@ confirmation for the path migration.
    response | | |        challenge | | |
             | | |                  | | |
   .---------|-+-|----.          .--|-+-|-----------.
- / AP/NAT A |   |   /          /   |   | AP/NAT B /
+ /    NAT A |   |   /          /   |   | NAT B    /
 '-----------|---|--'          '----|-+-|---------'
             | | |                  | | |
             | | 3 path-            | | 2 path-
@@ -637,7 +637,7 @@ to the new path, thus thwarting the attack.
         |                    | | | challenge
         |                    | | |
     .---+------.          .--|-+-|-----.
-   / off-path /          / AP| / |NAT /
+   / off-path /          /   |NAT|    /
   / attacker /          '----|-+-|---'
  '------+---'                | | |
         |                    | | |
