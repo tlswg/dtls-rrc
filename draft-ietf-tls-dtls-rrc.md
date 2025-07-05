@@ -72,7 +72,7 @@ The return routability check is performed by the receiving endpoint before the
 CID-address binding is updated in that endpoint's session state.
 This is done in order to give the receiving endpoint confidence
 that the sending peer is in fact reachable at the source address indicated in the received datagram.
-For an illustration of the handshake and address validation phases, see the {{overview}}.
+For an illustration of the handshake and address validation phases, see {{overview}}.
 
 {{regular}} of this document explains the fundamental mechanism that aims to reduce the DDoS attack surface.
 Additionally, in {{enhanced}}, a more advanced address validation mechanism is discussed.
