@@ -109,7 +109,7 @@ If the server is capable of meeting this requirement, it responds with a
 `rrc` extension in its ServerHello.  The `extension_type` value for this
 extension is TBD1 and the `extension_data` field of this extension is empty.
 A client offering the `rrc` extension MUST also offer the `connection_id` extension {{!RFC9146}}.
-If the client offers the `rrc` extension but not the `connection_id` extension, the server MUST NOT send `rrc` in its ServerHello.
+If the client includes the `rrc` extension in its ClientHello but omits the `connection_id` extension, the server MUST NOT include the `rrc` extension in its ServerHello.
 A client offering the `connection_id` extension SHOULD also offer the `rrc` extension, unless the application using DTLS has its own address validation mechanism.
 The client and server MUST NOT use RRC unless both sides have successfully exchanged `rrc` extensions.
 
