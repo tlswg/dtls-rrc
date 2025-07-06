@@ -6,9 +6,9 @@ TLS                                                   H. Tschofenig, Ed.
 Internet-Draft                                                     H-BRS
 Updates: 9146 (if approved)                                     A. Kraus
 Intended status: Standards Track                                        
-Expires: 4 January 2026                                       T. Fossati
+Expires: 7 January 2026                                       T. Fossati
                                                                   Linaro
-                                                             3 July 2025
+                                                             6 July 2025
 
 
            Return Routability Check for DTLS 1.2 and DTLS 1.3
@@ -46,7 +46,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 January 2026.
+   This Internet-Draft will expire on 7 January 2026.
 
 Copyright Notice
 
@@ -87,7 +87,7 @@ Table of Contents
    10. IANA Considerations
      10.1.  New TLS ContentType
      10.2.  New TLS ExtensionType
-     10.3.  New "RRC Message Type" Registry
+     10.3.  New "TLS RRC Message Type" Registry
        10.3.1.  Designated Expert Instructions
    11. Acknowledgments
    12. References
@@ -119,7 +119,8 @@ Table of Contents
    before the CID-address binding is updated in that endpoint's session
    state.  This is done in order to give the receiving endpoint
    confidence that the sending peer is in fact reachable at the source
-   address indicated in the received datagram.
+   address indicated in the received datagram.  For an illustration of
+   the handshake and address validation phases, see Section 6.
 
    Section 5.1 of this document explains the fundamental mechanism that
    aims to reduce the DDoS attack surface.  Additionally, in
@@ -169,10 +170,13 @@ Table of Contents
    extension_type value for this extension is TBD1 and the
    extension_data field of this extension is empty.  A client offering
    the rrc extension MUST also offer the connection_id extension
-   [RFC9146].  A client offering the connection_id extension SHOULD also
-   offer the rrc extension, unless the application using DTLS has its
-   own address validation mechanism.  The client and server MUST NOT use
-   RRC unless both sides have successfully exchanged rrc extensions.
+   [RFC9146].  If the client includes the rrc extension in its
+   ClientHello but omits the connection_id extension, the server MUST
+   NOT include the rrc extension in its ServerHello.  A client offering
+   the connection_id extension SHOULD also offer the rrc extension,
+   unless the application using DTLS has its own address validation
+   mechanism.  The client and server MUST NOT use RRC unless both sides
+   have successfully exchanged rrc extensions.
 
 3.1.  RRC and CID Interplay
 
@@ -233,7 +237,7 @@ Table of Contents
        };
    } return_routability_check;
 
-                 Figure 1: Return Routability Check Message
+        Figure 1: Return Routability Check Message and Content Type
 
    Future extensions to the RRC sub-protocol may define new message
    types.  Implementations MUST be able to parse and understand the
@@ -534,8 +538,8 @@ Auth | {CertificateVerify}
    return_routability_check content type in plain text, making them
    susceptible to interference (e.g., dropping of path_challenge
    messages), which would hinder the RRC functionality altogether.
-   Therefore, when using RRC in DTLS 1.2, it is recommended to enable
-   CID in both directions.
+   Therefore, when using RRC in DTLS 1.2 and middlebox interference is a
+   concern, it is recommended to enable CID in both directions.
 
 8.  Security Considerations
 
@@ -731,7 +735,7 @@ Auth | {CertificateVerify}
               response | | |        challenge | | |
                        | | |                  | | |
              .---------|-+-|----.          .--|-+-|-----------.
-            / AP/NAT A |   |   /          /   |   | AP/NAT B /
+            /    NAT A |   |   /          /   |   | NAT B    /
            '-----------|---|--'          '----|-+-|---------'
                        | | |                  | | |
                        | | 3 path-            | | 2 path-
@@ -762,7 +766,7 @@ Auth | {CertificateVerify}
                        |                    | | | challenge
                        |                    | | |
                    .---+------.          .--|-+-|-----.
-                  / off-path /          / AP| / |NAT /
+                  / off-path /          /   |NAT|    /
                  / attacker /          '----|-+-|---'
                 '------+---'                | | |
                        |                    | | |
@@ -845,10 +849,10 @@ Auth | {CertificateVerify}
 
        Table 1: rrc entry in the TLS ExtensionType Values registry
 
-10.3.  New "RRC Message Type" Registry
+10.3.  New "TLS RRC Message Type" Registry
 
-   IANA is requested to create a new registry "RRC Message Types" within
-   the Transport Layer Security (TLS) Parameters registry group
+   IANA is requested to create a new registry "TLS RRC Message Types"
+   within the Transport Layer Security (TLS) Parameters registry group
    [IANA.tls-parameters].  This registry will be administered under the
    "Expert Review" policy (Section 4.5 of [RFC8126]).
 
@@ -897,7 +901,7 @@ Auth | {CertificateVerify}
    |       | Private Use    |         |             |         |       |
    +-------+----------------+---------+-------------+---------+-------+
 
-          Table 2: Initial Entries in RRC Message Type registry
+        Table 2: Initial Entries in TLS RRC Message Type registry
 
    IANA is requested to add the following note for additional
    information regarding the use of RRC message codepoints in
