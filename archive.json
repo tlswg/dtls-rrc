@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-03T02:07:28.586929+00:00",
+  "timestamp": "2025-07-06T02:22:05.855528+00:00",
   "repo": "tlswg/dtls-rrc",
   "labels": [
     {
@@ -4918,24 +4918,26 @@
       "id": "PR_kwDOFigxk86cwkvB",
       "title": "Med's review",
       "url": "https://github.com/tlswg/dtls-rrc/pull/97",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "thomas-fossati",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Incorporate some of the editorial suggestions Med made in [his review](https://mailarchive.ietf.org/arch/msg/tls/f_JWgsCbxKIaDX1AcD8e47MIWUU/).",
       "createdAt": "2025-06-30T19:56:49Z",
-      "updatedAt": "2025-07-02T09:22:31Z",
+      "updatedAt": "2025-07-03T17:40:57Z",
       "baseRepository": "tlswg/dtls-rrc",
       "baseRefName": "master",
       "baseRefOid": "2b67a4f5a71abedf9dccbbba7eb22190b1cce17b",
       "headRepository": "tlswg/dtls-rrc",
       "headRefName": "med",
-      "headRefOid": "7af05c424005792e2ea3a6b23c187ed946b50804",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "6f599616da7177f5853c5239f8fc0c6fe8236882",
+      "closedAt": "2025-07-03T17:40:57Z",
+      "mergedAt": "2025-07-03T17:40:57Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "651bc5c50df8d2488c2ea22cb65459077361d842"
+      },
       "comments": [
         {
           "author": "boaks",
@@ -4943,6 +4945,13 @@
           "body": "Beside removing \"didn't negotiate a CID or it\" => LGTM",
           "createdAt": "2025-07-01T12:52:30Z",
           "updatedAt": "2025-07-01T12:52:30Z"
+        },
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "LGTM",
+          "createdAt": "2025-07-03T17:09:41Z",
+          "updatedAt": "2025-07-03T17:09:41Z"
         }
       ],
       "reviews": [
@@ -5063,6 +5072,161 @@
               "body": "```suggestion\r\nIn contrast, DTLS 1.2 RRC messages that are not wrapped in the `tls12_cid` record (e.g., in the server-to-client direction if the server negotiated a zero-length CID) have the `return_routability_check` content type in plain text, making them susceptible to interference (e.g., dropping of `path_challenge` messages), which would hinder the RRC functionality altogether.\r\n```",
               "createdAt": "2025-07-02T09:22:17Z",
               "updatedAt": "2025-07-02T09:22:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk86xyqn9",
+          "commit": {
+            "abbreviatedOid": "657032d"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-03T11:43:48Z",
+          "updatedAt": "2025-07-03T11:43:49Z",
+          "comments": [
+            {
+              "originalPosition": 119,
+              "body": "done in [7af05c4](https://github.com/tlswg/dtls-rrc/pull/97/commits/7af05c424005792e2ea3a6b23c187ed946b50804)",
+              "createdAt": "2025-07-03T11:43:49Z",
+              "updatedAt": "2025-07-03T11:43:49Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 98,
+      "id": "PR_kwDOFigxk86dT73G",
+      "title": "\u00c9ric's comments",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/98",
+      "state": "OPEN",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Addressing the COMMENTS in [\u00c9ric's review](https://mailarchive.ietf.org/arch/msg/tls/EQ0R8r6C_Vmoq3jMa8hx48XlQ20/)",
+      "createdAt": "2025-07-03T17:51:34Z",
+      "updatedAt": "2025-07-05T17:42:09Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "651bc5c50df8d2488c2ea22cb65459077361d842",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "eric",
+      "headRefOid": "964f506b7580eede8951237f6823f95edc50540b",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "cc @boaks ",
+          "createdAt": "2025-07-03T17:51:50Z",
+          "updatedAt": "2025-07-03T17:51:50Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> Small wording changes. Nothing important. Looks good though.\r\n\r\nAll good, thanks for taking a look.\r\n\r\n> From Eric's last email I see that he still needs to think about the issue and whether the response (to Med's review) clears his DISCUSS.\r\n\r\nYes, this PR only addresses his COMMENTS.",
+          "createdAt": "2025-07-05T17:42:09Z",
+          "updatedAt": "2025-07-05T17:42:09Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk86yNC7c",
+          "commit": {
+            "abbreviatedOid": "ad34400"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-05T10:27:43Z",
+          "updatedAt": "2025-07-05T10:27:43Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "```suggestion\r\nIf the client includes the `rrc` extension in its ClientHello but omits the `connection_id` extension, the server MUST NOT include the `rrc` extension in its ServerHello.\r\n```",
+              "createdAt": "2025-07-05T10:27:43Z",
+              "updatedAt": "2025-07-05T10:27:43Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk86yNDLH",
+          "commit": {
+            "abbreviatedOid": "ad34400"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-05T10:28:03Z",
+          "updatedAt": "2025-07-05T10:28:04Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "```suggestion\r\nFor an illustration of the handshake and address validation phases, see {{overview}}.\r\n```",
+              "createdAt": "2025-07-05T10:28:04Z",
+              "updatedAt": "2025-07-05T10:28:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk86yNFsI",
+          "commit": {
+            "abbreviatedOid": "ad34400"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-05T10:31:55Z",
+          "updatedAt": "2025-07-05T10:31:55Z",
+          "comments": [
+            {
+              "originalPosition": 39,
+              "body": "Should we capitalize the \"recommended\"?",
+              "createdAt": "2025-07-05T10:31:55Z",
+              "updatedAt": "2025-07-05T10:31:55Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOFigxk86yNHnE",
+          "commit": {
+            "abbreviatedOid": "ad34400"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "Small wording changes. Nothing important.\r\nLooks good though.\r\n\r\nFrom Eric's last email I see that he still needs to think about the issue and whether the response (to Med's review) clears his DISCUSS.",
+          "createdAt": "2025-07-05T10:35:04Z",
+          "updatedAt": "2025-07-05T10:35:04Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOFigxk86yPdYU",
+          "commit": {
+            "abbreviatedOid": "ad34400"
+          },
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-05T17:41:08Z",
+          "updatedAt": "2025-07-05T17:41:09Z",
+          "comments": [
+            {
+              "originalPosition": 39,
+              "body": "This is in the Operational Considerations section.  I don\u2019t know if it's expected to use RFC 2119 here.  Some people, for example, get upset if the security considerations contain normative text. \ud83e\udd37 ",
+              "createdAt": "2025-07-05T17:41:08Z",
+              "updatedAt": "2025-07-05T17:41:09Z"
             }
           ]
         }
