@@ -771,7 +771,10 @@ In cases where a registration decision could be perceived as creating a conflict
 
 We would like to thank
 Colin Perkins,
+Deb Cooley,
 Eric Rescorla,
+Éric Vyncke,
+Erik Kline,
 Hanno Becker,
 {{{Hanno Böck}}},
 Joe Clarke,
@@ -780,6 +783,7 @@ Marco Tiloca,
 Martin Thomson,
 Mike Bishop,
 Mike Ounsworth,
+Mohamed Boucadair,
 Mohit Sahni,
 Rich Salz,
 Russ Housley,
