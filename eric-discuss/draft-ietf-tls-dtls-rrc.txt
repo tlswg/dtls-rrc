@@ -275,10 +275,9 @@ Table of Contents
    the address validation times out, and the address will not be
    updated.  A new path validation will start when new data is received.
 
-   Also note that in the event of a NAT rebind that does not break end-
-   to-end connectivity, the initiator and responder will have different
-   views of the path: the initiator will see a new path, while the
-   responder will still see the old one.
+   Also note that in the event of a NAT rebind, the initiator and
+   responder will have different views of the path: the initiator will
+   see a new path, while the responder will still see the old one.
 
 5.1.  Basic
 
@@ -324,8 +323,7 @@ Table of Contents
           preferred, a return_routability_check message of type
           path_response MUST be returned.  (Note that, from the
           responder's perspective, the preferred path and the old path
-          coincide in the event of a NAT rebind that does not break end-
-          to-end connectivity.)
+          coincide in the event of a NAT rebind.)
 
        *  If the path through which the message was received is no
           longer preferred, a return_routability_check message of type

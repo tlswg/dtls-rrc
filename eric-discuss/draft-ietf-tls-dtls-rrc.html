@@ -1430,7 +1430,7 @@ the initiator and responder roles, broken down per protocol phase.<a href="#sect
 <p id="section-5-5">Please note that the presented algorithms are not designed to handle nested rebindings, i.e. rebindings that may occur while a path is being validated following a previous rebinding.
 If this happens (which should rarely occur), the <code>path_response</code> message is dropped, the address validation times out, and the address will not be updated.
 A new path validation will start when new data is received.<a href="#section-5-5" class="pilcrow">¶</a></p>
-<p id="section-5-6">Also note that in the event of a NAT rebind that does not break end-to-end connectivity, the initiator and responder will have different views of the path: the initiator will see a new path, while the responder will still see the old one.<a href="#section-5-6" class="pilcrow">¶</a></p>
+<p id="section-5-6">Also note that in the event of a NAT rebind, the initiator and responder will have different views of the path: the initiator will see a new path, while the responder will still see the old one.<a href="#section-5-6" class="pilcrow">¶</a></p>
 <div id="regular">
 <section id="section-5.1">
         <h3 id="name-basic">
@@ -1486,7 +1486,7 @@ The action to be taken depends on whether the path through which the message was
 <ul class="normal">
 <li class="normal" id="section-5.2-2.3.2.1">
                 <p id="section-5.2-2.3.2.1.1">If the path through which the message was received is preferred,
-a <code>return_routability_check</code> message of type <code>path_response</code> <span class="bcp14">MUST</span> be returned. (Note that, from the responder's perspective, the preferred path and the old path coincide in the event of a NAT rebind that does not break end-to-end connectivity.)<a href="#section-5.2-2.3.2.1.1" class="pilcrow">¶</a></p>
+a <code>return_routability_check</code> message of type <code>path_response</code> <span class="bcp14">MUST</span> be returned. (Note that, from the responder's perspective, the preferred path and the old path coincide in the event of a NAT rebind.)<a href="#section-5.2-2.3.2.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-5.2-2.3.2.2">
                 <p id="section-5.2-2.3.2.2.1">If the path through which the message was received is no longer preferred,
