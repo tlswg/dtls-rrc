@@ -933,11 +933,11 @@ Auth | {CertificateVerify}
 
 11.  Acknowledgments
 
-   We would like to thank Colin Perkins, Eric Rescorla, Hanno Becker,
-   Hanno Böck, Joe Clarke, Manuel Pégourié-Gonnard, Marco Tiloca, Martin
-   Thomson, Mike Bishop, Mike Ounsworth, Mohit Sahni, Rich Salz, Russ
-   Housley, Sean Turner, and Yaron Sheffer for their input to this
-   document.
+   We would like to thank Colin Perkins, Deb Cooley, Eric Rescorla, Éric
+   Vyncke, Erik Kline, Hanno Becker, Hanno Böck, Joe Clarke, Manuel
+   Pégourié-Gonnard, Marco Tiloca, Martin Thomson, Mike Bishop, Mike
+   Ounsworth, Mohamed Boucadair, Mohit Sahni, Rich Salz, Russ Housley,
+   Sean Turner, and Yaron Sheffer for their input to this document.
 
 12.  References
 
