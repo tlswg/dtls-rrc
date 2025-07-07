@@ -202,6 +202,8 @@ Please note that the presented algorithms are not designed to handle nested rebi
 If this happens (which should rarely occur), the `path_response` message is dropped, the address validation times out, and the address will not be updated.
 A new path validation will start when new data is received.
 
+Also note that in the event of a NAT rebind, the initiator and responder will have different views of the path: the initiator will see a new path, while the responder will still see the old one.
+
 ## Basic {#regular}
 
 The basic return routability check comprises the following steps:
@@ -232,7 +234,7 @@ The enhanced return routability check comprises the following steps:
    type `path_challenge`.
    The action to be taken depends on whether the path through which the message was received remains the preferred one.
    - If the path through which the message was received is preferred,
-   a `return_routability_check` message of type `path_response` MUST be returned.
+   a `return_routability_check` message of type `path_response` MUST be returned. (Note that, from the responder's perspective, the preferred path and the old path coincide in the event of a NAT rebind.)
    - If the path through which the message was received is no longer preferred,
    a `return_routability_check` message of type `path_drop` MUST be returned.  (Note that the responder must have initiated a voluntary path migration in order to know that this path is no longer the preferred one.)
 
@@ -769,7 +771,10 @@ In cases where a registration decision could be perceived as creating a conflict
 
 We would like to thank
 Colin Perkins,
+Deb Cooley,
 Eric Rescorla,
+Éric Vyncke,
+Erik Kline,
 Hanno Becker,
 {{{Hanno Böck}}},
 Joe Clarke,
@@ -778,6 +783,7 @@ Marco Tiloca,
 Martin Thomson,
 Mike Bishop,
 Mike Ounsworth,
+Mohamed Boucadair,
 Mohit Sahni,
 Rich Salz,
 Russ Housley,
