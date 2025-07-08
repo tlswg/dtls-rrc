@@ -62,7 +62,7 @@ that gives the receiver additional information for selecting the appropriate
 security context.  The CID mechanism has been specified in {{!RFC9146}} for
 DTLS 1.2 and in {{!RFC9147}} for DTLS 1.3.
 
-Section 6 of {{!RFC9146}} describes how the use of CID increases the attack
+{{Section 6 of !RFC9146}} describes how the use of CID increases the attack
 surface of DTLS 1.2 and 1.3 by providing both on-path and off-path attackers an opportunity for
 (D)DoS.  It also describes the steps a DTLS principal must take when a
 record with a CID is received that has a source address different
@@ -94,7 +94,7 @@ its last known address after a period of quiescence.
 
 This document assumes familiarity with the CID format and protocol defined for
 DTLS 1.2 {{!RFC9146}} and for DTLS 1.3 {{!RFC9147}}.  The presentation language
-used in this document is described in Section 4 of {{!RFC8446}}.
+used in this document is described in {{Section 4 of !RFC8446}}.
 
 In this document, the term "anti-amplification limit" means three times the amount of data received from an unvalidated address.
 This includes all DTLS records originating from that source address, excluding those that have been discarded.
