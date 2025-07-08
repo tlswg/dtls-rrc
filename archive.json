@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-06T02:22:05.855528+00:00",
+  "timestamp": "2025-07-08T02:08:09.500442+00:00",
   "repo": "tlswg/dtls-rrc",
   "labels": [
     {
@@ -1202,6 +1202,37 @@
       "updatedAt": "2025-06-16T14:36:32Z",
       "closedAt": "2025-06-16T14:36:32Z",
       "comments": []
+    },
+    {
+      "number": 100,
+      "id": "I_kwDOFigxk86_RfzT",
+      "title": "Erik Kline\u2019s review comments",
+      "url": "https://github.com/tlswg/dtls-rrc/issues/100",
+      "state": "OPEN",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From [Erik\u2019s review](https://mailarchive.ietf.org/arch/msg/tls/18rDVwQ6T_aC-j4K0LNNCL0Xg-c/).\n\n\n### S6\n\n* A brief explanation of what is meant by \"nested rebinding\" would be good.\n\n### S6.{2,3,...}\n\n* I think if I were implementing this I would try to probe both the old\n  and the new paths at the same time.\n\n  Can you say something about the considerations such an implementation\n  would need to be aware of?\n",
+      "createdAt": "2025-07-07T13:24:12Z",
+      "updatedAt": "2025-07-07T13:30:47Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> ### S6\n> \n> * A brief explanation of what is meant by \"nested rebinding\" would be good.\n\nThis should have been already addressed.  We now have the following:\n\n_\u201c[\u2026] nested rebindings, i.e. rebindings that may occur while a path is being validated following a previous rebinding\u201d_",
+          "createdAt": "2025-07-07T13:25:35Z",
+          "updatedAt": "2025-07-07T13:25:57Z"
+        },
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> ### S6.{2,3,...}\n> \n> * I think if I were implementing this I would try to probe both the old\n>   and the new paths at the same time.\n>   Can you say something about the considerations such an implementation\n>   would need to be aware of?\n\nThe two checks (old-path and new-path) could run in parallel.\nThe only caveat is that the initiator should only consider the outcome of the new-path check if the old-path check has failed (i.e., it's timed out or got a path_drop).\n\n@boaks @hannestschofenig wdyt?\n",
+          "createdAt": "2025-07-07T13:29:58Z",
+          "updatedAt": "2025-07-07T13:30:47Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -5102,24 +5133,26 @@
       "id": "PR_kwDOFigxk86dT73G",
       "title": "\u00c9ric's comments",
       "url": "https://github.com/tlswg/dtls-rrc/pull/98",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "thomas-fossati",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Addressing the COMMENTS in [\u00c9ric's review](https://mailarchive.ietf.org/arch/msg/tls/EQ0R8r6C_Vmoq3jMa8hx48XlQ20/)",
       "createdAt": "2025-07-03T17:51:34Z",
-      "updatedAt": "2025-07-05T17:42:09Z",
+      "updatedAt": "2025-07-06T14:52:29Z",
       "baseRepository": "tlswg/dtls-rrc",
       "baseRefName": "master",
       "baseRefOid": "651bc5c50df8d2488c2ea22cb65459077361d842",
       "headRepository": "tlswg/dtls-rrc",
       "headRefName": "eric",
       "headRefOid": "964f506b7580eede8951237f6823f95edc50540b",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-07-06T14:52:27Z",
+      "mergedAt": "2025-07-06T14:52:27Z",
+      "mergedBy": "hannestschofenig",
+      "mergeCommit": {
+        "oid": "6c3da4610324393fe3cda19d9906c29f6917454a"
+      },
       "comments": [
         {
           "author": "thomas-fossati",
@@ -5231,6 +5264,49 @@
           ]
         }
       ]
+    },
+    {
+      "number": 99,
+      "id": "PR_kwDOFigxk86ds23Q",
+      "title": "\"split path\" clarifications",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/99",
+      "state": "MERGED",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-07-07T07:38:39Z",
+      "updatedAt": "2025-07-07T11:46:32Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "6c3da4610324393fe3cda19d9906c29f6917454a",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "eric-discuss",
+      "headRefOid": "cea2915677a650e09e46652bfc3afb3c8e7c200a",
+      "closedAt": "2025-07-07T11:22:17Z",
+      "mergedAt": "2025-07-07T11:22:16Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "6c697ac7ff43a9185cb9992cb7d8f6e5160cb916"
+      },
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "cc @boaks ",
+          "createdAt": "2025-07-07T10:34:25Z",
+          "updatedAt": "2025-07-07T10:34:25Z"
+        },
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "lgtm",
+          "createdAt": "2025-07-07T11:02:44Z",
+          "updatedAt": "2025-07-07T11:02:44Z"
+        }
+      ],
+      "reviews": []
     }
   ]
 }
