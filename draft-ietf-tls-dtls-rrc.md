@@ -7,7 +7,7 @@ docname: draft-ietf-tls-dtls-rrc-latest
 category: std
 consensus: true
 submissiontype: IETF
-updates: 9146
+updates: 9146, 9147
 
 ipr: trust200902
 area: Security
@@ -50,6 +50,9 @@ This document specifies a return routability check for use in context of the
 Connection ID (CID) construct for the Datagram Transport Layer Security (DTLS)
 protocol versions 1.2 and 1.3.
 
+Implementations offering the CID functionality described in RFC 9146 and RFC 9147 are encouraged to also provide the return routability check functionality described in this document.
+For this reason, this document updates RFC 9146 and RFC 9147.
+
 --- middle
 
 # Introduction
@@ -67,6 +70,7 @@ from the one currently associated with the DTLS connection.  However, the
 actual mechanism for ensuring that the new peer address is willing to receive
 and process DTLS records is left open.  To address the gap, this document defines a Return
 Routability Check (RRC) sub-protocol for DTLS 1.2 and 1.3 inspired by the path validation procedure defined in {{Section 8.2 of RFC9000}}.
+As such, this document updates {{!RFC9146}} and {{!RFC9147}}.
 
 The return routability check is performed by the receiving endpoint before the
 CID-address binding is updated in that endpoint's session state.
