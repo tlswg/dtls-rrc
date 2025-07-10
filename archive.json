@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-08T02:08:09.500442+00:00",
+  "timestamp": "2025-07-10T02:09:48.308062+00:00",
   "repo": "tlswg/dtls-rrc",
   "labels": [
     {
@@ -5304,6 +5304,40 @@
           "body": "lgtm",
           "createdAt": "2025-07-07T11:02:44Z",
           "updatedAt": "2025-07-07T11:02:44Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 101,
+      "id": "PR_kwDOFigxk86d4uUs",
+      "title": "explain \u201cUpdates\"",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/101",
+      "state": "OPEN",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "address [Mahesh\u2019s discuss](https://mailarchive.ietf.org/arch/msg/tls/xKRQ307kBLgyK1STk8v6UOpN__A/)",
+      "createdAt": "2025-07-08T07:36:09Z",
+      "updatedAt": "2025-07-09T12:44:40Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "6c697ac7ff43a9185cb9992cb7d8f6e5160cb916",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "mahesh",
+      "headRefOid": "6d9fd86a4f928c95d5188c3f4bd7c5838ebc27fd",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "thomas-fossati",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "cc @boaks ",
+          "createdAt": "2025-07-09T12:44:40Z",
+          "updatedAt": "2025-07-09T12:44:40Z"
         }
       ],
       "reviews": []
