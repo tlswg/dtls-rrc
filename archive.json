@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-10T02:09:48.308062+00:00",
+  "timestamp": "2025-07-13T02:27:09.642509+00:00",
   "repo": "tlswg/dtls-rrc",
   "labels": [
     {
@@ -1215,7 +1215,7 @@
       "labels": [],
       "body": "From [Erik\u2019s review](https://mailarchive.ietf.org/arch/msg/tls/18rDVwQ6T_aC-j4K0LNNCL0Xg-c/).\n\n\n### S6\n\n* A brief explanation of what is meant by \"nested rebinding\" would be good.\n\n### S6.{2,3,...}\n\n* I think if I were implementing this I would try to probe both the old\n  and the new paths at the same time.\n\n  Can you say something about the considerations such an implementation\n  would need to be aware of?\n",
       "createdAt": "2025-07-07T13:24:12Z",
-      "updatedAt": "2025-07-07T13:30:47Z",
+      "updatedAt": "2025-07-10T13:53:32Z",
       "closedAt": null,
       "comments": [
         {
@@ -1231,6 +1231,13 @@
           "body": "> ### S6.{2,3,...}\n> \n> * I think if I were implementing this I would try to probe both the old\n>   and the new paths at the same time.\n>   Can you say something about the considerations such an implementation\n>   would need to be aware of?\n\nThe two checks (old-path and new-path) could run in parallel.\nThe only caveat is that the initiator should only consider the outcome of the new-path check if the old-path check has failed (i.e., it's timed out or got a path_drop).\n\n@boaks @hannestschofenig wdyt?\n",
           "createdAt": "2025-07-07T13:29:58Z",
           "updatedAt": "2025-07-07T13:30:47Z"
+        },
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "FMPOV, there are two cases:\n\non-path attacker:\n- replaces the source address\n- the receiver gets only one message with the wrong address. From a previous message there may be an old-path. But in the very most cases of CID, if that previous message was some time ago (e.g. 40s) then in many cases the old-path is not longer functional.\nAFAIK it doesn't make sense to check the old-path in this case\n\noff-path attacker:\n- injects a second message with replaced the source address\n- the receiver gets now two messages, equal except the source address.\nIn the case, a receiver gets two equal messages in a short time, we don't know, which one has the right path nor do we know, if both paths are valid, which one we should chose. If we challenge both, it's up on the client to decide. For my deployments, that decision is pretty easy: don't update the server's address on the client side. And also here, there may be from a previous message an old-path. But in the very most cases of CID, if that previous message was some time ago (e.g. 40s) then in many cases the old-path is not longer functional.",
+          "createdAt": "2025-07-10T13:53:32Z",
+          "updatedAt": "2025-07-10T13:53:32Z"
         }
       ]
     }
@@ -5313,24 +5320,26 @@
       "id": "PR_kwDOFigxk86d4uUs",
       "title": "explain \u201cUpdates\"",
       "url": "https://github.com/tlswg/dtls-rrc/pull/101",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "thomas-fossati",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "address [Mahesh\u2019s discuss](https://mailarchive.ietf.org/arch/msg/tls/xKRQ307kBLgyK1STk8v6UOpN__A/)",
       "createdAt": "2025-07-08T07:36:09Z",
-      "updatedAt": "2025-07-09T12:44:40Z",
+      "updatedAt": "2025-07-12T11:36:42Z",
       "baseRepository": "tlswg/dtls-rrc",
       "baseRefName": "master",
       "baseRefOid": "6c697ac7ff43a9185cb9992cb7d8f6e5160cb916",
       "headRepository": "tlswg/dtls-rrc",
       "headRefName": "mahesh",
       "headRefOid": "6d9fd86a4f928c95d5188c3f4bd7c5838ebc27fd",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-07-12T11:36:39Z",
+      "mergedAt": "2025-07-12T11:36:39Z",
+      "mergedBy": "thomas-fossati",
+      "mergeCommit": {
+        "oid": "e6da03000f822e9cd0e035b4ebee07a376357a43"
+      },
       "comments": [
         {
           "author": "thomas-fossati",
@@ -5338,9 +5347,30 @@
           "body": "cc @boaks ",
           "createdAt": "2025-07-09T12:44:40Z",
           "updatedAt": "2025-07-09T12:44:40Z"
+        },
+        {
+          "author": "boaks",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "lgtm",
+          "createdAt": "2025-07-10T10:01:29Z",
+          "updatedAt": "2025-07-10T10:01:29Z"
         }
       ],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOFigxk86zlJo3",
+          "commit": {
+            "abbreviatedOid": "6d9fd86"
+          },
+          "author": "hannestschofenig",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "Good to add this extra note.",
+          "createdAt": "2025-07-12T09:09:02Z",
+          "updatedAt": "2025-07-12T09:09:02Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
