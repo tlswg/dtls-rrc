@@ -715,7 +715,7 @@ extension to the `TLS ExtensionType Values` registry as described in
 {: #tbl-ext align="left"
    title="rrc entry in the TLS ExtensionType Values registry" }
 
-## New "TLS RRC Message Type" Registry
+## New "TLS RRC Message Types" Registry
 
 IANA is requested to create a new registry "TLS RRC Message Types" within the Transport Layer Security (TLS) Parameters registry group {{!IANA.tls-parameters}}.
 This registry will be administered under the "Expert Review" policy ({{Section 4.5 of !RFC8126}}).
@@ -756,7 +756,7 @@ The initial state of this sub-registry is as follows:
 | 3-253 | Unassigned     |           |             |            |         |
 | 254-255 | Reserved for Private Use | Y | | {{&SELF}} | |
 {: #tbl-rrc-mt align="left"
-   title="Initial Entries in TLS RRC Message Type registry" }
+   title="Initial Entries in TLS RRC Message Types registry" }
 
 IANA is requested to add the following note for additional information regarding the use of RRC message codepoints in experiments:
 
