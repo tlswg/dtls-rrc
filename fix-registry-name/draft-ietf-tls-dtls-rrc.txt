@@ -4,11 +4,11 @@
 
 TLS                                                   H. Tschofenig, Ed.
 Internet-Draft                                                     H-BRS
-Updates: 9146 (if approved)                                     A. Kraus
+Updates: 9146, 9147 (if approved)                               A. Kraus
 Intended status: Standards Track                                        
-Expires: 8 January 2026                                       T. Fossati
+Expires: 14 February 2026                                     T. Fossati
                                                                   Linaro
-                                                             7 July 2025
+                                                          13 August 2025
 
 
            Return Routability Check for DTLS 1.2 and DTLS 1.3
@@ -19,6 +19,11 @@ Abstract
    This document specifies a return routability check for use in context
    of the Connection ID (CID) construct for the Datagram Transport Layer
    Security (DTLS) protocol versions 1.2 and 1.3.
+
+   Implementations offering the CID functionality described in RFC 9146
+   and RFC 9147 are encouraged to also provide the return routability
+   check functionality described in this document.  For this reason,
+   this document updates RFC 9146 and RFC 9147.
 
 Discussion Venues
 
@@ -46,7 +51,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 January 2026.
+   This Internet-Draft will expire on 14 February 2026.
 
 Copyright Notice
 
@@ -87,7 +92,7 @@ Table of Contents
    10. IANA Considerations
      10.1.  New TLS ContentType
      10.2.  New TLS ExtensionType
-     10.3.  New "TLS RRC Message Type" Registry
+     10.3.  New "TLS RRC Message Types" Registry
        10.3.1.  Designated Expert Instructions
    11. Acknowledgments
    12. References
@@ -113,7 +118,7 @@ Table of Contents
    records is left open.  To address the gap, this document defines a
    Return Routability Check (RRC) sub-protocol for DTLS 1.2 and 1.3
    inspired by the path validation procedure defined in Section 8.2 of
-   [RFC9000].
+   [RFC9000].  As such, this document updates [RFC9146] and [RFC9147].
 
    The return routability check is performed by the receiving endpoint
    before the CID-address binding is updated in that endpoint's session
@@ -855,7 +860,7 @@ Auth | {CertificateVerify}
 
        Table 1: rrc entry in the TLS ExtensionType Values registry
 
-10.3.  New "TLS RRC Message Type" Registry
+10.3.  New "TLS RRC Message Types" Registry
 
    IANA is requested to create a new registry "TLS RRC Message Types"
    within the Transport Layer Security (TLS) Parameters registry group
@@ -907,7 +912,7 @@ Auth | {CertificateVerify}
    |       | Private Use    |         |             |         |       |
    +-------+----------------+---------+-------------+---------+-------+
 
-        Table 2: Initial Entries in TLS RRC Message Type registry
+        Table 2: Initial Entries in TLS RRC Message Types registry
 
    IANA is requested to add the following note for additional
    information regarding the use of RRC message codepoints in
@@ -946,9 +951,9 @@ Auth | {CertificateVerify}
    [I-D.ietf-tls-rfc8447bis]
               Salowey, J. A. and S. Turner, "IANA Registry Updates for
               TLS and DTLS", Work in Progress, Internet-Draft, draft-
-              ietf-tls-rfc8447bis-14, 16 June 2025,
+              ietf-tls-rfc8447bis-15, 21 July 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-tls-
-              rfc8447bis-14>.
+              rfc8447bis-15>.
 
    [IANA.tls-parameters]
               IANA, "Transport Layer Security (TLS) Parameters",
