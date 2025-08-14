@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-13T02:27:09.642509+00:00",
+  "timestamp": "2025-08-14T02:08:21.838298+00:00",
   "repo": "tlswg/dtls-rrc",
   "labels": [
     {
@@ -5371,6 +5371,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 102,
+      "id": "PR_kwDOFigxk86jbQV7",
+      "title": "s/TLS RRC Message Type/TLS RRC Message Types/",
+      "url": "https://github.com/tlswg/dtls-rrc/pull/102",
+      "state": "OPEN",
+      "author": "thomas-fossati",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-08-13T07:51:23Z",
+      "updatedAt": "2025-08-13T07:51:23Z",
+      "baseRepository": "tlswg/dtls-rrc",
+      "baseRefName": "master",
+      "baseRefOid": "e6da03000f822e9cd0e035b4ebee07a376357a43",
+      "headRepository": "tlswg/dtls-rrc",
+      "headRefName": "fix-registry-name",
+      "headRefOid": "209ad2cbcb8cc8e28e4b45cd7b4ea0d480f26d18",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
